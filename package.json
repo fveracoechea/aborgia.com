@@ -1,0 +1,13 @@
+{
+  "name": "aborgia.com",
+  "version": "0.0.1",
+  "description": "Aborgia Insurance Broker",
+  "main": "index.js",
+  "author": "Francisco Veracoechea",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["strapi-cms", "website"],
+  "scripts": {
+    "dev": "yarn workspace strapi-cms develop & yarn workspace website dev"
+  }
+}
