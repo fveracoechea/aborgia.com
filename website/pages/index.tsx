@@ -48,10 +48,6 @@ const Home: NextPage<{ route: string }> = ({ route }) => {
   return (
     <GlobalSettingsCtx.Provider value={contextValue}>
       <Layout>
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <Typography variant="h1">
           {global?.siteName} <Link href="/">Insurance Broker!</Link>
         </Typography>

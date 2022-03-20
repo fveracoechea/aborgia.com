@@ -1,7 +1,5 @@
-import { gql, useQuery } from "@apollo/client";
 import { Link, Typography } from "@mui/material";
 import type { GetStaticProps, NextPage, GetStaticPaths } from "next";
-import Head from "next/head";
 import { initializeApollo } from "apollo/client";
 import Layout from "components/Layout";
 import {
@@ -14,8 +12,10 @@ import {
   SinglePageQueryVariables,
   PagesDocument,
   PagesQuery,
+  Page,
   useSinglePageQuery,
 } from "apollo/generated";
+import PageContent from "components/PageContent";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const apolloClient = initializeApollo();
@@ -52,8 +52,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 const Page: NextPage<{ route: string }> = ({ route }) => {
   const { data } = useSinglePageQuery({ variables: { route } });
   const global = data?.globalSetting?.data?.attributes;
-  const page = data?.pages?.data?.[0]?.attributes
-
+  const page = data?.pages?.data?.[0]?.attributes as Page;
+  
   if (!global || !page) return <p>Loading...</p>;
 
   const contextValue: GlobalSettingsValue = {
@@ -66,13 +66,10 @@ const Page: NextPage<{ route: string }> = ({ route }) => {
   return (
     <GlobalSettingsCtx.Provider value={contextValue}>
       <Layout>
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <Typography variant="h1">
           {page.name} <Link href="/">Insurance Broker!</Link>
         </Typography>
+        <PageContent content={page.content} />
       </Layout>
     </GlobalSettingsCtx.Provider>
   );

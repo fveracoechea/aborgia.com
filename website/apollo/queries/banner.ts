@@ -37,8 +37,10 @@ export const StrapiBannerFragment = gql`
   ${StrapiSpacingFragment}
   fragment StrapiBannerFragment on ComponentBannerBanner {
     __typename
+    id
     banner {
       data {
+        id
         attributes {
           locale
           title
