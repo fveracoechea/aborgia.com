@@ -8,6 +8,9 @@
   "private": true,
   "workspaces": ["strapi-cms", "website"],
   "scripts": {
-    "dev": "yarn workspace strapi-cms develop & yarn workspace website dev"
+    "dev": "yarn dev:strapi & yarn dev:next",
+    "dev:strapi": "yarn workspace strapi-cms develop",
+    "dev:next": "yarn workspace website dev",
+    "codegen": "yarn workspace website codegen"
   }
 }

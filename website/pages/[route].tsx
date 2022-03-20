@@ -1,5 +1,6 @@
-import { Link, Typography, Button } from "@mui/material";
-import type { GetStaticProps, NextPage } from "next";
+import { gql, useQuery } from "@apollo/client";
+import { Link, Typography } from "@mui/material";
+import type { GetStaticProps, NextPage, GetStaticPaths } from "next";
 import Head from "next/head";
 import { initializeApollo } from "apollo/client";
 import Layout from "components/Layout";
@@ -11,12 +12,29 @@ import {
   SinglePageQuery,
   SinglePageDocument,
   SinglePageQueryVariables,
+  PagesDocument,
+  PagesQuery,
   useSinglePageQuery,
 } from "apollo/generated";
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  const apolloClient = initializeApollo();
+  const result = await apolloClient.query<PagesQuery>({
+    query: PagesDocument,
+  });
+  return {
+    paths: result?.data!.pages!.data!.map(({ attributes, id }) => ({
+      params: {
+        route: attributes?.route.replace("/", ""),
+      },
+    })),
+    fallback: false, // false or 'blocking'
+  };
+};
+
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const apolloClient = initializeApollo();
-  const route = "/";
+  const route = `/${ctx!.params!.route}`;
 
   await apolloClient.query<SinglePageQuery, SinglePageQueryVariables>({
     query: SinglePageDocument,
@@ -31,16 +49,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   };
 };
 
-const Home: NextPage<{ route: string }> = ({ route }) => {
+const Page: NextPage<{ route: string }> = ({ route }) => {
   const { data } = useSinglePageQuery({ variables: { route } });
   const global = data?.globalSetting?.data?.attributes;
-  const page = data?.pages?.data?.[0]?.attributes;
+  const page = data?.pages?.data?.[0]?.attributes
 
   if (!global || !page) return <p>Loading...</p>;
 
   const contextValue: GlobalSettingsValue = {
-    route,
     siteName: global.siteName,
+    route,
     favicon: global?.favicon?.data?.attributes?.url!,
     theme: global?.theme || {},
   };
@@ -53,23 +71,11 @@ const Home: NextPage<{ route: string }> = ({ route }) => {
         </Head>
 
         <Typography variant="h1">
-          {global?.siteName} <Link href="/">Insurance Broker!</Link>
+          {page.name} <Link href="/">Insurance Broker!</Link>
         </Typography>
-        <Button variant="contained" color="primary">
-          primary
-        </Button>
-        <Button variant="contained" color="secondary">
-          secondary
-        </Button>
-        <Button variant="contained" color="success">
-          success
-        </Button>
-        <Button variant="contained" color="error">
-          error
-        </Button>
       </Layout>
     </GlobalSettingsCtx.Provider>
   );
 };
 
-export default Home;
+export default Page;

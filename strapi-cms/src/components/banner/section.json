@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_banner_sections",
+  "info": {
+    "displayName": "Section",
+    "icon": "grip-horizontal",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "primaryText": {
+      "type": "string"
+    },
+    "secondaryText": {
+      "type": "text"
+    },
+    "backgroundColor": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "textAlign": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "right",
+        "center"
+      ],
+      "default": "left",
+      "required": true
+    },
+    "images": {
+      "type": "component",
+      "repeatable": false,
+      "required": true,
+      "component": "banner.images"
+    },
+    "spacing": {
+      "type": "component",
+      "repeatable": false,
+      "component": "banner.spacing",
+      "required": true
+    }
+  }
+}

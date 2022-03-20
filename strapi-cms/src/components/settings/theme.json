@@ -1,0 +1,54 @@
+{
+  "collectionName": "components_settings_themes",
+  "info": {
+    "displayName": "Theme",
+    "icon": "fill-drip",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "primary": {
+      "displayName": "Color",
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color",
+      "required": true
+    },
+    "secondary": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color",
+      "required": true
+    },
+    "error": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    },
+    "warning": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    },
+    "info": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    },
+    "textPrimary": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    },
+    "textSecondary": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    },
+    "success": {
+      "type": "component",
+      "repeatable": false,
+      "component": "settings.color"
+    }
+  }
+}

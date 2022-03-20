@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_settings_colors",
+  "info": {
+    "displayName": "Color",
+    "icon": "paint-brush",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "main": {
+      "type": "string",
+      "required": true
+    },
+    "light": {
+      "type": "string"
+    },
+    "dark": {
+      "type": "string"
+    }
+  }
+}
