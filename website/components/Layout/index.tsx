@@ -19,7 +19,7 @@ const Layout: FC<Props> = ({ children }) => {
       <CssBaseline />
       <Seo />
       <Header />
-      <Container component="main" maxWidth="lg">
+      <Container component="main" maxWidth="xl">
         {children}
       </Container>
     </ThemeProvider>
