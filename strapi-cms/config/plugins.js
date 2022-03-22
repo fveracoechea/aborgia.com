@@ -6,7 +6,7 @@ module.exports = {
   },
   graphql: {
     config: {
-      endpoint: '/graphql',
+      endpoint: "/graphql",
       shadowCRUD: true,
       playgroundAlways: false,
       depthLimit: 12,
@@ -15,5 +15,13 @@ module.exports = {
         tracing: false,
       },
     },
+  },
+  "strapi-colorpicker": {
+    enabled: true,
+    resolve: "./src/plugins/strapi-colorpicker",
+  },
+  'wysiwyg': {
+    enabled: true,
+    resolve: './src/plugins/wysiwyg'
   },
 };

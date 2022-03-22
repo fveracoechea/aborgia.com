@@ -6,11 +6,16 @@
   "author": "Francisco Veracoechea",
   "license": "MIT",
   "private": true,
-  "workspaces": ["strapi-cms", "website"],
+  "workspaces": [
+    "strapi-cms",
+    "website"
+  ],
   "scripts": {
     "dev": "yarn dev:strapi & yarn dev:next",
-    "dev:strapi": "yarn workspace strapi-cms develop",
+    "dev:strapi": "node prebuild.js && yarn workspace strapi-cms develop",
     "dev:next": "yarn workspace website dev",
+    "build:strapi": "node prebuild.js && yarn workspace strapi-cms build",
     "codegen": "yarn workspace website codegen"
   }
+
 }

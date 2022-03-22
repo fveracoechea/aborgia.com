@@ -34,7 +34,8 @@
       },
       "type": "dynamiczone",
       "components": [
-        "banner.section"
+        "banner.section",
+        "banner.text"
       ]
     },
     "fullWidth": {
@@ -46,14 +47,6 @@
       "type": "boolean",
       "default": false,
       "required": false
-    },
-    "backgroundColor": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string"
     },
     "displaySettings": {
       "pluginOptions": {
@@ -91,6 +84,17 @@
       },
       "required": true,
       "component": "banner.images"
+    },
+    "backgroundColor": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "customFieldRenderer": "colorpicker",
+      "type": "string",
+      "required": true,
+      "default": "#FFFFFF"
     }
   }
 }
