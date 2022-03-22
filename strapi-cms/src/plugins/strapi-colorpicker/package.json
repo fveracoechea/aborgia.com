@@ -1,0 +1,28 @@
+{
+  "name": "strapi-colorpicker",
+  "version": "0.1.0",
+  "description": "A color picker for Strapi, by Francisco Veracoechea",
+  "strapi": {
+    "name": "strapi-colorpicker",
+    "displayName": "Strapi Color Picker",
+    "description": "A color picker for Strapi, by Francisco Veracoechea",
+    "kind": "plugin"
+  },
+  "author": {
+    "name": "Francisco Veracoechea"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.0"
+  },
+  "maintainers": [
+    {
+      "name": "Francisco Veracoechea",
+      "github": "https://github.com/fveracoechea"
+    }
+  ],
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
