@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const StrapiFileFragment = gql`
+export const StrapiFileFragment = gql`
   fragment StrapiFile on UploadFileEntityResponse {
     data {
       attributes {
@@ -54,11 +54,21 @@ export const StrapiBannerFragment = gql`
             ...StrapiImages
           }
           content {
+            ... on ComponentBannerText {
+              __typename
+              text
+              textColor
+              backgroundColor
+              spacing {
+                ...StrapiSpacing
+              }
+            }
             ... on ComponentBannerSection {
               __typename
               primaryText
               secondaryText
               textAlign
+              textColor
               backgroundColor
               spacing {
                 ...StrapiSpacing

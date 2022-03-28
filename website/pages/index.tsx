@@ -1,6 +1,4 @@
-import { Link, Typography, Button } from "@mui/material";
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 import { initializeApollo } from "apollo/client";
 import Layout from "components/Layout";
 import {
@@ -12,16 +10,25 @@ import {
   SinglePageDocument,
   SinglePageQueryVariables,
   useSinglePageQuery,
+  StrapiHeroQuery,
+  StrapiHeroDocument,
+  StrapiValuesQuery,
+  StrapiValuesDocument,
 } from "apollo/generated";
+import { Hero } from "components/Hero";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const apolloClient = initializeApollo();
   const route = "/";
 
-  await apolloClient.query<SinglePageQuery, SinglePageQueryVariables>({
-    query: SinglePageDocument,
-    variables: { route },
-  });
+  await Promise.all([
+    apolloClient.query<SinglePageQuery, SinglePageQueryVariables>({
+      query: SinglePageDocument,
+      variables: { route },
+    }),
+    apolloClient.query<StrapiHeroQuery>({ query: StrapiHeroDocument }),
+    apolloClient.query<StrapiValuesQuery>({ query: StrapiValuesDocument }),
+  ]);
 
   return {
     props: {
@@ -48,21 +55,7 @@ const Home: NextPage<{ route: string }> = ({ route }) => {
   return (
     <GlobalSettingsCtx.Provider value={contextValue}>
       <Layout>
-        <Typography variant="h1">
-          {global?.siteName} <Link href="/">Insurance Broker!</Link>
-        </Typography>
-        <Button variant="contained" color="primary">
-          primary
-        </Button>
-        <Button variant="contained" color="secondary">
-          secondary
-        </Button>
-        <Button variant="contained" color="success">
-          success
-        </Button>
-        <Button variant="contained" color="error">
-          error
-        </Button>
+        <Hero />
       </Layout>
     </GlobalSettingsCtx.Provider>
   );

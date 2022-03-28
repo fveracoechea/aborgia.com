@@ -1,11 +1,16 @@
-import { createTheme, SxProps } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+import {
+  createTheme,
+  SxProps,
+  PaletteColorOptions,
+  responsiveFontSizes,
+  Theme
+} from "@mui/material/styles";
 import { ComponentSettingsTheme } from "apollo/generated";
 
 // Create a theme instance.
 const theme = (theme: ComponentSettingsTheme) => {
-  const primary = theme?.primary || {};
-  const secondary = theme?.secondary || {};
+  const primary = (theme?.primary || {}) as PaletteColorOptions;
+  const secondary = (theme?.secondary || {}) as PaletteColorOptions;
   const success = theme?.success || {};
   const error = theme?.error || {};
   const info = theme?.info || {};
@@ -16,19 +21,21 @@ const theme = (theme: ComponentSettingsTheme) => {
     secondary: theme?.textSecondary?.main || undefined,
   };
 
-  return createTheme({
-    palette: {
-      primary,
-      secondary,
-      success,
-      error,
-      info,
-      warning,
-      text,
-    },
-  });
+  return responsiveFontSizes(
+    createTheme({
+      palette: {
+        primary,
+        secondary,
+        success,
+        error,
+        info,
+        warning,
+        text,
+      },
+    })
+  );
 };
 
-export type SxStyles = SxProps<typeof theme>;
+export type SxStyles = SxProps<Theme>;
 
 export default theme;

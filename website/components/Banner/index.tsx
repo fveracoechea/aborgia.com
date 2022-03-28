@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { BannerEntity, ComponentBannerImages } from "apollo/generated";
+import { BannerEntity } from "apollo/generated";
 import { Grid, SxProps, Theme } from "@mui/material";
 import { getBannerImages } from "helpers/images";
 import Section from "./section";
+import TextCotent from "./textContent";
 
 type Props = {
   data: BannerEntity;
@@ -21,16 +22,25 @@ const Banner: FC<Props> = ({ data }) => {
     backgroundImage: getBannerImages(data?.attributes?.images),
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
   };
 
   return (
-    <Grid item sm sx={wrapperStyles}>
+    <Grid container item md sx={wrapperStyles}>
       {data?.attributes?.content &&
         data.attributes.content.map((item) => {
           if (item?.__typename === "ComponentBannerSection") {
-            return <Section key={`ComponentBannerSection-${item.id}`} data={item} />;
+            return (
+              <Section key={`ComponentBannerSection-${item.id}`} data={item} />
+            );
           }
+
+          if (item?.__typename === "ComponentBannerText") {
+            return (
+              <TextCotent key={`ComponentBannerText-${item.id}`} data={item} />
+            );
+          }
+
           return null;
         })}
     </Grid>

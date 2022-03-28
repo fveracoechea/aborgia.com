@@ -45,7 +45,11 @@ const toComponent = (element: Maybe<PageContentDynamicZone>) => {
 const PageContent: FC<Props> = ({ content }) => {
   if (!content) return null;
 
-  return <Grid container>{content.map(toComponent)}</Grid>;
+  return (
+    <Grid sx={{ flexDirection: "column" }} container>
+      {content.map(toComponent)}
+    </Grid>
+  );
 };
 
 export default PageContent;

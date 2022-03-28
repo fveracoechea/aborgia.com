@@ -30,7 +30,13 @@ const ResponsiveAppBar = () => {
   if (!data) return null;
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="fixed"
+      sx={(t) => ({
+        backgroundImage: `linear-gradient(to right, ${t.palette.primary.main}, ${t.palette.secondary.dark})`,
+      })}
+      elevation={0}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="/" passHref>
@@ -115,7 +121,7 @@ const ResponsiveAppBar = () => {
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
-              Health and life insurance
+              +1 (404) 513-1683
             </Typography>
           </Box>
         </Toolbar>

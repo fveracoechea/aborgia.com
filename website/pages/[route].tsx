@@ -66,9 +66,9 @@ const Page: NextPage<{ route: string }> = ({ route }) => {
   return (
     <GlobalSettingsCtx.Provider value={contextValue}>
       <Layout>
-        <Typography variant="h1">
+        {/* <Typography variant="h1">
           {page.name} <Link href="/">Insurance Broker!</Link>
-        </Typography>
+        </Typography> */}
         <PageContent content={page.content} />
       </Layout>
     </GlobalSettingsCtx.Provider>

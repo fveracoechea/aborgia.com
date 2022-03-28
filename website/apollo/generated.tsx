@@ -27,7 +27,7 @@ export type Scalars = {
 
 export type Banner = {
   __typename?: 'Banner';
-  backgroundColor?: Maybe<Scalars['String']>;
+  backgroundColor: Scalars['String'];
   content?: Maybe<Array<Maybe<BannerContentDynamicZone>>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   displaySettings: Enum_Banner_Displaysettings;
@@ -49,7 +49,7 @@ export type BannerLocalizationsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
-export type BannerContentDynamicZone = ComponentBannerSection | Error;
+export type BannerContentDynamicZone = ComponentBannerSection | ComponentBannerText | Error;
 
 export type BannerEntity = {
   __typename?: 'BannerEntity';
@@ -144,7 +144,7 @@ export type ComponentBannerImagesInput = {
 
 export type ComponentBannerSection = {
   __typename?: 'ComponentBannerSection';
-  backgroundColor?: Maybe<Scalars['String']>;
+  backgroundColor: Scalars['String'];
   id: Scalars['ID'];
   images: ComponentBannerImages;
   link?: Maybe<Scalars['String']>;
@@ -152,6 +152,7 @@ export type ComponentBannerSection = {
   secondaryText?: Maybe<Scalars['String']>;
   spacing: ComponentBannerSpacing;
   textAlign: Enum_Componentbannersection_Textalign;
+  textColor: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -166,6 +167,15 @@ export type ComponentBannerSpacingInput = {
   horizontal?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['ID']>;
   vertical?: InputMaybe<Scalars['Int']>;
+};
+
+export type ComponentBannerText = {
+  __typename?: 'ComponentBannerText';
+  backgroundColor: Scalars['String'];
+  id: Scalars['ID'];
+  spacing: ComponentBannerSpacing;
+  text: Scalars['String'];
+  textColor: Scalars['String'];
 };
 
 export type ComponentSettingsColor = {
@@ -284,7 +294,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | I18NLocale | Page | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentBannerText | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | Hero | I18NLocale | Page | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Value;
 
 export type GlobalSetting = {
   __typename?: 'GlobalSetting';
@@ -312,6 +322,46 @@ export type GlobalSettingInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   siteName?: InputMaybe<Scalars['String']>;
   theme?: InputMaybe<ComponentSettingsThemeInput>;
+};
+
+export type Hero = {
+  __typename?: 'Hero';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  images?: Maybe<UploadFileRelationResponseCollection>;
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<HeroRelationResponseCollection>;
+  tagline: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type HeroImagesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type HeroEntity = {
+  __typename?: 'HeroEntity';
+  attributes?: Maybe<Hero>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type HeroEntityResponse = {
+  __typename?: 'HeroEntityResponse';
+  data?: Maybe<HeroEntity>;
+};
+
+export type HeroInput = {
+  images?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagline?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type HeroRelationResponseCollection = {
+  __typename?: 'HeroRelationResponseCollection';
+  data: Array<HeroEntity>;
 };
 
 export type I18NLocale = {
@@ -423,6 +473,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createBanner?: Maybe<BannerEntityResponse>;
   createBannerLocalization?: Maybe<BannerEntityResponse>;
+  createHeroLocalization?: Maybe<HeroEntityResponse>;
   createPage?: Maybe<PageEntityResponse>;
   createSeo?: Maybe<SeoEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -430,8 +481,11 @@ export type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createValue?: Maybe<ValueEntityResponse>;
+  createValueLocalization?: Maybe<ValueEntityResponse>;
   deleteBanner?: Maybe<BannerEntityResponse>;
   deleteGlobalSetting?: Maybe<GlobalSettingEntityResponse>;
+  deleteHero?: Maybe<HeroEntityResponse>;
   deletePage?: Maybe<PageEntityResponse>;
   deleteSeo?: Maybe<SeoEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -439,6 +493,7 @@ export type Mutation = {
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Update an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteValue?: Maybe<ValueEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
@@ -453,6 +508,7 @@ export type Mutation = {
   updateBanner?: Maybe<BannerEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateGlobalSetting?: Maybe<GlobalSettingEntityResponse>;
+  updateHero?: Maybe<HeroEntityResponse>;
   updatePage?: Maybe<PageEntityResponse>;
   updateSeo?: Maybe<SeoEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -460,6 +516,7 @@ export type Mutation = {
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateValue?: Maybe<ValueEntityResponse>;
   upload: UploadFileEntityResponse;
 };
 
@@ -472,6 +529,13 @@ export type MutationCreateBannerArgs = {
 
 export type MutationCreateBannerLocalizationArgs = {
   data?: InputMaybe<BannerInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationCreateHeroLocalizationArgs = {
+  data?: InputMaybe<HeroInput>;
   id?: InputMaybe<Scalars['ID']>;
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
@@ -502,8 +566,26 @@ export type MutationCreateUsersPermissionsUserArgs = {
 };
 
 
+export type MutationCreateValueArgs = {
+  data: ValueInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationCreateValueLocalizationArgs = {
+  data?: InputMaybe<ValueInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationDeleteBannerArgs = {
   id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type MutationDeleteHeroArgs = {
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
@@ -530,6 +612,12 @@ export type MutationDeleteUsersPermissionsRoleArgs = {
 
 export type MutationDeleteUsersPermissionsUserArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationDeleteValueArgs = {
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -591,6 +679,12 @@ export type MutationUpdateGlobalSettingArgs = {
 };
 
 
+export type MutationUpdateHeroArgs = {
+  data: HeroInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationUpdatePageArgs = {
   data: PageInput;
   id: Scalars['ID'];
@@ -618,6 +712,13 @@ export type MutationUpdateUsersPermissionsRoleArgs = {
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID'];
+};
+
+
+export type MutationUpdateValueArgs = {
+  data: ValueInput;
+  id: Scalars['ID'];
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -738,6 +839,7 @@ export type Query = {
   banner?: Maybe<BannerEntityResponse>;
   banners?: Maybe<BannerEntityResponseCollection>;
   globalSetting?: Maybe<GlobalSettingEntityResponse>;
+  hero?: Maybe<HeroEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
@@ -753,6 +855,8 @@ export type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  value?: Maybe<ValueEntityResponse>;
+  values?: Maybe<ValueEntityResponseCollection>;
 };
 
 
@@ -773,6 +877,11 @@ export type QueryBannersArgs = {
 
 export type QueryGlobalSettingArgs = {
   publicationState?: InputMaybe<PublicationState>;
+};
+
+
+export type QueryHeroArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -862,6 +971,21 @@ export type QueryUsersPermissionsUserArgs = {
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryValueArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
+export type QueryValuesArgs = {
+  filters?: InputMaybe<ValueFiltersInput>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1022,6 +1146,11 @@ export type UploadFileInput = {
   size?: InputMaybe<Scalars['Float']>;
   url?: InputMaybe<Scalars['String']>;
   width?: InputMaybe<Scalars['Int']>;
+};
+
+export type UploadFileRelationResponseCollection = {
+  __typename?: 'UploadFileRelationResponseCollection';
+  data: Array<UploadFileEntity>;
 };
 
 export type UsersPermissionsCreateRolePayload = {
@@ -1238,17 +1367,93 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type Value = {
+  __typename?: 'Value';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  icon: Scalars['String'];
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<ValueRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type ValueLocalizationsArgs = {
+  filters?: InputMaybe<ValueFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ValueEntity = {
+  __typename?: 'ValueEntity';
+  attributes?: Maybe<Value>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type ValueEntityResponse = {
+  __typename?: 'ValueEntityResponse';
+  data?: Maybe<ValueEntity>;
+};
+
+export type ValueEntityResponseCollection = {
+  __typename?: 'ValueEntityResponseCollection';
+  data: Array<ValueEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ValueFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ValueFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  icon?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  localizations?: InputMaybe<ValueFiltersInput>;
+  not?: InputMaybe<ValueFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ValueFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ValueInput = {
+  description?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
+export type ValueRelationResponseCollection = {
+  __typename?: 'ValueRelationResponseCollection';
+  data: Array<ValueEntity>;
+};
+
 export type StrapiFileFragment = { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null };
 
 export type StrapiImagesFragment = { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null };
 
 export type StrapiSpacingFragment = { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number };
 
-export type StrapiBannerFragmentFragment = { __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor?: string | null, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, backgroundColor?: string | null, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename?: 'Error' } | null> | null } | null } | null } | null };
+export type StrapiBannerFragmentFragment = { __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null };
+
+export type StrapiFileCollectionFragment = { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null }> };
+
+export type StrapiHeroQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type StrapiHeroQuery = { __typename?: 'Query', hero?: { __typename?: 'HeroEntityResponse', data?: { __typename?: 'HeroEntity', attributes?: { __typename?: 'Hero', title: string, tagline: string, images?: { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null }> } | null } | null } | null } | null };
+
+export type StrapiValuesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type StrapiValuesQuery = { __typename?: 'Query', values?: { __typename?: 'ValueEntityResponseCollection', data: Array<{ __typename?: 'ValueEntity', attributes?: { __typename?: 'Value', icon: string, title: string, description: string } | null }> } | null };
 
 export type PageSeoFragmentFragment = { __typename?: 'Page', seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null };
 
-export type PageContentFragmentFragment = { __typename?: 'Page', content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor?: string | null, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, backgroundColor?: string | null, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null };
+export type PageContentFragmentFragment = { __typename?: 'Page', content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null };
 
 export type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1260,12 +1465,24 @@ export type SinglePageQueryVariables = Exact<{
 }>;
 
 
-export type SinglePageQuery = { __typename?: 'Query', renderNavigation: Array<{ __typename?: 'NavigationItem', title: string, path?: string | null, id: number } | null>, globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, success?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, error?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, warning?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, info?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null, content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor?: string | null, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, backgroundColor?: string | null, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null } | null }> } | null };
+export type SinglePageQuery = { __typename?: 'Query', renderNavigation: Array<{ __typename?: 'NavigationItem', title: string, path?: string | null, id: number } | null>, globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, success?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, error?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, warning?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, info?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null, content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null } | null }> } | null };
 
 export type ThemeColorFragmentFragment = { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null };
 
 export type StrapiThemeFragmentFragment = { __typename?: 'GlobalSetting', theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, success?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, error?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, warning?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, info?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } };
 
+export const StrapiFileCollectionFragmentDoc = gql`
+    fragment StrapiFileCollection on UploadFileRelationResponseCollection {
+  data {
+    attributes {
+      url
+      width
+      height
+      size
+    }
+  }
+}
+    `;
 export const PageSeoFragmentFragmentDoc = gql`
     fragment PageSeoFragment on Page {
   seo {
@@ -1329,11 +1546,21 @@ export const StrapiBannerFragmentFragmentDoc = gql`
           ...StrapiImages
         }
         content {
+          ... on ComponentBannerText {
+            __typename
+            text
+            textColor
+            backgroundColor
+            spacing {
+              ...StrapiSpacing
+            }
+          }
           ... on ComponentBannerSection {
             __typename
             primaryText
             secondaryText
             textAlign
+            textColor
             backgroundColor
             spacing {
               ...StrapiSpacing
@@ -1395,6 +1622,88 @@ export const StrapiThemeFragmentFragmentDoc = gql`
   }
 }
     ${ThemeColorFragmentFragmentDoc}`;
+export const StrapiHeroDocument = gql`
+    query StrapiHero {
+  hero {
+    data {
+      attributes {
+        title
+        tagline
+        images {
+          ...StrapiFileCollection
+        }
+      }
+    }
+  }
+}
+    ${StrapiFileCollectionFragmentDoc}`;
+
+/**
+ * __useStrapiHeroQuery__
+ *
+ * To run a query within a React component, call `useStrapiHeroQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStrapiHeroQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStrapiHeroQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useStrapiHeroQuery(baseOptions?: Apollo.QueryHookOptions<StrapiHeroQuery, StrapiHeroQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StrapiHeroQuery, StrapiHeroQueryVariables>(StrapiHeroDocument, options);
+      }
+export function useStrapiHeroLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StrapiHeroQuery, StrapiHeroQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StrapiHeroQuery, StrapiHeroQueryVariables>(StrapiHeroDocument, options);
+        }
+export type StrapiHeroQueryHookResult = ReturnType<typeof useStrapiHeroQuery>;
+export type StrapiHeroLazyQueryHookResult = ReturnType<typeof useStrapiHeroLazyQuery>;
+export type StrapiHeroQueryResult = Apollo.QueryResult<StrapiHeroQuery, StrapiHeroQueryVariables>;
+export const StrapiValuesDocument = gql`
+    query StrapiValues {
+  values {
+    data {
+      attributes {
+        icon
+        title
+        description
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useStrapiValuesQuery__
+ *
+ * To run a query within a React component, call `useStrapiValuesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStrapiValuesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStrapiValuesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useStrapiValuesQuery(baseOptions?: Apollo.QueryHookOptions<StrapiValuesQuery, StrapiValuesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<StrapiValuesQuery, StrapiValuesQueryVariables>(StrapiValuesDocument, options);
+      }
+export function useStrapiValuesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<StrapiValuesQuery, StrapiValuesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<StrapiValuesQuery, StrapiValuesQueryVariables>(StrapiValuesDocument, options);
+        }
+export type StrapiValuesQueryHookResult = ReturnType<typeof useStrapiValuesQuery>;
+export type StrapiValuesLazyQueryHookResult = ReturnType<typeof useStrapiValuesLazyQuery>;
+export type StrapiValuesQueryResult = Apollo.QueryResult<StrapiValuesQuery, StrapiValuesQueryVariables>;
 export const PagesDocument = gql`
     query Pages {
   pages {
