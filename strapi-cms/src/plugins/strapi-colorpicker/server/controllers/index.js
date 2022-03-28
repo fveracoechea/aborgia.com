@@ -1,7 +1,7 @@
 'use strict';
 
-const myController = require('./my-controller');
+const materialIcon = require('./materialIcon');
 
 module.exports = {
-  myController,
+  materialIcon,
 };

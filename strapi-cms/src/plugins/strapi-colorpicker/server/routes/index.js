@@ -1,8 +1,8 @@
 module.exports = [
   {
     method: 'GET',
-    path: '/',
-    handler: 'myController.index',
+    path: '/icons',
+    handler: 'materialIcon.index',
     config: {
       policies: [],
     },
