@@ -19,7 +19,10 @@
       "type": "text"
     },
     "backgroundColor": {
-      "type": "string"
+      "customFieldRenderer": "colorpicker",
+      "type": "string",
+      "required": true,
+      "default": "#333333"
     },
     "link": {
       "type": "string"

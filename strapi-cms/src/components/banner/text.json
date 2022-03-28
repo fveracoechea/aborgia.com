@@ -14,7 +14,8 @@
     "spacing": {
       "type": "component",
       "repeatable": false,
-      "component": "banner.spacing"
+      "component": "banner.spacing",
+      "required": true
     },
     "backgroundColor": {
       "customFieldRenderer": "colorpicker",
