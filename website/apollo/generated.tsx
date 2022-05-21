@@ -25,6 +25,41 @@ export type Scalars = {
   Upload: any;
 };
 
+export type AboutMe = {
+  __typename?: 'AboutMe';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description: Scalars['String'];
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<AboutMeRelationResponseCollection>;
+  name?: Maybe<Scalars['String']>;
+  picture?: Maybe<UploadFileEntityResponse>;
+  tagline: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type AboutMeEntity = {
+  __typename?: 'AboutMeEntity';
+  attributes?: Maybe<AboutMe>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type AboutMeEntityResponse = {
+  __typename?: 'AboutMeEntityResponse';
+  data?: Maybe<AboutMeEntity>;
+};
+
+export type AboutMeInput = {
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  picture?: InputMaybe<Scalars['ID']>;
+  tagline?: InputMaybe<Scalars['String']>;
+};
+
+export type AboutMeRelationResponseCollection = {
+  __typename?: 'AboutMeRelationResponseCollection';
+  data: Array<AboutMeEntity>;
+};
+
 export type Banner = {
   __typename?: 'Banner';
   backgroundColor: Scalars['String'];
@@ -178,6 +213,52 @@ export type ComponentBannerText = {
   textColor: Scalars['String'];
 };
 
+export type ComponentHomepageCoverages = {
+  __typename?: 'ComponentHomepageCoverages';
+  content: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  image: UploadFileEntityResponse;
+  name: Scalars['String'];
+};
+
+export type ComponentHomepageCoveragesFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentHomepageCoveragesFiltersInput>>>;
+  content?: InputMaybe<StringFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentHomepageCoveragesFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentHomepageCoveragesFiltersInput>>>;
+};
+
+export type ComponentHomepageCoveragesInput = {
+  content?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  image?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type ComponentHomepageInsurance = {
+  __typename?: 'ComponentHomepageInsurance';
+  coverages: Array<Maybe<ComponentHomepageCoverages>>;
+  id: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+
+export type ComponentHomepageInsuranceCoveragesArgs = {
+  filters?: InputMaybe<ComponentHomepageCoveragesFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ComponentHomepageInsuranceInput = {
+  coverages?: InputMaybe<Array<InputMaybe<ComponentHomepageCoveragesInput>>>;
+  id?: InputMaybe<Scalars['ID']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
 export type ComponentSettingsColor = {
   __typename?: 'ComponentSettingsColor';
   dark?: Maybe<Scalars['String']>;
@@ -195,27 +276,19 @@ export type ComponentSettingsColorInput = {
 
 export type ComponentSettingsTheme = {
   __typename?: 'ComponentSettingsTheme';
-  error?: Maybe<ComponentSettingsColor>;
   id: Scalars['ID'];
-  info?: Maybe<ComponentSettingsColor>;
   primary: ComponentSettingsColor;
   secondary: ComponentSettingsColor;
-  success?: Maybe<ComponentSettingsColor>;
   textPrimary?: Maybe<ComponentSettingsColor>;
   textSecondary?: Maybe<ComponentSettingsColor>;
-  warning?: Maybe<ComponentSettingsColor>;
 };
 
 export type ComponentSettingsThemeInput = {
-  error?: InputMaybe<ComponentSettingsColorInput>;
   id?: InputMaybe<Scalars['ID']>;
-  info?: InputMaybe<ComponentSettingsColorInput>;
   primary?: InputMaybe<ComponentSettingsColorInput>;
   secondary?: InputMaybe<ComponentSettingsColorInput>;
-  success?: InputMaybe<ComponentSettingsColorInput>;
   textPrimary?: InputMaybe<ComponentSettingsColorInput>;
   textSecondary?: InputMaybe<ComponentSettingsColorInput>;
-  warning?: InputMaybe<ComponentSettingsColorInput>;
 };
 
 export type DateTimeFilterInput = {
@@ -251,6 +324,12 @@ export enum Enum_Componentbannersection_Textalign {
   Center = 'center',
   Left = 'left',
   Right = 'right'
+}
+
+export enum Enum_Quote_Status {
+  Fulfilled = 'fulfilled',
+  Pending = 'pending',
+  Rejected = 'rejected'
 }
 
 export enum Enum_Seo_Metarobots {
@@ -294,7 +373,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentBannerText | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | Hero | I18NLocale | Page | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Value;
+export type GenericMorph = AboutMe | Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentBannerText | ComponentHomepageCoverages | ComponentHomepageInsurance | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | Hero | Homepage | I18NLocale | Page | Quote | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Value;
 
 export type GlobalSetting = {
   __typename?: 'GlobalSetting';
@@ -362,6 +441,35 @@ export type HeroInput = {
 export type HeroRelationResponseCollection = {
   __typename?: 'HeroRelationResponseCollection';
   data: Array<HeroEntity>;
+};
+
+export type Homepage = {
+  __typename?: 'Homepage';
+  Insurance?: Maybe<ComponentHomepageInsurance>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  locale?: Maybe<Scalars['String']>;
+  localizations?: Maybe<HomepageRelationResponseCollection>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type HomepageEntity = {
+  __typename?: 'HomepageEntity';
+  attributes?: Maybe<Homepage>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type HomepageEntityResponse = {
+  __typename?: 'HomepageEntityResponse';
+  data?: Maybe<HomepageEntity>;
+};
+
+export type HomepageInput = {
+  Insurance?: InputMaybe<ComponentHomepageInsuranceInput>;
+};
+
+export type HomepageRelationResponseCollection = {
+  __typename?: 'HomepageRelationResponseCollection';
+  data: Array<HomepageEntity>;
 };
 
 export type I18NLocale = {
@@ -471,10 +579,13 @@ export type JsonFilterInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createAboutMeLocalization?: Maybe<AboutMeEntityResponse>;
   createBanner?: Maybe<BannerEntityResponse>;
   createBannerLocalization?: Maybe<BannerEntityResponse>;
   createHeroLocalization?: Maybe<HeroEntityResponse>;
+  createHomepageLocalization?: Maybe<HomepageEntityResponse>;
   createPage?: Maybe<PageEntityResponse>;
+  createQuote?: Maybe<QuoteEntityResponse>;
   createSeo?: Maybe<SeoEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   /** Create a new role */
@@ -483,10 +594,13 @@ export type Mutation = {
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   createValue?: Maybe<ValueEntityResponse>;
   createValueLocalization?: Maybe<ValueEntityResponse>;
+  deleteAboutMe?: Maybe<AboutMeEntityResponse>;
   deleteBanner?: Maybe<BannerEntityResponse>;
   deleteGlobalSetting?: Maybe<GlobalSettingEntityResponse>;
   deleteHero?: Maybe<HeroEntityResponse>;
+  deleteHomepage?: Maybe<HomepageEntityResponse>;
   deletePage?: Maybe<PageEntityResponse>;
+  deleteQuote?: Maybe<QuoteEntityResponse>;
   deleteSeo?: Maybe<SeoEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   /** Delete an existing role */
@@ -505,11 +619,14 @@ export type Mutation = {
   removeFile?: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
+  updateAboutMe?: Maybe<AboutMeEntityResponse>;
   updateBanner?: Maybe<BannerEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateGlobalSetting?: Maybe<GlobalSettingEntityResponse>;
   updateHero?: Maybe<HeroEntityResponse>;
+  updateHomepage?: Maybe<HomepageEntityResponse>;
   updatePage?: Maybe<PageEntityResponse>;
+  updateQuote?: Maybe<QuoteEntityResponse>;
   updateSeo?: Maybe<SeoEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   /** Update an existing role */
@@ -518,6 +635,13 @@ export type Mutation = {
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   updateValue?: Maybe<ValueEntityResponse>;
   upload: UploadFileEntityResponse;
+};
+
+
+export type MutationCreateAboutMeLocalizationArgs = {
+  data?: InputMaybe<AboutMeInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -541,8 +665,20 @@ export type MutationCreateHeroLocalizationArgs = {
 };
 
 
+export type MutationCreateHomepageLocalizationArgs = {
+  data?: InputMaybe<HomepageInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationCreatePageArgs = {
   data: PageInput;
+};
+
+
+export type MutationCreateQuoteArgs = {
+  data: QuoteInput;
 };
 
 
@@ -579,6 +715,11 @@ export type MutationCreateValueLocalizationArgs = {
 };
 
 
+export type MutationDeleteAboutMeArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationDeleteBannerArgs = {
   id: Scalars['ID'];
   locale?: InputMaybe<Scalars['I18NLocaleCode']>;
@@ -590,7 +731,17 @@ export type MutationDeleteHeroArgs = {
 };
 
 
+export type MutationDeleteHomepageArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationDeletePageArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteQuoteArgs = {
   id: Scalars['ID'];
 };
 
@@ -661,6 +812,12 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationUpdateAboutMeArgs = {
+  data: AboutMeInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationUpdateBannerArgs = {
   data: BannerInput;
   id: Scalars['ID'];
@@ -685,8 +842,20 @@ export type MutationUpdateHeroArgs = {
 };
 
 
+export type MutationUpdateHomepageArgs = {
+  data: HomepageInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type MutationUpdatePageArgs = {
   data: PageInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateQuoteArgs = {
+  data: QuoteInput;
   id: Scalars['ID'];
 };
 
@@ -836,15 +1005,19 @@ export enum PublicationState {
 
 export type Query = {
   __typename?: 'Query';
+  aboutMe?: Maybe<AboutMeEntityResponse>;
   banner?: Maybe<BannerEntityResponse>;
   banners?: Maybe<BannerEntityResponseCollection>;
   globalSetting?: Maybe<GlobalSettingEntityResponse>;
   hero?: Maybe<HeroEntityResponse>;
+  homepage?: Maybe<HomepageEntityResponse>;
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
   page?: Maybe<PageEntityResponse>;
   pages?: Maybe<PageEntityResponseCollection>;
+  quote?: Maybe<QuoteEntityResponse>;
+  quotes?: Maybe<QuoteEntityResponseCollection>;
   renderNavigation: Array<Maybe<NavigationItem>>;
   renderNavigationChild: Array<Maybe<NavigationItem>>;
   seo?: Maybe<SeoEntityResponse>;
@@ -857,6 +1030,11 @@ export type Query = {
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
   value?: Maybe<ValueEntityResponse>;
   values?: Maybe<ValueEntityResponseCollection>;
+};
+
+
+export type QueryAboutMeArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
 };
 
 
@@ -885,6 +1063,11 @@ export type QueryHeroArgs = {
 };
 
 
+export type QueryHomepageArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']>;
+};
+
+
 export type QueryI18NLocaleArgs = {
   id?: InputMaybe<Scalars['ID']>;
 };
@@ -906,6 +1089,18 @@ export type QueryPagesArgs = {
   filters?: InputMaybe<PageFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type QueryQuoteArgs = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+
+export type QueryQuotesArgs = {
+  filters?: InputMaybe<QuoteFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -987,6 +1182,62 @@ export type QueryValuesArgs = {
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type Quote = {
+  __typename?: 'Quote';
+  additionalInformation?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  insurance: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  phone: Scalars['String'];
+  status?: Maybe<Enum_Quote_Status>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type QuoteEntity = {
+  __typename?: 'QuoteEntity';
+  attributes?: Maybe<Quote>;
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type QuoteEntityResponse = {
+  __typename?: 'QuoteEntityResponse';
+  data?: Maybe<QuoteEntity>;
+};
+
+export type QuoteEntityResponseCollection = {
+  __typename?: 'QuoteEntityResponseCollection';
+  data: Array<QuoteEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type QuoteFiltersInput = {
+  additionalInformation?: InputMaybe<StringFilterInput>;
+  and?: InputMaybe<Array<InputMaybe<QuoteFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  email?: InputMaybe<StringFilterInput>;
+  firstName?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  insurance?: InputMaybe<StringFilterInput>;
+  lastName?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<QuoteFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<QuoteFiltersInput>>>;
+  phone?: InputMaybe<StringFilterInput>;
+  status?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type QuoteInput = {
+  additionalInformation?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  insurance?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Enum_Quote_Status>;
 };
 
 export type ResponseCollectionMeta = {
@@ -1431,6 +1682,23 @@ export type ValueRelationResponseCollection = {
   data: Array<ValueEntity>;
 };
 
+export type CreateQuoteMutationVariables = Exact<{
+  firstName: Scalars['String'];
+  lastName?: InputMaybe<Scalars['String']>;
+  email: Scalars['String'];
+  phone: Scalars['String'];
+  insurance: Scalars['String'];
+  additionalInformation?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CreateQuoteMutation = { __typename?: 'Mutation', createQuote?: { __typename?: 'QuoteEntityResponse', data?: { __typename?: 'QuoteEntity', id?: string | null, attributes?: { __typename?: 'Quote', firstName: string } | null } | null } | null };
+
+export type AboutMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AboutMeQuery = { __typename?: 'Query', aboutMe?: { __typename?: 'AboutMeEntityResponse', data?: { __typename?: 'AboutMeEntity', attributes?: { __typename?: 'AboutMe', name?: string | null, description: string, tagline: string, picture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } | null } | null } | null };
+
 export type StrapiFileFragment = { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null };
 
 export type StrapiImagesFragment = { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null };
@@ -1441,6 +1709,11 @@ export type StrapiBannerFragmentFragment = { __typename: 'ComponentBannerBanner'
 
 export type StrapiFileCollectionFragment = { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null }> };
 
+export type HomepageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HomepageQuery = { __typename?: 'Query', homepage?: { __typename?: 'HomepageEntityResponse', data?: { __typename?: 'HomepageEntity', id?: string | null, attributes?: { __typename?: 'Homepage', Insurance?: { __typename?: 'ComponentHomepageInsurance', title: string, coverages: Array<{ __typename?: 'ComponentHomepageCoverages', id: string, name: string, description: string, content: string, image: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } } | null> } | null } | null } | null } | null };
+
 export type StrapiHeroQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1449,7 +1722,7 @@ export type StrapiHeroQuery = { __typename?: 'Query', hero?: { __typename?: 'Her
 export type StrapiValuesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StrapiValuesQuery = { __typename?: 'Query', values?: { __typename?: 'ValueEntityResponseCollection', data: Array<{ __typename?: 'ValueEntity', attributes?: { __typename?: 'Value', icon: string, title: string, description: string } | null }> } | null };
+export type StrapiValuesQuery = { __typename?: 'Query', values?: { __typename?: 'ValueEntityResponseCollection', data: Array<{ __typename?: 'ValueEntity', id?: string | null, attributes?: { __typename?: 'Value', icon: string, title: string, description: string } | null }> } | null };
 
 export type PageSeoFragmentFragment = { __typename?: 'Page', seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null };
 
@@ -1465,11 +1738,11 @@ export type SinglePageQueryVariables = Exact<{
 }>;
 
 
-export type SinglePageQuery = { __typename?: 'Query', renderNavigation: Array<{ __typename?: 'NavigationItem', title: string, path?: string | null, id: number } | null>, globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, success?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, error?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, warning?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, info?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null, content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null } | null }> } | null };
+export type SinglePageQuery = { __typename?: 'Query', renderNavigation: Array<{ __typename?: 'NavigationItem', title: string, path?: string | null, id: number } | null>, globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null, content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null } | null }> } | null };
 
 export type ThemeColorFragmentFragment = { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null };
 
-export type StrapiThemeFragmentFragment = { __typename?: 'GlobalSetting', theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, success?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, error?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, warning?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, info?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } };
+export type StrapiThemeFragmentFragment = { __typename?: 'GlobalSetting', theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } };
 
 export const StrapiFileCollectionFragmentDoc = gql`
     fragment StrapiFileCollection on UploadFileRelationResponseCollection {
@@ -1601,18 +1874,6 @@ export const StrapiThemeFragmentFragmentDoc = gql`
     secondary {
       ...ThemeColorFragment
     }
-    success {
-      ...ThemeColorFragment
-    }
-    error {
-      ...ThemeColorFragment
-    }
-    warning {
-      ...ThemeColorFragment
-    }
-    info {
-      ...ThemeColorFragment
-    }
     textPrimary {
       ...ThemeColorFragment
     }
@@ -1622,6 +1883,144 @@ export const StrapiThemeFragmentFragmentDoc = gql`
   }
 }
     ${ThemeColorFragmentFragmentDoc}`;
+export const CreateQuoteDocument = gql`
+    mutation CreateQuote($firstName: String!, $lastName: String, $email: String!, $phone: String!, $insurance: String!, $additionalInformation: String) {
+  createQuote(
+    data: {firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, insurance: $insurance, additionalInformation: $additionalInformation}
+  ) {
+    data {
+      id
+      attributes {
+        firstName
+      }
+    }
+  }
+}
+    `;
+export type CreateQuoteMutationFn = Apollo.MutationFunction<CreateQuoteMutation, CreateQuoteMutationVariables>;
+
+/**
+ * __useCreateQuoteMutation__
+ *
+ * To run a mutation, you first call `useCreateQuoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateQuoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createQuoteMutation, { data, loading, error }] = useCreateQuoteMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      email: // value for 'email'
+ *      phone: // value for 'phone'
+ *      insurance: // value for 'insurance'
+ *      additionalInformation: // value for 'additionalInformation'
+ *   },
+ * });
+ */
+export function useCreateQuoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateQuoteMutation, CreateQuoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateQuoteMutation, CreateQuoteMutationVariables>(CreateQuoteDocument, options);
+      }
+export type CreateQuoteMutationHookResult = ReturnType<typeof useCreateQuoteMutation>;
+export type CreateQuoteMutationResult = Apollo.MutationResult<CreateQuoteMutation>;
+export type CreateQuoteMutationOptions = Apollo.BaseMutationOptions<CreateQuoteMutation, CreateQuoteMutationVariables>;
+export const AboutMeDocument = gql`
+    query AboutMe {
+  aboutMe {
+    data {
+      attributes {
+        name
+        description
+        tagline
+        picture {
+          ...StrapiFile
+        }
+      }
+    }
+  }
+}
+    ${StrapiFileFragmentDoc}`;
+
+/**
+ * __useAboutMeQuery__
+ *
+ * To run a query within a React component, call `useAboutMeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAboutMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAboutMeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAboutMeQuery(baseOptions?: Apollo.QueryHookOptions<AboutMeQuery, AboutMeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AboutMeQuery, AboutMeQueryVariables>(AboutMeDocument, options);
+      }
+export function useAboutMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AboutMeQuery, AboutMeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AboutMeQuery, AboutMeQueryVariables>(AboutMeDocument, options);
+        }
+export type AboutMeQueryHookResult = ReturnType<typeof useAboutMeQuery>;
+export type AboutMeLazyQueryHookResult = ReturnType<typeof useAboutMeLazyQuery>;
+export type AboutMeQueryResult = Apollo.QueryResult<AboutMeQuery, AboutMeQueryVariables>;
+export const HomepageDocument = gql`
+    query Homepage {
+  homepage {
+    data {
+      id
+      attributes {
+        Insurance {
+          title
+          coverages {
+            id
+            name
+            description
+            content
+            image {
+              ...StrapiFile
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${StrapiFileFragmentDoc}`;
+
+/**
+ * __useHomepageQuery__
+ *
+ * To run a query within a React component, call `useHomepageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomepageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomepageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHomepageQuery(baseOptions?: Apollo.QueryHookOptions<HomepageQuery, HomepageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HomepageQuery, HomepageQueryVariables>(HomepageDocument, options);
+      }
+export function useHomepageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomepageQuery, HomepageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HomepageQuery, HomepageQueryVariables>(HomepageDocument, options);
+        }
+export type HomepageQueryHookResult = ReturnType<typeof useHomepageQuery>;
+export type HomepageLazyQueryHookResult = ReturnType<typeof useHomepageLazyQuery>;
+export type HomepageQueryResult = Apollo.QueryResult<HomepageQuery, HomepageQueryVariables>;
 export const StrapiHeroDocument = gql`
     query StrapiHero {
   hero {
@@ -1668,6 +2067,7 @@ export const StrapiValuesDocument = gql`
     query StrapiValues {
   values {
     data {
+      id
       attributes {
         icon
         title

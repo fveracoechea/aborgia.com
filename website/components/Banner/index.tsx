@@ -12,8 +12,6 @@ type Props = {
 const Banner: FC<Props> = ({ data }) => {
   if (!data) return null;
 
-  console.log("Banner data => ", data?.attributes);
-
   const wrapperStyles: SxProps<Theme> = {
     position: "relative",
     backgroundColor: data.attributes?.backgroundColor || "transparent",

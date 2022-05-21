@@ -1,6 +1,17 @@
 import { gql } from "@apollo/client";
 
 export const homepage = gql`
+  fragment StrapiFile on UploadFileEntityResponse {
+    data {
+      attributes {
+        url
+        width
+        height
+        size
+      }
+    }
+  }
+
   fragment StrapiFileCollection on UploadFileRelationResponseCollection {
     data {
       attributes {
@@ -8,6 +19,28 @@ export const homepage = gql`
         width
         height
         size
+      }
+    }
+  }
+
+  query Homepage {
+    homepage {
+      data {
+        id
+        attributes {
+          Insurance {
+            title
+            coverages {
+              id
+              name
+              description
+              content
+              image {
+                ...StrapiFile
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -29,6 +62,7 @@ export const homepage = gql`
   query StrapiValues {
     values {
       data {
+        id
         attributes {
           icon
           title

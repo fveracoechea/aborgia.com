@@ -4,18 +4,24 @@ import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 
 const Component = forwardRef((props: any, ref: any) => {
+  const { style, ...imageProps } = props;
   return (
     <Box
       sx={{
         display: "block",
         width: "100%",
         position: "relative",
-        height: '75vh',
+        height: {
+          xs: 400,
+          sm: 400,
+          md: "75vh",
+        },
       }}
       ref={ref}
     >
       <NextImage
-        {...props}
+        {...imageProps}
+        priority
         layout="fill"
         sizes="100vw"
         objectFit="cover"

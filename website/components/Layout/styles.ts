@@ -17,5 +17,6 @@ export const sx: Styles = {
       xs: t.spacing(6),
       sm: t.spacing(8),
     },
+    paddingBottom: t.spacing(4),
   }),
 };

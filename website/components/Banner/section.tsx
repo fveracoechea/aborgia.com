@@ -1,9 +1,5 @@
 import { FC } from "react";
-import {
-  BannerEntity,
-  ComponentBannerImages,
-  ComponentBannerSection,
-} from "apollo/generated";
+import { ComponentBannerSection } from "apollo/generated";
 import { Grid, SxProps, Theme, Typography } from "@mui/material";
 import { getBannerImages } from "helpers/images";
 
@@ -13,8 +9,6 @@ type Props = {
 
 const Section: FC<Props> = ({ data }) => {
   if (!data) return null;
-
-  console.log("Section data => ", data);
 
   const wrapperStyles: SxProps<Theme> = {
     position: "relative",
@@ -31,12 +25,12 @@ const Section: FC<Props> = ({ data }) => {
   return (
     <Grid item md sx={wrapperStyles}>
       {data?.primaryText && (
-        <Typography color="whitesmoke" variant="h2">
+        <Typography color="textSecondary" variant="h2">
           {data.primaryText}
         </Typography>
       )}
       {data?.secondaryText && (
-        <Typography color="whitesmoke" variant="h4">
+        <Typography color="textSecondary" variant="h4">
           {data.secondaryText}
         </Typography>
       )}

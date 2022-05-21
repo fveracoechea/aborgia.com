@@ -17,7 +17,7 @@ export const useImageAnimation = (hero: StrapiHero | null) => {
           setCurrentImgIndex(currentImgIndex + 1);
         }
       }, 300);
-    }, 5000);
+    }, 6000);
 
     return () => clearTimeout(interval);
   }, [images, currentImgIndex]);

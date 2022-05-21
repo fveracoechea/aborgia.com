@@ -3,18 +3,15 @@ import {
   SxProps,
   PaletteColorOptions,
   responsiveFontSizes,
-  Theme
-} from "@mui/material/styles";
+  Theme,
+  experimental_sx as sx,
+} from "@mui/material";
 import { ComponentSettingsTheme } from "apollo/generated";
 
 // Create a theme instance.
 const theme = (theme: ComponentSettingsTheme) => {
   const primary = (theme?.primary || {}) as PaletteColorOptions;
   const secondary = (theme?.secondary || {}) as PaletteColorOptions;
-  const success = theme?.success || {};
-  const error = theme?.error || {};
-  const info = theme?.info || {};
-  const warning = theme?.warning || {};
 
   const text = {
     primary: theme?.textPrimary?.main || undefined,
@@ -26,11 +23,26 @@ const theme = (theme: ComponentSettingsTheme) => {
       palette: {
         primary,
         secondary,
-        success,
-        error,
-        info,
-        warning,
         text,
+      },
+      components: {
+        MuiTextField: {
+          defaultProps: {
+            variant: "standard",
+          },
+          styleOverrides: {
+            root: {
+              color: text.primary,
+            },
+          },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+            root: {
+              color: text.primary,
+            },
+          },
+        },
       },
     })
   );

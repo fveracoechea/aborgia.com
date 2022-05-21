@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
             <Typography
               variant="h6"
               noWrap
-              color="textPrimary"
+              color="textSecondary"
               component={MuiLink}
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
@@ -90,6 +90,7 @@ const ResponsiveAppBar = () => {
           <Typography
             variant="h6"
             noWrap
+            color="textSecondary"
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
@@ -102,7 +103,7 @@ const ResponsiveAppBar = () => {
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
-                    color: "white",
+                    color: (t) => t.palette.text.secondary,
                     display: "block",
                     padding: "0 1rem",
                   }}
@@ -112,17 +113,15 @@ const ResponsiveAppBar = () => {
               </Link>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
-            <Typography
-              variant="h6"
+            <MuiLink
               noWrap
-              color="textPrimary"
-              component="div"
+              color="textSecondary"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+              href="tel:+1 (404) 513-1683"
             >
               +1 (404) 513-1683
-            </Typography>
+            </MuiLink>
           </Box>
         </Toolbar>
       </Container>

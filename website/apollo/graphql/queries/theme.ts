@@ -18,18 +18,6 @@ export const StrapiThemeFragment = gql`
       secondary {
         ...ThemeColorFragment
       }
-      success {
-        ...ThemeColorFragment
-      }
-      error {
-        ...ThemeColorFragment
-      }
-      warning {
-        ...ThemeColorFragment
-      }
-      info {
-        ...ThemeColorFragment
-      }
       textPrimary {
         ...ThemeColorFragment
       }

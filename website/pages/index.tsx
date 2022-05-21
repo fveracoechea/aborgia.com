@@ -14,8 +14,14 @@ import {
   StrapiHeroDocument,
   StrapiValuesQuery,
   StrapiValuesDocument,
+  AboutMeDocument,
+  AboutMeQuery,
 } from "apollo/generated";
 import { Hero } from "components/Hero";
+import { Values } from "components/Values";
+import { Insurance } from "components/Insurance";
+import { ContactSection } from "components/ContactSection";
+import { AboutMe } from "components/AboutMe";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const apolloClient = initializeApollo();
@@ -28,6 +34,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     }),
     apolloClient.query<StrapiHeroQuery>({ query: StrapiHeroDocument }),
     apolloClient.query<StrapiValuesQuery>({ query: StrapiValuesDocument }),
+    apolloClient.query<AboutMeQuery>({ query: AboutMeDocument }),
   ]);
 
   return {
@@ -56,6 +63,10 @@ const Home: NextPage<{ route: string }> = ({ route }) => {
     <GlobalSettingsCtx.Provider value={contextValue}>
       <Layout>
         <Hero />
+        <Values />
+        <Insurance />
+        <ContactSection />
+        <AboutMe />
       </Layout>
     </GlobalSettingsCtx.Provider>
   );

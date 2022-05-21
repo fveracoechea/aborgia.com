@@ -11,11 +11,10 @@
     "website"
   ],
   "scripts": {
-    "dev": "yarn dev:strapi & yarn dev:next",
+    "dev": "yarn dev:strapi & yarn dev:next & yarn codegen",
     "dev:strapi": "node prebuild.js && yarn workspace strapi-cms develop",
     "dev:next": "yarn workspace website dev",
     "build:strapi": "node prebuild.js && yarn workspace strapi-cms build",
-    "codegen": "yarn workspace website codegen"
+    "codegen": "sleep 15 && yarn workspace website codegen"
   }
-
 }
