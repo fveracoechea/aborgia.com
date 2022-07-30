@@ -18,7 +18,7 @@ const validationSchema = yup.object({
   lastName: yup.string(),
   age: yup.number().integer().min(12).max(120),
   phone: yup.string().required("Phone number is required"),
-  aditionalInfo: yup.string(),
+  additionalInformation: yup.string(),
 });
 
 let timeout: NodeJS.Timeout | null = null;
@@ -48,7 +48,7 @@ export const useContactForm = () => {
       age: 0,
       phone: "",
       insurance: "",
-      aditionalInfo: "",
+      additionalInformation: "",
     },
     validationSchema: validationSchema,
     onSubmit: (variables) => {

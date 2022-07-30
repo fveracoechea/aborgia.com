@@ -1,0 +1,14 @@
+query AboutMe {
+  aboutMe {
+    data {
+      attributes {
+        name
+        description
+        tagline
+        picture {
+          ...StrapiFile
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,8 @@ const Seo: FC = () => {
     global: { siteName },
   } = usePage();
 
-  const pageSeo = data?.pages?.data?.[0]?.attributes?.seo?.data?.attributes;
+  const pageSeo =
+    data?.pages?.data?.[0]?.attributes?.PageSEO?.SEO?.data?.attributes;
 
   if (!pageSeo) return null;
 

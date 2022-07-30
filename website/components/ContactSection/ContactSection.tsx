@@ -29,8 +29,12 @@ export const ContactSection: FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 6 }}>
-      <Grid container spacing={4}>
+    <Container
+      maxWidth="lg"
+      sx={{ pt: 6, scrollMarginTop: (t) => t.spacing(6) }}
+      id="contact"
+    >
+      <Grid container spacing={4} sx={{}}>
         <Grid item sm={12} xs={12}>
           <SectionTitle>Get a Quote</SectionTitle>
         </Grid>
@@ -153,18 +157,22 @@ export const ContactSection: FC = () => {
         <Grid item md={8} sm={12} xs={12}>
           <TextField
             fullWidth
-            id="aditionalInfo"
-            name="aditionalInfo"
+            id="additionalInformation"
+            name="additionalInformation"
             label="Aditional Information"
             multiline
             maxRows={4}
             minRows={4}
-            value={form.values.aditionalInfo}
+            value={form.values.additionalInformation}
             onChange={form.handleChange}
             error={
-              form.touched.aditionalInfo && Boolean(form.errors.aditionalInfo)
+              form.touched.additionalInformation &&
+              Boolean(form.errors.additionalInformation)
             }
-            helperText={form.touched.aditionalInfo && form.errors.aditionalInfo}
+            helperText={
+              form.touched.additionalInformation &&
+              form.errors.additionalInformation
+            }
           />
         </Grid>
         <Grid item md={4} sm={12} xs={12}>

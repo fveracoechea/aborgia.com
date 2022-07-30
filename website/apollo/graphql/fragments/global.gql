@@ -1,0 +1,44 @@
+fragment ThemeColorFragment on ComponentSettingsColor {
+  main
+  light
+  dark
+}
+
+fragment StrapiFile on UploadFileEntityResponse {
+  data {
+    attributes {
+      url
+      width
+      height
+      size
+    }
+  }
+}
+
+fragment StrapiFileCollection on UploadFileRelationResponseCollection {
+  data {
+    attributes {
+      url
+      width
+      height
+      size
+    }
+  }
+}
+
+fragment StrapiThemeFragment on GlobalSetting {
+  theme {
+    primary {
+      ...ThemeColorFragment
+    }
+    secondary {
+      ...ThemeColorFragment
+    }
+    textPrimary {
+      ...ThemeColorFragment
+    }
+    textSecondary {
+      ...ThemeColorFragment
+    }
+  }
+}

@@ -1,0 +1,61 @@
+fragment StrapiImages on ComponentBannerImages {
+  mobile {
+    ...StrapiFile
+  }
+  desktop {
+    ...StrapiFile
+  }
+}
+
+fragment StrapiSpacing on ComponentBannerSpacing {
+  vertical
+  horizontal
+}
+
+fragment StrapiBannerFragment on ComponentBannerBanner {
+  __typename
+  id
+  banner {
+    data {
+      id
+      attributes {
+        locale
+        title
+        backgroundColor
+        fullWidth
+        displaySettings
+        spacing {
+          ...StrapiSpacing
+        }
+        images {
+          ...StrapiImages
+        }
+        content {
+          ... on ComponentBannerText {
+            __typename
+            text
+            textColor
+            backgroundColor
+            spacing {
+              ...StrapiSpacing
+            }
+          }
+          ... on ComponentBannerSection {
+            __typename
+            primaryText
+            secondaryText
+            textAlign
+            textColor
+            backgroundColor
+            spacing {
+              ...StrapiSpacing
+            }
+            images {
+              ...StrapiImages
+            }
+          }
+        }
+      }
+    }
+  }
+}

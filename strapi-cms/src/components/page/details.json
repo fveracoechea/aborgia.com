@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_page_details",
+  "info": {
+    "displayName": "Details",
+    "icon": "globe-americas",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "SEO": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::seo.seo"
+    }
+  }
+}

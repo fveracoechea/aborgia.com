@@ -1,4 +1,4 @@
-import { Link, Typography } from "@mui/material";
+
 import type { GetStaticProps, NextPage, GetStaticPaths } from "next";
 import { initializeApollo } from "apollo/client";
 import Layout from "components/Layout";
@@ -53,7 +53,7 @@ const Page: NextPage<{ route: string }> = ({ route }) => {
   const { data } = useSinglePageQuery({ variables: { route } });
   const global = data?.globalSetting?.data?.attributes;
   const page = data?.pages?.data?.[0]?.attributes as Page;
-  
+
   if (!global || !page) return <p>Loading...</p>;
 
   const contextValue: GlobalSettingsValue = {
@@ -69,7 +69,7 @@ const Page: NextPage<{ route: string }> = ({ route }) => {
         {/* <Typography variant="h1">
           {page.name} <Link href="/">Insurance Broker!</Link>
         </Typography> */}
-        <PageContent content={page.content} />
+        {/* <PageContent content={page.content} /> */}
       </Layout>
     </GlobalSettingsCtx.Provider>
   );

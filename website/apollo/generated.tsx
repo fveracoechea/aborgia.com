@@ -20,7 +20,6 @@ export type Scalars = {
   I18NLocaleCode: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  PageContentDynamicZoneInput: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
@@ -259,6 +258,17 @@ export type ComponentHomepageInsuranceInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
+export type ComponentPageDetails = {
+  __typename?: 'ComponentPageDetails';
+  SEO?: Maybe<SeoEntityResponse>;
+  id: Scalars['ID'];
+};
+
+export type ComponentPageDetailsInput = {
+  SEO?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type ComponentSettingsColor = {
   __typename?: 'ComponentSettingsColor';
   dark?: Maybe<Scalars['String']>;
@@ -373,7 +383,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']>;
 };
 
-export type GenericMorph = AboutMe | Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentBannerText | ComponentHomepageCoverages | ComponentHomepageInsurance | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | Hero | Homepage | I18NLocale | Page | Quote | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Value;
+export type GenericMorph = AboutMe | Banner | ComponentBannerBanner | ComponentBannerImages | ComponentBannerSection | ComponentBannerSpacing | ComponentBannerText | ComponentHomepageCoverages | ComponentHomepageInsurance | ComponentPageDetails | ComponentSettingsColor | ComponentSettingsTheme | GlobalSetting | Hero | Homepage | I18NLocale | Page | Quote | Seo | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Value;
 
 export type GlobalSetting = {
   __typename?: 'GlobalSetting';
@@ -934,16 +944,13 @@ export enum NavigationRenderType {
 
 export type Page = {
   __typename?: 'Page';
-  content?: Maybe<Array<Maybe<PageContentDynamicZone>>>;
+  PageSEO?: Maybe<ComponentPageDetails>;
   createdAt?: Maybe<Scalars['DateTime']>;
   name: Scalars['String'];
   publishedAt?: Maybe<Scalars['DateTime']>;
   route: Scalars['String'];
-  seo?: Maybe<SeoEntityResponse>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
-
-export type PageContentDynamicZone = ComponentBannerBanner | Error;
 
 export type PageEntity = {
   __typename?: 'PageEntity';
@@ -971,16 +978,14 @@ export type PageFiltersInput = {
   or?: InputMaybe<Array<InputMaybe<PageFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
   route?: InputMaybe<StringFilterInput>;
-  seo?: InputMaybe<SeoFiltersInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
 export type PageInput = {
-  content?: InputMaybe<Array<Scalars['PageContentDynamicZoneInput']>>;
+  PageSEO?: InputMaybe<ComponentPageDetailsInput>;
   name?: InputMaybe<Scalars['String']>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   route?: InputMaybe<Scalars['String']>;
-  seo?: InputMaybe<Scalars['ID']>;
 };
 
 export type Pagination = {
@@ -1682,6 +1687,22 @@ export type ValueRelationResponseCollection = {
   data: Array<ValueEntity>;
 };
 
+export type StrapiImagesFragment = { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null };
+
+export type StrapiSpacingFragment = { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number };
+
+export type StrapiBannerFragmentFragment = { __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null };
+
+export type ThemeColorFragmentFragment = { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null };
+
+export type StrapiFileFragment = { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null };
+
+export type StrapiFileCollectionFragment = { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null }> };
+
+export type StrapiThemeFragmentFragment = { __typename?: 'GlobalSetting', theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } };
+
+export type PageSeoFragmentFragment = { __typename?: 'Page', PageSEO?: { __typename?: 'ComponentPageDetails', SEO?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', id?: string | null, attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null } | null };
+
 export type CreateQuoteMutationVariables = Exact<{
   firstName: Scalars['String'];
   lastName?: InputMaybe<Scalars['String']>;
@@ -1699,16 +1720,6 @@ export type AboutMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AboutMeQuery = { __typename?: 'Query', aboutMe?: { __typename?: 'AboutMeEntityResponse', data?: { __typename?: 'AboutMeEntity', attributes?: { __typename?: 'AboutMe', name?: string | null, description: string, tagline: string, picture?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } | null } | null } | null };
 
-export type StrapiFileFragment = { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null };
-
-export type StrapiImagesFragment = { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null };
-
-export type StrapiSpacingFragment = { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number };
-
-export type StrapiBannerFragmentFragment = { __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null };
-
-export type StrapiFileCollectionFragment = { __typename?: 'UploadFileRelationResponseCollection', data: Array<{ __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null }> };
-
 export type HomepageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1724,10 +1735,6 @@ export type StrapiValuesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type StrapiValuesQuery = { __typename?: 'Query', values?: { __typename?: 'ValueEntityResponseCollection', data: Array<{ __typename?: 'ValueEntity', id?: string | null, attributes?: { __typename?: 'Value', icon: string, title: string, description: string } | null }> } | null };
 
-export type PageSeoFragmentFragment = { __typename?: 'Page', seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null };
-
-export type PageContentFragmentFragment = { __typename?: 'Page', content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null };
-
 export type PagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1738,39 +1745,8 @@ export type SinglePageQueryVariables = Exact<{
 }>;
 
 
-export type SinglePageQuery = { __typename?: 'Query', renderNavigation: Array<{ __typename?: 'NavigationItem', title: string, path?: string | null, id: number } | null>, globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, seo?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null, content?: Array<{ __typename: 'ComponentBannerBanner', id: string, banner?: { __typename?: 'BannerEntityResponse', data?: { __typename?: 'BannerEntity', id?: string | null, attributes?: { __typename?: 'Banner', locale?: string | null, title: string, backgroundColor: string, fullWidth?: boolean | null, displaySettings: Enum_Banner_Displaysettings, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null }, content?: Array<{ __typename: 'ComponentBannerSection', primaryText?: string | null, secondaryText?: string | null, textAlign: Enum_Componentbannersection_Textalign, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number }, images: { __typename?: 'ComponentBannerImages', mobile?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, desktop?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null } } | { __typename: 'ComponentBannerText', text: string, textColor: string, backgroundColor: string, spacing: { __typename?: 'ComponentBannerSpacing', vertical: number, horizontal: number } } | { __typename?: 'Error' } | null> | null } | null } | null } | null } | { __typename?: 'Error' } | null> | null } | null }> } | null };
+export type SinglePageQuery = { __typename?: 'Query', globalSetting?: { __typename?: 'GlobalSettingEntityResponse', data?: { __typename: 'GlobalSettingEntity', attributes?: { __typename?: 'GlobalSetting', siteName: string, favicon?: { __typename?: 'UploadFileEntityResponse', data?: { __typename?: 'UploadFileEntity', attributes?: { __typename?: 'UploadFile', url: string, width?: number | null, height?: number | null, size: number } | null } | null } | null, theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } } | null } | null } | null, pages?: { __typename?: 'PageEntityResponseCollection', data: Array<{ __typename?: 'PageEntity', id?: string | null, attributes?: { __typename?: 'Page', name: string, route: string, PageSEO?: { __typename?: 'ComponentPageDetails', SEO?: { __typename?: 'SeoEntityResponse', data?: { __typename?: 'SeoEntity', id?: string | null, attributes?: { __typename?: 'Seo', pageTile: string, canonical: string, metaRobots: Enum_Seo_Metarobots, metaDescription: string, keywords: string } | null } | null } | null } | null } | null }> } | null };
 
-export type ThemeColorFragmentFragment = { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null };
-
-export type StrapiThemeFragmentFragment = { __typename?: 'GlobalSetting', theme: { __typename?: 'ComponentSettingsTheme', primary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, secondary: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null }, textPrimary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null, textSecondary?: { __typename?: 'ComponentSettingsColor', main: string, light?: string | null, dark?: string | null } | null } };
-
-export const StrapiFileCollectionFragmentDoc = gql`
-    fragment StrapiFileCollection on UploadFileRelationResponseCollection {
-  data {
-    attributes {
-      url
-      width
-      height
-      size
-    }
-  }
-}
-    `;
-export const PageSeoFragmentFragmentDoc = gql`
-    fragment PageSeoFragment on Page {
-  seo {
-    data {
-      attributes {
-        pageTile
-        canonical
-        metaRobots
-        metaDescription
-        keywords
-      }
-    }
-  }
-}
-    `;
 export const StrapiSpacingFragmentDoc = gql`
     fragment StrapiSpacing on ComponentBannerSpacing {
   vertical
@@ -1849,15 +1825,18 @@ export const StrapiBannerFragmentFragmentDoc = gql`
 }
     ${StrapiSpacingFragmentDoc}
 ${StrapiImagesFragmentDoc}`;
-export const PageContentFragmentFragmentDoc = gql`
-    fragment PageContentFragment on Page {
-  content {
-    ... on ComponentBannerBanner {
-      ...StrapiBannerFragment
+export const StrapiFileCollectionFragmentDoc = gql`
+    fragment StrapiFileCollection on UploadFileRelationResponseCollection {
+  data {
+    attributes {
+      url
+      width
+      height
+      size
     }
   }
 }
-    ${StrapiBannerFragmentFragmentDoc}`;
+    `;
 export const ThemeColorFragmentFragmentDoc = gql`
     fragment ThemeColorFragment on ComponentSettingsColor {
   main
@@ -1883,6 +1862,24 @@ export const StrapiThemeFragmentFragmentDoc = gql`
   }
 }
     ${ThemeColorFragmentFragmentDoc}`;
+export const PageSeoFragmentFragmentDoc = gql`
+    fragment PageSeoFragment on Page {
+  PageSEO {
+    SEO {
+      data {
+        id
+        attributes {
+          pageTile
+          canonical
+          metaRobots
+          metaDescription
+          keywords
+        }
+      }
+    }
+  }
+}
+    `;
 export const CreateQuoteDocument = gql`
     mutation CreateQuote($firstName: String!, $lastName: String, $email: String!, $phone: String!, $insurance: String!, $additionalInformation: String) {
   createQuote(
@@ -2145,11 +2142,6 @@ export type PagesLazyQueryHookResult = ReturnType<typeof usePagesLazyQuery>;
 export type PagesQueryResult = Apollo.QueryResult<PagesQuery, PagesQueryVariables>;
 export const SinglePageDocument = gql`
     query SinglePage($route: String!) {
-  renderNavigation(navigationIdOrSlug: "main-navigation", menuOnly: true) {
-    title
-    path
-    id
-  }
   globalSetting {
     data {
       __typename
@@ -2169,15 +2161,13 @@ export const SinglePageDocument = gql`
         name
         route
         ...PageSeoFragment
-        ...PageContentFragment
       }
     }
   }
 }
     ${StrapiFileFragmentDoc}
 ${StrapiThemeFragmentFragmentDoc}
-${PageSeoFragmentFragmentDoc}
-${PageContentFragmentFragmentDoc}`;
+${PageSeoFragmentFragmentDoc}`;
 
 /**
  * __useSinglePageQuery__

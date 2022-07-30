@@ -24,16 +24,10 @@
       "unique": true,
       "pluginOptions": {}
     },
-    "seo": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::seo.seo"
-    },
-    "content": {
-      "type": "dynamiczone",
-      "components": [
-        "banner.banner"
-      ]
+    "PageSEO": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.details"
     }
   }
 }

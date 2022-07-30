@@ -10,7 +10,36 @@ import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import MuiLink from "@mui/material/Link";
 import Link from "next/link";
+import Image from "next/image";
 import usePage from "hooks/usePage";
+
+const links = [
+  {
+    id: "link-service",
+    href: "/#services",
+    text: "Services",
+  },
+  {
+    id: "link-contact",
+    href: "/#contact",
+    text: "Contact",
+  },
+  {
+    id: "link-about",
+    href: "/#about-me",
+    text: "About Me",
+  },
+  {
+    id: "link-blog",
+    href: "/blog",
+    text: "Blog",
+  },
+  // {
+  //   id: "link-irs",
+  //   href: "/irs",
+  //   text: "IRS",
+  // },
+];
 
 const ResponsiveAppBar = () => {
   const {
@@ -39,16 +68,19 @@ const ResponsiveAppBar = () => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            component="h1"
+            noWrap
+            color="textSecondary"
+            sx={{ display: "none" }}
+          >
+            {siteName}
+          </Typography>
           <Link href="/" passHref>
-            <Typography
-              variant="h6"
-              noWrap
-              color="textSecondary"
-              component={MuiLink}
-              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-            >
-              {siteName}
-            </Typography>
+            <MuiLink sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
+              <Image width={145} height={56} src="/logo.png" layout="fixed" />
+            </MuiLink>
           </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -80,25 +112,33 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {data?.renderNavigation.map((page) => (
-                <MenuItem key={page?.id!} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page?.title}</Typography>
+              {links.map((link) => (
+                <MenuItem key={link.id} onClick={handleCloseNavMenu}>
+                  <Link key={link.id} href={link.href} passHref>
+                    <MuiLink
+                      onClick={handleCloseNavMenu}
+                      sx={{
+                        py: "4px",
+                        color: (t) => t.palette.text.primary,
+                        display: "block",
+                      }}
+                    >
+                      {link.text}
+                    </MuiLink>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            color="textSecondary"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            {siteName}
-          </Typography>
+          <Link href="/" passHref>
+            <MuiLink sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <Image width={145} height={56} src="/logo.png" layout="fixed" />
+            </MuiLink>
+          </Link>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {data?.renderNavigation.map((page) => (
-              <Link key={page!.id} href={page?.path!} passHref>
+            {links.map((link) => (
+              <Link key={link.id} href={link.href} passHref>
                 <MuiLink
                   onClick={handleCloseNavMenu}
                   sx={{
@@ -108,7 +148,7 @@ const ResponsiveAppBar = () => {
                     padding: "0 1rem",
                   }}
                 >
-                  {page!.title}
+                  {link.text}
                 </MuiLink>
               </Link>
             ))}

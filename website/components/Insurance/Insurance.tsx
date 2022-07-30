@@ -12,7 +12,11 @@ export const Insurance = () => {
   if (!insurance) return null;
   return (
     <Container maxWidth="lg">
-      <Grid container>
+      <Grid
+        container
+        id="services"
+        sx={{ scrollMarginTop: (t) => t.spacing(10) }}
+      >
         <Grid item xs={12}>
           <SectionTitle>{insurance.title}</SectionTitle>
         </Grid>

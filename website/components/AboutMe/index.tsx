@@ -13,7 +13,7 @@ export const AboutMe: FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container sx={{ pt: 8, pb: 2 }} spacing={4}>
+      <Grid container sx={{ pt: 8, pb: 2 }} spacing={4} id="about-me">
         <Grid item md={4}>
           {image && (
             <Box>

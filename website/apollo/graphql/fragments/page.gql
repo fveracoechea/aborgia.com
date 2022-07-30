@@ -1,0 +1,16 @@
+fragment PageSeoFragment on Page {
+  PageSEO {
+    SEO {
+      data {
+        id
+        attributes {
+          pageTile
+          canonical
+          metaRobots
+          metaDescription
+          keywords
+        }
+      }
+    }
+  }
+}
