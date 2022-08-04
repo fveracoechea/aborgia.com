@@ -232,7 +232,7 @@ const ResponsiveAppBar = () => {
             <Button
               sx={{
                 color: (t) => t.palette.text.secondary,
-                display: { sm: "none", md: "flex" },
+                display: { xs: "none", sm: "none", md: "flex" },
               }}
               color="primary"
               href="tel:+1 (404) 513-1683"
