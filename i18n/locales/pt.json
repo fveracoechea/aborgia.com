@@ -1,0 +1,84 @@
+{
+  "siteName": "Arelys Borgia",
+  "header": {
+    "lang": "Selecione sua lingua",
+    "follow": "Me siga no Instagram",
+    "services": "Coberturas",
+    "contact": "Contato",
+    "aboutMe": "Sobre mim"
+  },
+  "hero": {
+    "title": "Agente de seguro de saúde e vida",
+    "tagline": "Protegendo o que é mais importante"
+  },
+  "values": {
+    "1": "Integridade",
+    "2": "Paixão",
+    "3": "Excelência em Serviços",
+    "4": "Inclusão",
+    "5": "Satisfação",
+    "6": "Colaboração"
+  },
+  "coverages": {
+    "title": "Proteção para hoje e amanhã",
+    "1": {
+      "name": "Seguro de vida",
+      "description": "A vida não é sobre coisas, é sobre prioridades. Considere que um carro ultra-caro ou uma conta bancária gigantesca nunca fez uma vida valer a pena. Em vez disso, é ver um pôr do sol com o amor da sua vida, aproveitar as férias com seus filhos e construir um legado com as melhores partes de si mesmo."
+    },
+    "2": {
+      "name": "Proteção de hipoteca",
+      "description": "É um tipo de apólice de seguro que ajuda sua família a fazer seus pagamentos mensais da hipoteca se você morrer antes que sua hipoteca seja totalmente paga. Algumas apólices também oferecem cobertura por tempo limitado se você perder o emprego ou ficar incapacitado após um acidente."
+    },
+    "3": {
+      "name": "Incapacidade de Longo Prazo",
+      "description": "O seguro de invalidez de longo prazo (LTD) é um tipo de apólice de seguro que pode fornecer benefícios financeiros a um funcionário que não possa trabalhar por um longo período devido a um acidente, doença ou lesão."
+    },
+    "4": {
+      "name": "Seguro de acidentes",
+      "description": "Acidentes acontecem quando você menos espera. Mesmo com seguro de saúde, as despesas extras de uma lesão acidental podem realmente aumentar."
+    }
+  },
+  "other": "Outro",
+  "form": {
+    "messages": {
+      "firstName": {
+        "required": "O primeiro nome é necessário"
+      },
+      "email": {
+        "invalid": "Entre com um email válido",
+        "required": "O e-mail é obrigatório"
+      },
+      "phone": {
+        "required": "O número de telefone é obrigatório"
+      },
+      "reCAPTCHA": {
+        "required": "ReCAPTCHA é um campo obrigatório"
+      },
+      "age": {
+        "invalid": "A idade deve ser maior ou igual a 12"
+      },
+      "success": "Seu pedido de orçamento foi enviado!"
+    },
+    "title": "Faça uma cotação",
+    "inputs": {
+      "firstName": "Primeiro nome",
+      "lastName": "Sobrenome",
+      "email": "E-mail",
+      "age": "Era",
+      "phone": "Número de telefone",
+      "insurance": "Cobertura do seguro",
+      "additionalInformation": "Informação Adicional",
+      "submit": "Enviar"
+    }
+  },
+  "aboutMe": {
+    "subtitle1": "Lorem ipsum dolor sit amet",
+    "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "subtitle2": "Lorem ipsum dolor sit amet",
+    "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  "footer": {
+    "p1": "Obtenha a melhor cobertura de saúde com os melhores benefícios ao melhor preço,",
+    "p2": "Cuidamos do seu presente olhando para o futuro."
+  }
+}

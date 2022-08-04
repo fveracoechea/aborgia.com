@@ -1,0 +1,85 @@
+{
+  "siteName": "Arelys Borgia",
+  "header": {
+    "lang": "Elige tu idioma",
+    "follow": "Sigueme en Istagram",
+    "services": "Coberturas",
+    "contact": "Contacto",
+    "aboutMe": "Acerca de Mi"
+  },
+  "hero": {
+    "title": "Agente de Seguros, Salud y Vida",
+    "tagline": "Protegiendo lo que más importa"
+  },
+  "values": {
+    "1": "Integridad",
+    "2": "Pasión",
+    "3": "Excelencia de servicio",
+    "4": "Inclusión",
+    "5": "Satisfacción",
+    "6": "Colaboración"
+  },
+  "coverages": {
+    "tile": "Protección para hoy y mañana",
+    "1": {
+      "name": "Seguro de vida",
+      "description": "La vida no se trata de cosas, se trata de prioridades. Considere que un automóvil ultra caro o una cuenta bancaria gigantesca nunca hicieron que una vida valiera la pena. En cambio, vivir es ver una puesta de sol con el amor de tu vida, disfrutar de unas vacaciones con tus hijos y construir un legado a partir de las mejores partes de ti mismo."
+    },
+    "2": {
+      "name": "Protección Hipotecaria",
+      "description": "Es un tipo de póliza de seguro que ayuda a su familia a hacer los pagos mensuales de su hipoteca si muere antes de que su hipoteca esté totalmente pagada. Algunas pólizas también ofrecerán cobertura por un tiempo limitado si pierde su trabajo o queda discapacitado después de un accidente."
+    },
+    "3": {
+      "name": "Discapacidad a largo plazo",
+      "description": "El seguro de discapacidad a largo plazo (LTD) es un tipo de póliza de seguro que puede brindar beneficios financieros a un empleado que no puede trabajar durante un período prolongado debido a un accidente, enfermedad o lesión."
+    },
+    "4": {
+      "name": "Seguro de accidentes",
+      "description": "Los accidentes ocurren cuando menos los esperas. Incluso con un seguro de salud, los gastos adicionales de una lesión accidental realmente pueden sumarse."
+    }
+  },
+  "other": "Otro",
+  "form": {
+    "messages": {
+      "firstName": {
+        "required": "Se requiere el primer nombre"
+      },
+      "age": {
+        "invalid": "La edad debe ser mayor o igual a 12"
+      },
+      "email": {
+        "invalid": "Introduzca un correo electrónico válido",
+        "required": "Correo electronico es requerido"
+      },
+      "phone": {
+        "required": "Se requiere el número de teléfono"
+      },
+      "reCAPTCHA": {
+        "required": "ReCAPTCHA es un campo obligatorio"
+      },
+      "success": "Su solicitud de cotización ha sido enviada!"
+    },
+    "title": "Consigue una cotización",
+    "inputs": {
+      "firstName": "Primer nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "age": "Edad",
+      "phone": "Número de teléfono",
+      "insurance": "Cobertura del seguro",
+      "additionalInformation": "Información Adicional",
+      "submit": "Enviar"
+    }
+  },
+  "aboutMe": {
+    "title": "Protecting What Matters Most",
+    "subtitle1": "Lorem ipsum dolor sit amet",
+    "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "subtitle2": "Lorem ipsum dolor sit amet",
+    "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  "footer": {
+    "p1": "Obtenga la mejor cobertura de salud con los mejores beneficios, al mejor precio",
+    "p2": "Cuidamos tu presente mirando hacia el futuro."
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "siteName": "Arelys Borgia",
+  "header": {
+    "lang": "Select your language",
+    "follow": "Follow me on Istagram",
+    "services": "Coverages",
+    "contact": "Contact",
+    "aboutMe": "About Me"
+  },
+  "hero": {
+    "title": "Health and Life Insurance Agent",
+    "tagline": "Protecting What Matters Most"
+  },
+  "values": {
+    "1": "Integrity",
+    "2": "Passion",
+    "3": "Service Excellence",
+    "4": "Inclusion",
+    "5": "Satisfaction",
+    "6": "Collaboration"
+  },
+  "coverages": {
+    "title": "Protection for Today and Tomorrow",
+    "1": {
+      "name": "Life Insurance",
+      "description": "Life isn't about things, it's about priorities. Consider that an ultra-expensive car or a gigantic bank account never really made a life worth living. Instead, it's seeing a sunset with the love of your life, enjoying a vacation with your kids, and building a legacy out of the best parts of yourself."
+    },
+    "2": {
+      "name": "Mortgage Protection",
+      "description": "It's a type of insurance policy that helps your family make your monthly mortgage payments if you die before your mortgage is fully paid off. Some policies will also offer coverage for a limited time if you lose your job or become disabled after an accident."
+    },
+    "3": {
+      "name": "Long-Term Disability",
+      "description": "Long-term disability (LTD) insurance is a type of insurance policy that can provide financial benefits to an employee who is unable to work for a long period due to an accident, illness, or injury."
+    },
+    "4": {
+      "name": "Accident insurance",
+      "description": "Accidents happen when you least expect them. Even with health insurance, the extra expenses from an accidental injury can really add up."
+    }
+  },
+  "other": "Other",
+  "form": {
+    "messages": {
+      "firstName": {
+        "required": "First Name is required"
+      },
+      "email": {
+        "invalid": "Enter a valid email",
+        "required": "Email is required"
+      },
+      "phone": {
+        "required": "Phone number is required"
+      },
+      "reCAPTCHA": {
+        "required": "ReCAPTCHA is a required field"
+      },
+      "age": {
+        "invalid": "Age must be greater than or equal to 12"
+      },
+      "success": "Your quote request has been sent!"
+    },
+    "title": "Get a Quote",
+    "inputs": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "age": "Age",
+      "phone": "Phone Number",
+      "insurance": "Insurance Coverage",
+      "additionalInformation": "Additional Information",
+      "submit": "Submit"
+    }
+  },
+  "aboutMe": {
+    "subtitle1": "Lorem ipsum dolor sit amet",
+    "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "subtitle2": "Lorem ipsum dolor sit amet",
+    "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  "footer": {
+    "p1": "Obtain the best health coverage with the best benefits at the best price,",
+    "p2": "We take care of your present looking towards the future."
+  }
+}
