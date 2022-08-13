@@ -49,7 +49,8 @@
         "required": "O e-mail é obrigatório"
       },
       "phone": {
-        "required": "O número de telefone é obrigatório"
+        "required": "O número de telefone é obrigatório",
+        "invalid": "Insira um número de telefone válido"
       },
       "reCAPTCHA": {
         "required": "ReCAPTCHA é um campo obrigatório"
@@ -57,7 +58,8 @@
       "age": {
         "invalid": "A idade deve ser maior ou igual a 12"
       },
-      "success": "Seu pedido de orçamento foi enviado!"
+      "success": "Seu pedido de orçamento foi enviado!",
+      "error": "Alguma coisa deu errado. Por favor tente outra vez..."
     },
     "title": "Faça uma cotação",
     "inputs": {

@@ -49,7 +49,8 @@
         "required": "Email is required"
       },
       "phone": {
-        "required": "Phone number is required"
+        "required": "Phone number is required",
+        "invalid": "Enter a valid phone number"
       },
       "reCAPTCHA": {
         "required": "ReCAPTCHA is a required field"
@@ -57,7 +58,8 @@
       "age": {
         "invalid": "Age must be greater than or equal to 12"
       },
-      "success": "Your quote request has been sent!"
+      "success": "Your quote request has been sent!",
+      "error": "Something went wrong, please try again..."
     },
     "title": "Get a Quote",
     "inputs": {

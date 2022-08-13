@@ -20,7 +20,7 @@
     "6": "Colaboración"
   },
   "coverages": {
-    "tile": "Protección para hoy y mañana",
+    "title": "Protección para hoy y mañana",
     "1": {
       "name": "Seguro de vida",
       "description": "La vida no se trata de cosas, se trata de prioridades. Considere que un automóvil ultra caro o una cuenta bancaria gigantesca nunca hicieron que una vida valiera la pena. En cambio, vivir es ver una puesta de sol con el amor de tu vida, disfrutar de unas vacaciones con tus hijos y construir un legado a partir de las mejores partes de ti mismo."
@@ -52,12 +52,14 @@
         "required": "Correo electronico es requerido"
       },
       "phone": {
-        "required": "Se requiere el número de teléfono"
+        "required": "Se requiere el número de teléfono",
+        "invalid": "Introduce un número de teléfono válido"
       },
       "reCAPTCHA": {
         "required": "ReCAPTCHA es un campo obligatorio"
       },
-      "success": "Su solicitud de cotización ha sido enviada!"
+      "success": "Su solicitud de cotización ha sido enviada!",
+      "error": "Algo salió mal. Por favor, vuelva a intentarlo..."
     },
     "title": "Consigue una cotización",
     "inputs": {
