@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,6 +19,7 @@
     "framer-motion": "^6.2.8",
     "next": "12.1.0",
     "next-export-i18n": "^2.0.3",
+    "node-mailjet": "^5.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-google-recaptcha": "^2.1.0",

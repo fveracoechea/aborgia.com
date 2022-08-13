@@ -56,7 +56,7 @@ export const Insurance = () => {
           <SectionTitle>{t("coverages.title")}</SectionTitle>
         </Grid>
         {coverages.map(({ id, name, image, description }) => (
-          <Grid key={id} item xs={12} sm={6}>
+          <Grid key={id} item xs={12} sm={12} md={6}>
             <Box sx={sx.innerWrapper}>
               <Img alt={name} src={image} />
               <Box
@@ -68,7 +68,7 @@ export const Insurance = () => {
                 <Typography
                   aria-hidden="true"
                   color="textSecondary"
-                  variant="h5"
+                  variant="h4"
                 >
                   {name}
                 </Typography>

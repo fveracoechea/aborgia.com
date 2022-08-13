@@ -10,9 +10,9 @@ type Styles = {
 export const sx: Styles = {
   innerWrapper: {
     height: {
-      md: 300,
-      sm: 250,
-      xs: 220,
+      md: 350,
+      sm: 280,
+      xs: 280,
     },
     position: "relative",
     "& img": {

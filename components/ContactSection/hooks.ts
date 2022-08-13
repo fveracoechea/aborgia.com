@@ -29,7 +29,10 @@ export const useContactForm = () => {
       .integer()
       .min(12, t("form.messages.age.invalid"))
       .max(120, t("form.messages.age.invalid")),
-    phone: yup.string().required(t("form.messages.phone.required")),
+    phone: yup
+      .string()
+      .min(9, t("form.messages.phone.invalid"))
+      .required(t("form.messages.phone.required")),
     additionalInformation: yup.string(),
   });
 
@@ -49,14 +52,15 @@ export const useContactForm = () => {
       email: "",
       firstName: "",
       lastName: "",
-      age: 0,
+      age: "",
       phone: "",
       insurance: "",
       additionalInformation: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (variables) => {
+    onSubmit: (values) => {
       setIsSubmitting(true);
+
       if (!reCAPTCHA) {
         createAlert({
           text: t("form.messages.reCAPTCHA.required"),
@@ -67,17 +71,38 @@ export const useContactForm = () => {
       }
       // TODO: send to sendgrid
 
-      // createQuote({ variables }).then((a) => {
-      //   if (a.errors) {
-      //     console.log("errors => ", a.errors);
-      //   }
-      //   createAlert({
-      //     text: t("form.messages.success"),
-      //     severity: "success",
-      //   });
-      //   form.resetForm();
-      //   setIsSubmitting(false);
-      // });
+      fetch("/api/sendQuote", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((r) => r.json())
+        .then(({ error }) => {
+          if (error) {
+            createAlert({
+              text: t("form.messages.error"),
+              severity: "error",
+            });
+            setIsSubmitting(false);
+            return;
+          }
+          createAlert({
+            text: t("form.messages.success"),
+            severity: "success",
+          });
+          setIsSubmitting(false);
+          form.resetForm();
+        })
+        .catch((err) => {
+          console.log(err);
+          createAlert({
+            text: t("form.messages.error"),
+            severity: "error",
+          });
+          setIsSubmitting(false);
+        });
     },
   });
 
