@@ -22,14 +22,16 @@ export const AboutMe: FC = () => {
         <Grid item md={8}>
           <Typography variant="h4">{t("siteName")}</Typography>
           <Typography variant="subtitle1">{t("hero.tagline")}</Typography>
-          <Typography sx={{ py: 2 }} variant="h6">
+          <Typography sx={{ py: 2, fontWeight: "600" }} variant="subtitle1">
             {t("aboutMe.subtitle1")}
           </Typography>
-          <Typography variant="body1">{t("aboutMe.p1")}</Typography>
-          <Typography sx={{ py: 2 }} variant="h6">
-            {t("aboutMe.subtitle2")}
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            {t("aboutMe.p1")}
           </Typography>
-          <Typography variant="body1">{t("aboutMe.p2")}</Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            {t("aboutMe.p2")}
+          </Typography>
+          <Typography variant="body1">{t("aboutMe.p3")}</Typography>
         </Grid>
       </Grid>
     </Container>

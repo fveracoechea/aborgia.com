@@ -8,8 +8,8 @@
     "aboutMe": "Sobre mim"
   },
   "hero": {
-    "title": "Agente de seguro de saúde e vida",
-    "tagline": "Protegendo o que é mais importante"
+    "title": "Cobertura médica ao seu alcance",
+    "tagline": "ACOMPANHAMOS VOCÊ EM TODAS AS ETAPAS"
   },
   "values": {
     "1": "Integridade",
@@ -20,22 +20,22 @@
     "6": "Colaboração"
   },
   "coverages": {
-    "title": "Proteção para hoje e amanhã",
+    "title": "Ajudamo-lo a obter a melhor cobertura de saúde ao melhor preço.",
     "1": {
-      "name": "Seguro de vida",
-      "description": "A vida não é sobre coisas, é sobre prioridades. Considere que um carro ultra-caro ou uma conta bancária gigantesca nunca fez uma vida valer a pena. Em vez disso, é ver um pôr do sol com o amor da sua vida, aproveitar as férias com seus filhos e construir um legado com as melhores partes de si mesmo."
+      "name": "ObamaCare",
+      "description": "É uma reforma da saúde nos EUA que expande e melhora o acesso aos cuidados de saúde e reduz os gastos por meio de regulamentações e impostos."
     },
     "2": {
       "name": "Proteção de hipoteca",
       "description": "É um tipo de apólice de seguro que ajuda sua família a fazer seus pagamentos mensais da hipoteca se você morrer antes que sua hipoteca seja totalmente paga. Algumas apólices também oferecem cobertura por tempo limitado se você perder o emprego ou ficar incapacitado após um acidente."
     },
     "3": {
-      "name": "Incapacidade de Longo Prazo",
-      "description": "O seguro de invalidez de longo prazo (LTD) é um tipo de apólice de seguro que pode fornecer benefícios financeiros a um funcionário que não possa trabalhar por um longo período devido a um acidente, doença ou lesão."
+      "name": "Seguro de vida",
+      "description": "Quanto custa a tranquilidade? Você sabia que seu dinheiro pode crescer com nossas políticas de vida? Economize para a Universidade de seus filhos,Economize para minha aposentadoria. Ao mesmo tempo, eles protegem você com benefícios Vitalícios: Pagamento por Doença Terminal, Pagamento por Doença Crônica, Pagamento por Doença Crítica, Pagamento por Lesão Crítica, Pagamento em Caso de Morte."
     },
     "4": {
       "name": "Seguro de acidentes",
-      "description": "Acidentes acontecem quando você menos espera. Mesmo com seguro de saúde, as despesas extras de uma lesão acidental podem realmente aumentar."
+      "description": "O seguro de despesas finais é um tipo de seguro de vida inteira destinado a cobrir despesas médicas e despesas de funeral quando você morre Uma política de despesas finais também é conhecida como seguro funeral ou enterro e é popular entre os idosos."
     }
   },
   "other": "Outro",
@@ -74,10 +74,10 @@
     }
   },
   "aboutMe": {
-    "subtitle1": "Lorem ipsum dolor sit amet",
-    "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "subtitle2": "Lorem ipsum dolor sit amet",
-    "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    "subtitle1": "Agente de Seguros",
+    "p1": "Com larga experiência nos diferentes tipos de seguros e sistemas de seguros a nível nacional e internacional.",
+    "p2": "Meu objetivo é ajudá-lo a encontrar o melhor plano de seguro médico para você. Ao fornecer a você informações justas, imparciais e precisas, sem nenhum custo.",
+    "p3": "Cuide do seu presente olhando para o futuro."
   },
   "footer": {
     "p1": "Obtenha a melhor cobertura de saúde com os melhores benefícios ao melhor preço,",

@@ -88,9 +88,8 @@ const ResponsiveAppBar = () => {
             <MuiLink sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
               <img
                 alt={t("siteName")}
-                width={145}
-                height={56}
-                src="/logo.png"
+                src="/logov2.png"
+                style={{ width: 145, height: "auto" }}
               />
             </MuiLink>
           </Link>
@@ -102,7 +101,7 @@ const ResponsiveAppBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{ color: "text.secondary" }}
             >
               <MenuIcon />
             </IconButton>
@@ -160,7 +159,7 @@ const ResponsiveAppBar = () => {
                 alt={t("siteName")}
                 width={145}
                 height={56}
-                src="/logo.png"
+                src="/logov2.png"
               />
             </MuiLink>
           </Link>

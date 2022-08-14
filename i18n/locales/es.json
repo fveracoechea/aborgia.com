@@ -8,8 +8,8 @@
     "aboutMe": "Acerca de Mi"
   },
   "hero": {
-    "title": "Agente de Seguros, Salud y Vida",
-    "tagline": "Protegiendo lo que más importa"
+    "title": "Cobertura médica a tu alcance",
+    "tagline": "TE GUIAMOS EN CADA PASO"
   },
   "values": {
     "1": "Integridad",
@@ -20,22 +20,22 @@
     "6": "Colaboración"
   },
   "coverages": {
-    "title": "Protección para hoy y mañana",
+    "title": "Te ayudamos a obtener la mejor cobertura de salud al mejor precio.",
     "1": {
-      "name": "Seguro de vida",
-      "description": "La vida no se trata de cosas, se trata de prioridades. Considere que un automóvil ultra caro o una cuenta bancaria gigantesca nunca hicieron que una vida valiera la pena. En cambio, vivir es ver una puesta de sol con el amor de tu vida, disfrutar de unas vacaciones con tus hijos y construir un legado a partir de las mejores partes de ti mismo."
+      "name": "ObamaCare",
+      "description": "Es una reforma de salud en los EE.UU. que amplía y mejora el acceso a la atención médica y reduzca el gasto a través de regulaciones e impuestos."
     },
     "2": {
       "name": "Protección Hipotecaria",
       "description": "Es un tipo de póliza de seguro que ayuda a su familia a hacer los pagos mensuales de su hipoteca si muere antes de que su hipoteca esté totalmente pagada. Algunas pólizas también ofrecerán cobertura por un tiempo limitado si pierde su trabajo o queda discapacitado después de un accidente."
     },
     "3": {
-      "name": "Discapacidad a largo plazo",
-      "description": "El seguro de discapacidad a largo plazo (LTD) es un tipo de póliza de seguro que puede brindar beneficios financieros a un empleado que no puede trabajar durante un período prolongado debido a un accidente, enfermedad o lesión."
+      "name": "Seguro de vida",
+      "description": "Cuanto cuesta la tranquilidad? Sabías que tu dinero puede crecer con nuestras pólizas de Vida? Ahorrar para la Universidad de tus hijos, Ahorrar para mi retiro. A la vez te protegen con beneficios en Vida: Pago por Enfermedad Terminal, Pago por Enfermedad Crónica, Pago por enfermedad Crítica, Pago por lesión Crítica, Pago en caso de Fallecimiento."
     },
     "4": {
-      "name": "Seguro de accidentes",
-      "description": "Los accidentes ocurren cuando menos los esperas. Incluso con un seguro de salud, los gastos adicionales de una lesión accidental realmente pueden sumarse."
+      "name": "Gastos Finales",
+      "description": "El seguro de gastos finales es un tipo de seguro de vida entera diseñado para cubrir gastos médicos y gastos funerarios cuando usted fallece. Una póliza de gastos finales también se conoce como un seguro funerario o de entierro y es popular entre las personas mayores."
     }
   },
   "other": "Otro",
@@ -74,11 +74,10 @@
     }
   },
   "aboutMe": {
-    "title": "Protecting What Matters Most",
-    "subtitle1": "Lorem ipsum dolor sit amet",
-    "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "subtitle2": "Lorem ipsum dolor sit amet",
-    "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    "subtitle1": "Agente de Seguros",
+    "p1": "Con amplia experiencia en los diferentes tipos de seguros y sistemas de seguros a nivel nacional e internacional.",
+    "p2": "Mi objetivo es ayudarlo a encontrar el mejor plan de seguro médico para usted. Mientras le proporcionamos información justa, imparcial y precisa sin costo alguno.",
+    "p3": "Cuida tu presente mirando hacia el futuro."
   },
   "footer": {
     "p1": "Obtenga la mejor cobertura de salud con los mejores beneficios, al mejor precio",

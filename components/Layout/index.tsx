@@ -52,7 +52,7 @@ const Layout: FC<Props> = ({ children }) => {
                 alt={t("siteName")}
                 width={290}
                 height={112}
-                src="/dark-logo.png"
+                src="/dark-logo-v2.png"
               />
             </Grid>
             <Grid item md={9}>

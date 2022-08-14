@@ -88,7 +88,7 @@ export const Hero: FC = () => {
           variants={sentence1}
           initial="hidden"
           animate="visible"
-          sx={{ textAlign: "center" }}
+          sx={{ textAlign: "center", mb: 2 }}
         >
           {t("hero.title")
             .split("")

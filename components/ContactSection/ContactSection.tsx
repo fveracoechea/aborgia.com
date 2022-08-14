@@ -54,7 +54,7 @@ export const ContactSection: FC = () => {
     >
       <Grid container spacing={4} sx={{}}>
         <Grid item sm={12} xs={12}>
-          <SectionTitle>{t("form.title")}</SectionTitle>
+          <SectionTitle variant="h4">{t("form.title")}</SectionTitle>
         </Grid>
       </Grid>
 

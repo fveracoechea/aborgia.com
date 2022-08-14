@@ -53,7 +53,7 @@ export const Insurance = () => {
         sx={{ scrollMarginTop: (t) => t.spacing(10) }}
       >
         <Grid item xs={12}>
-          <SectionTitle>{t("coverages.title")}</SectionTitle>
+          <SectionTitle variant="h4">{t("coverages.title")}</SectionTitle>
         </Grid>
         {coverages.map(({ id, name, image, description }) => (
           <Grid key={id} item xs={12} sm={12} md={6}>
@@ -68,7 +68,7 @@ export const Insurance = () => {
                 <Typography
                   aria-hidden="true"
                   color="textSecondary"
-                  variant="h4"
+                  variant="h5"
                 >
                   {name}
                 </Typography>
@@ -84,11 +84,15 @@ export const Insurance = () => {
                   },
                 })}
               >
-                <Typography color="textSecondary" variant="h6">
+                <Typography
+                  color="textSecondary"
+                  variant="h6"
+                  sx={{ textAlign: "center" }}
+                >
                   {name}
                 </Typography>
                 <Typography
-                  sx={{ textAlign: "justify" }}
+                  sx={{ textAlign: "center" }}
                   color="textSecondary"
                   variant="body1"
                 >
