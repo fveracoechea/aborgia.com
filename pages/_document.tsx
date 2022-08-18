@@ -1,5 +1,4 @@
 import * as React from "react";
-import Script from "next/script";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 import createEmotionServer from "@emotion/server/create-instance";
@@ -23,26 +22,6 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-
-          {/* Google tag (gtag.js) */}
-          <Script
-            strategy="afterInteractive"
-            src="https://www.googletagmanager.com/gtag/js?id=G-KDY4PW4XVM"
-          />
-
-          <Script
-            id="google-tag"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: ` 
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', 'G-KDY4PW4XVM');
-            `,
-            }}
-          />
         </body>
       </Html>
     );
