@@ -49,7 +49,7 @@ export const ContactSection: FC = () => {
   return (
     <Container
       maxWidth="lg"
-      sx={{ pt: 6, scrollMarginTop: (t) => t.spacing(6) }}
+      sx={{ py: 4, scrollMarginTop: (t) => t.spacing(6) }}
       id="contact"
     >
       <Grid container spacing={4} sx={{}}>

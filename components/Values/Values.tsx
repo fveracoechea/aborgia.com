@@ -22,6 +22,7 @@ export const Values: FC = () => {
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
+          pb: 4,
         }}
       >
         {values.map((item) => (
@@ -33,7 +34,7 @@ export const Values: FC = () => {
                 sm: `${100 / 3}%`,
                 md: "auto",
               },
-              height: "12rem",
+              height: "8rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

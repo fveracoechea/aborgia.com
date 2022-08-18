@@ -49,9 +49,9 @@ const ResponsiveAppBar = () => {
 
   const links = [
     {
-      id: "link-service",
-      href: "/#services",
-      text: t("header.services"),
+      id: "link-about",
+      href: "/#about-me",
+      text: t("header.aboutMe"),
     },
     {
       id: "link-contact",
@@ -59,9 +59,9 @@ const ResponsiveAppBar = () => {
       text: t("header.contact"),
     },
     {
-      id: "link-about",
-      href: "/#about-me",
-      text: t("header.aboutMe"),
+      id: "link-service",
+      href: "/#services",
+      text: t("header.services"),
     },
   ];
 
@@ -154,9 +154,17 @@ const ResponsiveAppBar = () => {
             </Menu>
           </Box>
           <Link href="/" passHref>
-            <MuiLink sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <MuiLink
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <img
                 alt={t("siteName")}
+                style={{ width: "80%", height: "auto" }}
                 width={145}
                 height={56}
                 src="/logov2.png"

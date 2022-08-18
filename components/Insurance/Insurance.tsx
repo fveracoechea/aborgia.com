@@ -50,7 +50,7 @@ export const Insurance = () => {
       <Grid
         container
         id="services"
-        sx={{ scrollMarginTop: (t) => t.spacing(10) }}
+        sx={{ scrollMarginTop: (t) => t.spacing(10), py: 6 }}
       >
         <Grid item xs={12}>
           <SectionTitle variant="h4">{t("coverages.title")}</SectionTitle>

@@ -12,9 +12,12 @@ const Seo: FC = () => {
       <title>{t("siteName")}</title>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="initial-scale=1, width=device-width" />
-      <meta name="description" content="Health and Life Insurance Agent" />
+      <meta name="description" content={t("hero.title")} />
       <meta name="robots" content="all" />
-      <meta name="keywords" content="health, life, insurance, agent" />
+      <meta
+        name="keywords"
+        content="health, life, insurance, ObamaCare, coverage"
+      />
       <link rel="canonical" href={appUrl} />
       <link rel="icon" href="/favicon.ico" />
 
@@ -22,13 +25,10 @@ const Seo: FC = () => {
       <meta property="og:url" content={appUrl} />
       <meta
         property="og:title"
-        content={`${t("siteName")}: Health and Life Insurance Agent.`}
+        content={`${t("siteName")}: ${t("hero.title")}.`}
       />
-      <meta
-        property="og:description"
-        content="Obtain the best coverage with the best benefits at the best price."
-      />
-      <meta property="og:image" content={`${appUrl}/about-me.jpeg`} />
+      <meta property="og:description" content={t("coverages.title")} />
+      <meta property="og:image" content={`${appUrl}/profile.jpg`} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:locale:alternate" content="es_ES" />

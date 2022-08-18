@@ -2,18 +2,25 @@
 import React, { FC } from "react";
 import { useTranslation } from "next-export-i18n";
 
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, styled } from "@mui/material";
+
+const Image = styled("img")`
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 50%;
+  border: solid 5px ${(p) => p.theme.palette.secondary.main};
+`;
 
 export const AboutMe: FC = () => {
   const { t } = useTranslation();
 
   return (
     <Container maxWidth="lg">
-      <Grid container sx={{ py: 10 }} spacing={4} id="about-me">
+      <Grid container sx={{ pt: 10, pb: 2 }} spacing={4} id="about-me">
         <Grid item md={4}>
-          <img
-            style={{ width: "100%", height: "auto" }}
-            src="/about-me.jpeg"
+          <Image
+            src="/profile.jpg"
             alt="Arelys Borgia"
             width={380}
             height={380}

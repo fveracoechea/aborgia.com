@@ -10,10 +10,10 @@ import { AboutMe } from "components/AboutMe";
 const Home: NextPage<{}> = () => (
   <Layout>
     <Hero />
-    <Values />
-    <Insurance />
-    <ContactSection />
     <AboutMe />
+    <Values />
+    <ContactSection />
+    <Insurance />
   </Layout>
 );
 
