@@ -35,7 +35,15 @@ const Seo: FC = () => {
       <meta property="og:locale:alternate" content="pt_PT" />
 
       {/* twitter */}
-      <meta name="twitter:card" content="summary"></meta>
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="twitter:domain" content="aborgia.com" />
+      <meta property="twitter:url" content={appUrl} />
+      <meta
+        name="twitter:title"
+        content={`${t("siteName")}: ${t("hero.title")}.`}
+      />
+      <meta name="twitter:description" content={t("coverages.title")} />
+      <meta name="twitter:image" content={`${appUrl}/profile.jpg`} />
     </Head>
   );
 };
