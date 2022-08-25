@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Head from "next/head";
 import { useTranslation } from "next-export-i18n";
 
-const appUrl = "https://aborgia.netlify.app";
+const appUrl = "https://www.aborgia.app";
 
 const Seo: FC = () => {
   const { t } = useTranslation();
