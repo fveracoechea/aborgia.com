@@ -67,7 +67,7 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar
-      position="fixed"
+      position="sticky"
       sx={(t) => ({
         backgroundImage: `linear-gradient(to right, ${t.palette.primary.main}, ${t.palette.secondary.dark})`,
       })}

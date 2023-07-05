@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Container, Grid, Typography, Box, styled } from "@mui/material";
-import { SectionTitle } from "components/Styled";
 import { sx } from "./styles";
 import { useTranslation } from "next-export-i18n";
 
@@ -46,14 +45,12 @@ export const Insurance = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
-      <Grid
-        container
-        id="services"
-        sx={{ scrollMarginTop: (t) => t.spacing(10), py: 6 }}
-      >
+    <Box paddingBottom={12}>
+      <Grid container id="services" sx={{ scrollMarginTop: 20 }} spacing={8}>
         <Grid item xs={12}>
-          <SectionTitle variant="h4">{t("coverages.title")}</SectionTitle>
+          <Typography textAlign="center" variant="h4">
+            {t("coverages.title")}
+          </Typography>
         </Grid>
         {coverages.map(({ id, name, image, description }) => (
           <Grid key={id} item xs={12} sm={12} md={6}>
@@ -103,6 +100,6 @@ export const Insurance = () => {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </Box>
   );
 };

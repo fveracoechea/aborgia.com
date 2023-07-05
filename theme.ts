@@ -27,7 +27,7 @@ const theme = responsiveFontSizes(
     components: {
       MuiTextField: {
         defaultProps: {
-          variant: "standard",
+          variant: "outlined",
         },
         styleOverrides: {
           root: {
