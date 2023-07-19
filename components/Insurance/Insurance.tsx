@@ -1,18 +1,52 @@
-/* eslint-disable @next/next/no-img-element */
-import { Container, Grid, Typography, Box, styled } from "@mui/material";
-import { sx } from "./styles";
+import { Grid, Typography, Box, styled } from "@mui/material";
 import { useTranslation } from "next-export-i18n";
+import Image from "next/image";
 
-const Img = styled("img")`
-  display: block;
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-`;
+const InnerWrapper = styled(Box)(({ theme }) => ({
+  position: "relative",
+  [theme.breakpoints.up("md")]: {
+    height: 350,
+  },
+  [theme.breakpoints.down("md")]: {
+    height: 280,
+  },
+  "& img": {
+    zIndex: 1,
+    display: "block",
+    position: "absolute",
+    width: "100%",
+    left: 0,
+    top: 0,
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+  },
+}));
+
+const Content = styled(Box)(({ theme }) => ({
+  zIndex: 2,
+  position: "absolute",
+  transition: "all .4s ease",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  padding: theme.spacing(2),
+  alignItems: "center",
+  "&.overlay": {
+    backgroundColor: "rgba(0,0,0,.6)",
+  },
+  "&.active": {
+    backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
+    flexDirection: "column",
+    opacity: "0",
+    "&:hover": {
+      opacity: "1",
+    },
+  },
+}));
 
 export const Insurance = () => {
   const { t } = useTranslation();
@@ -54,14 +88,9 @@ export const Insurance = () => {
         </Grid>
         {coverages.map(({ id, name, image, description }) => (
           <Grid key={id} item xs={12} sm={12} md={6}>
-            <Box sx={sx.innerWrapper}>
-              <Img alt={name} src={image} />
-              <Box
-                sx={(t) => ({
-                  ...sx.item,
-                  backgroundColor: "rgba(0,0,0,.6)",
-                })}
-              >
+            <InnerWrapper>
+              <Image alt={name as string} src={image} fill />
+              <Content className="overlay">
                 <Typography
                   aria-hidden="true"
                   color="textSecondary"
@@ -69,18 +98,8 @@ export const Insurance = () => {
                 >
                   {name}
                 </Typography>
-              </Box>
-              <Box
-                sx={(t) => ({
-                  ...sx.item,
-                  backgroundImage: `linear-gradient(to right, ${t.palette.primary.main}, ${t.palette.secondary.dark})`,
-                  flexDirection: "column",
-                  opacity: "0",
-                  "&:hover": {
-                    opacity: "1",
-                  },
-                })}
-              >
+              </Content>
+              <Content className="active">
                 <Typography
                   color="textSecondary"
                   variant="h6"
@@ -95,8 +114,8 @@ export const Insurance = () => {
                 >
                   {description}
                 </Typography>
-              </Box>
-            </Box>
+              </Content>
+            </InnerWrapper>
           </Grid>
         ))}
       </Grid>

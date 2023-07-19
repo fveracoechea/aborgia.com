@@ -1,28 +1,26 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { MouseEventHandler, useRef, useState } from "react";
-import Link from "next/link";
-import {
-  useTranslation,
-  LanguageSwitcher,
-  useLanguageQuery,
-} from "next-export-i18n";
+import Image from "next/image";
+import { useTranslation, useLanguageQuery } from "next-export-i18n";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import MenuItem from "@mui/material/MenuItem";
-import MuiLink from "@mui/material/Link";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  Container,
+  Link,
+  styled,
+  Stack,
+  IconButton,
+  Box,
+} from "@mui/material";
+
 import Tooltip from "@mui/material/Tooltip";
 import Instagram from "@mui/icons-material/Instagram";
 import Phone from "@mui/icons-material/Phone";
-import Translate from "@mui/icons-material/Translate";
-import styled from "@mui/system/styled";
+
+import { LanguageSelector } from "components/LanguageSwitcher";
+import { MobileNav } from "components/MobileNav";
 
 const PhoneIcon = styled(Phone)`
   display: flex;
@@ -32,20 +30,47 @@ const PhoneIcon = styled(Phone)`
   }
 `;
 
+const NavLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  fontWeight: theme.typography.fontWeightMedium,
+  padding: theme.spacing(1),
+  display: "block",
+}));
+
+const Navbar = styled(Toolbar)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  color: theme.palette.text.secondary,
+
+  ".responsive-wrapper": {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: theme.spacing(2),
+    [theme.breakpoints.down("md")]: {
+      gap: theme.spacing(0),
+    },
+  },
+
+  ".desktop": {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  ".mobile": {
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
+}));
+
+const StyledAppbar = styled(AppBar)(({ theme }) => ({
+  backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
+}));
+
 const ResponsiveAppBar = () => {
-  const [lang, setLang] = useState(false);
-  const [query] = useLanguageQuery();
-  const langRef = useRef(null);
   const { t } = useTranslation();
-  const [anchorElNav, setAnchorElNav] = React.useState<Element | null>(null);
-
-  const handleOpenNavMenu: MouseEventHandler<HTMLButtonElement> = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
   const links = [
     {
@@ -66,191 +91,67 @@ const ResponsiveAppBar = () => {
   ];
 
   return (
-    <AppBar
-      position="sticky"
-      sx={(t) => ({
-        backgroundImage: `linear-gradient(to right, ${t.palette.primary.main}, ${t.palette.secondary.dark})`,
-      })}
-      elevation={0}
-    >
+    <StyledAppbar position="sticky">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Navbar disableGutters>
           <Typography
-            variant="h6"
             component="h1"
             noWrap
             color="textSecondary"
-            sx={{ display: "none" }}
+            visibility="hidden"
+            position="absolute"
           >
             {t("siteName")}
           </Typography>
-          <Link href="/" passHref>
-            <MuiLink sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
-              <img
+
+          <Box className="responsive-wrapper">
+            <MobileNav links={links} />
+
+            <Link href="/" display="block" width={145} height={26}>
+              <Image
                 alt={t("siteName")}
                 src="/logov2.png"
-                style={{ width: 145, height: "auto" }}
-              />
-            </MuiLink>
-          </Link>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              sx={{ color: "text.secondary" }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {links.map((link) => (
-                <MenuItem key={link.id} onClick={handleCloseNavMenu}>
-                  <Link key={link.id} href={link.href} passHref>
-                    <MuiLink
-                      onClick={handleCloseNavMenu}
-                      sx={{
-                        py: "4px",
-                        color: (t) => t.palette.text.primary,
-                        display: "block",
-                      }}
-                    >
-                      {link.text}
-                    </MuiLink>
-                  </Link>
-                </MenuItem>
-              ))}
-              <MenuItem>
-                <Button
-                  sx={{
-                    color: (t) => t.palette.text.primary,
-                  }}
-                  color="primary"
-                  href="tel:+1 (404) 513-1683"
-                  startIcon={<PhoneIcon />}
-                >
-                  +1 (404) 513-1683
-                </Button>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <Link href="/" passHref>
-            <MuiLink
-              sx={{
-                flexGrow: 1,
-                display: { xs: "flex", md: "none" },
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                alt={t("siteName")}
-                style={{ width: "80%", height: "auto" }}
                 width={145}
-                height={56}
-                src="/logov2.png"
+                height={26}
               />
-            </MuiLink>
-          </Link>
+            </Link>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-            }}
-          >
             {links.map((link) => (
-              <Link key={link.id} href={link.href} passHref>
-                <MuiLink
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: (t) => t.palette.text.secondary,
-                    display: "block",
-                    padding: "0 1rem",
-                  }}
-                >
-                  {link.text}
-                </MuiLink>
-              </Link>
+              <NavLink
+                className="desktop"
+                key={link.id}
+                href={link.href}
+                underline="hover"
+              >
+                {link.text}
+              </NavLink>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0, display: "flex" }}>
-            <Tooltip arrow title={t("header.follow")}>
-              <MuiLink
-                href="https://www.instagram.com/aborgia_insurance/"
-                target="_blank"
-                sx={{
-                  color: (t) => t.palette.text.secondary,
-                  display: "flex",
-                  alignItems: "center",
-                  p: 1,
-                }}
-              >
-                <Instagram aria-label={t("header.follow")} />
-              </MuiLink>
-            </Tooltip>
-            <Tooltip arrow title={t("header.lang")}>
-              <Button
-                sx={{
-                  color: (t) => t.palette.text.secondary,
-                }}
-                ref={langRef}
-                onClick={() => setLang(true)}
-                startIcon={<Translate />}
-              >
-                {query?.lang}
-              </Button>
-            </Tooltip>
-            <Menu
-              anchorEl={langRef.current}
-              open={lang}
-              onClose={() => setLang(false)}
-            >
-              <MenuItem onClick={() => setLang(false)}>
-                <LanguageSwitcher lang="es">Español</LanguageSwitcher>
-              </MenuItem>
-              <MenuItem onClick={() => setLang(false)}>
-                <LanguageSwitcher lang="en">English</LanguageSwitcher>
-              </MenuItem>
-              <MenuItem onClick={() => setLang(false)}>
-                <LanguageSwitcher lang="pt">Português</LanguageSwitcher>
-              </MenuItem>
-            </Menu>
+
+          <Box className="responsive-wrapper">
             <Button
-              sx={{
-                color: (t) => t.palette.text.secondary,
-                display: { xs: "none", sm: "none", md: "flex" },
-              }}
-              color="primary"
+              className="desktop"
+              color="inherit"
               href="tel:+1 (404) 513-1683"
               startIcon={<PhoneIcon />}
             >
               +1 (404) 513-1683
             </Button>
+            <Tooltip arrow title={t("header.follow")}>
+              <IconButton
+                href="https://www.instagram.com/aborgia_insurance/"
+                target="_blank"
+                color="inherit"
+              >
+                <Instagram aria-label={t("header.follow")} />
+              </IconButton>
+            </Tooltip>
+
+            <LanguageSelector />
           </Box>
-        </Toolbar>
+        </Navbar>
       </Container>
-    </AppBar>
+    </StyledAppbar>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Box, Radio, Stack, styled } from "@mui/material";
+import Image from "next/image";
 import {
   ChangeEvent,
   PropsWithChildren,
@@ -7,7 +8,7 @@ import {
   useState,
 } from "react";
 
-const Image = styled("img")`
+const Img = styled(Image)`
   display: block;
   position: absolute;
   width: 100%;
@@ -103,11 +104,13 @@ export function Slider(props: Props) {
   return (
     <Wrapper>
       {images.map((src, idx) => (
-        <Image
+        <Img
           className={idx === activeImg ? "active" : ""}
           key={src}
           src={src}
           alt={`hero-image-${idx}`}
+          fill
+          priority={idx === 0}
         />
       ))}
       <Content>{children}</Content>
@@ -119,6 +122,7 @@ export function Slider(props: Props) {
               value={idx}
               name="slider-bullets"
               sx={{ svg: { color: "white" } }}
+              size="small"
               disableRipple
               checked={idx === activeImg}
               onChange={onBulletChange}

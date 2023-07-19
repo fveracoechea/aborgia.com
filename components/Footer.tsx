@@ -1,20 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, Link, Stack, Typography } from "@mui/material";
 import Instagram from "@mui/icons-material/Instagram";
 import Phone from "@mui/icons-material/Phone";
 import Email from "@mui/icons-material/Email";
 import Copyright from "@mui/icons-material/Copyright";
 import { useTranslation } from "next-export-i18n";
+import Image from "next/image";
 
 const year = new Date().getFullYear();
 
@@ -80,7 +72,7 @@ export function Footer() {
               </Stack>
             </Grid>
             <Grid item md={4}>
-              <img
+              <Image
                 style={{ width: "100%", height: "auto" }}
                 alt={t("siteName")}
                 width={290}
