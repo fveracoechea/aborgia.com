@@ -132,10 +132,10 @@ const ResponsiveAppBar = () => {
             <Button
               className="desktop"
               color="inherit"
-              href="tel:+1 (404) 513-1683"
+              href="tel:(404) 513-1683"
               startIcon={<PhoneIcon />}
             >
-              +1 (404) 513-1683
+              (404) 513-1683
             </Button>
             <Tooltip arrow title={t("header.follow")}>
               <IconButton

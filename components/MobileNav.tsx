@@ -49,20 +49,17 @@ export function MobileNav({ links }: Props) {
         onClose={onClose}
       >
         {links.map((link) => (
-          <MenuItem key={link.id} onClick={onClose}>
-            <Link key={link.id} href={link.href} onClick={onClose}>
-              {link.text}
-            </Link>
+          <MenuItem
+            component={Link}
+            key={link.id}
+            onClick={onClose}
+            href={link.href}
+          >
+            {link.text}
           </MenuItem>
         ))}
-        <MenuItem>
-          <Button
-            color="inherit"
-            href="tel:+1 (404) 513-1683"
-            startIcon={<PhoneIcon />}
-          >
-            +1 (404) 513-1683
-          </Button>
+        <MenuItem component={Link} href="tel:+1 (404) 513-1683">
+          <PhoneIcon /> &nbsp; (404) 513-1683
         </MenuItem>
       </Menu>
     </>
