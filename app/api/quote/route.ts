@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import Mailjet from "node-mailjet";
 
 const mailjet = new Mailjet({
@@ -79,18 +79,9 @@ const getEmailText = (data: Data) => {
   `;
 };
 
-export async function POST(
-  req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>
-) {
-  if (req.method !== "POST") {
-    res.status(200).json({ error: true });
-    return;
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    const values = req.body;
-    console.log("values ", values);
+    const values = await request.json();
 
     await mailjet.post("send", { version: "v3.1" }).request({
       Messages: [
@@ -112,9 +103,9 @@ export async function POST(
       ],
     });
 
-    res.status(200).json({ error: false });
+    return NextResponse.json({ error: false });
   } catch (error) {
     console.log("error ", error);
-    res.status(200).json({ error: true });
+    return  NextResponse.json({ error: true });
   }
 }
