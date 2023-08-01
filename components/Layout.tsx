@@ -2,7 +2,6 @@
 import React, { PropsWithChildren, ReactNode } from "react";
 import { Container, Box, styled, Stack } from "@mui/material";
 import Header from "./Header";
-import Seo from "components/SEO";
 
 import { Footer } from "components/Footer";
 

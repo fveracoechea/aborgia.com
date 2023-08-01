@@ -28,6 +28,7 @@
     "react-dom": "18.2.0",
     "react-google-recaptcha": "^2.1.0",
     "server-only": "^0.0.1",
+    "sharp": "^0.32.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

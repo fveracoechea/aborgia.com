@@ -8,6 +8,7 @@ const nextConfig = {
     domains: ["127.0.0.1", "localhost"],
   },
   experimental: {
+    serverActions: true,
     typedRoutes: true,
   },
 };
