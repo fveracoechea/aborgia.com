@@ -26,7 +26,6 @@ export function Layout(props: Props) {
 
   return (
     <>
-      <Seo />
       <Header />
       <Background>
         <Overlay>

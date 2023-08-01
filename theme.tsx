@@ -74,4 +74,6 @@ const theme = responsiveFontSizes(
 
 export type SxStyles = SxProps<Theme>;
 
+console.log("theme = ", theme);
+
 export default theme;
