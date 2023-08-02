@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import { theme } from "./vars.css";
+import { theme, breakpoints } from "./vars.css";
 
 globalStyle("html, body", {
   fontFamily: "'Lora', serif",
@@ -40,4 +40,32 @@ globalStyle(".customScroll::-webkit-scrollbar-track", {
 
 globalStyle(".customScroll::-webkit-scrollbar-thumb", {
   backgroundColor: theme.color.grey.light,
+});
+
+globalStyle(".text-center", {
+  textAlign: "center",
+});
+
+globalStyle(".text-right", {
+  textAlign: "right",
+});
+
+globalStyle(".text-left", {
+  textAlign: "left",
+});
+
+globalStyle(".desktop", {
+  "@media": {
+    [`screen and (max-width: ${breakpoints.md})`]: {
+      display: "none !important",
+    },
+  },
+});
+
+globalStyle(".mobile", {
+  "@media": {
+    [`screen and (min-width: ${breakpoints.md})`]: {
+      display: "none !important",
+    },
+  },
 });

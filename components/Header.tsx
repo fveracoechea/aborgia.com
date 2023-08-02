@@ -1,158 +1,173 @@
-import React, { MouseEventHandler, useRef, useState } from "react";
+import { Container } from "design/Container";
 import Image from "next/image";
-import { useTranslation, useLanguageQuery } from "next-export-i18n";
-
+import NextLink from "next/link";
+import { Dict } from "locales/en";
+import { header, navigation, toolbar, toolbarContent } from "./classes.css";
+import { Stack } from "design/Stack";
+import { Link } from "design/Link";
+import Logo from "shared/assets/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  Container,
-  Link,
-  styled,
-  Stack,
-  IconButton,
-  Box,
-} from "@mui/material";
+  faEarthAmericas,
+  faEnvelope,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 
-import Tooltip from "@mui/material/Tooltip";
-import Instagram from "@mui/icons-material/Instagram";
-import Phone from "@mui/icons-material/Phone";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import clsx from "clsx";
+import { MobileNav } from "./MobileNav";
+import { theme } from "design/theme";
 
-import { LanguageSelector } from "components/LanguageSwitcher";
-import { MobileNav } from "components/MobileNav";
+type Props = {
+  dict: Dict;
+};
 
-const PhoneIcon = styled(Phone)`
-  display: flex;
-  margin-right: ${({ theme }) => theme.spacing(1)};
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-right: 0;
-  }
-`;
-
-const NavLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontWeight: theme.typography.fontWeightMedium,
-  padding: theme.spacing(1),
-  display: "block",
-}));
-
-const Navbar = styled(Toolbar)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  color: theme.palette.text.secondary,
-
-  ".responsive-wrapper": {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    gap: theme.spacing(2),
-    [theme.breakpoints.down("md")]: {
-      gap: theme.spacing(0),
-    },
-  },
-
-  ".desktop": {
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-  ".mobile": {
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-}));
-
-const StyledAppbar = styled(AppBar)(({ theme }) => ({
-  backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
-}));
-
-const ResponsiveAppBar = () => {
-  const { t } = useTranslation();
-
-  const links = [
+export function Header({ dict }: Props) {
+  const contact = [
     {
-      id: "link-about",
-      href: "/#about-me",
-      text: t("header.aboutMe"),
+      key: "c-phone",
+      icon: <FontAwesomeIcon fontSize="1rem" icon={faPhone} />,
+      href: "tel:+1 (404) 513-1683",
+      text: "+1 (404) 513-1683",
     },
     {
-      id: "link-contact",
-      href: "/#contact",
-      text: t("header.contact"),
+      key: "c-email",
+      icon: <FontAwesomeIcon fontSize="1rem" icon={faEnvelope} />,
+      href: "mailto:aborgiainsurance@gmail.com",
+      text: "aborgiainsurance@gmail.com",
     },
     {
-      id: "link-service",
-      href: "/#services",
-      text: t("header.services"),
+      key: "c-insta",
+      icon: <FontAwesomeIcon fontSize="1.2rem" icon={faInstagram} />,
+      href: "https://www.instagram.com/aborgia_insurance/",
+      text: "@aborgia_insurance",
     },
   ];
 
-  return (
-    <StyledAppbar position="sticky">
-      <Container maxWidth="xl">
-        <Navbar disableGutters>
-          <Typography
-            component="h1"
-            noWrap
-            color="textSecondary"
-            visibility="hidden"
-            position="absolute"
-          >
-            {t("siteName")}
-          </Typography>
+  const nav = [
+    {
+      key: "nav-about",
+      href: "/#about-me",
+      text: dict.header.aboutMe,
+    },
+    {
+      key: "nav-service",
+      href: "/#services",
+      text: dict.header.services,
+    },
+    {
+      key: "nav-news",
+      href: "/#news-and-updates",
+      text: "News & Updates",
+    },
+  ];
 
-          <Box className="responsive-wrapper">
-            <MobileNav links={links} />
-
-            <Link href="/" display="block" width={145} height={26}>
-              <Image
-                alt={t("siteName")}
-                src="/logov2.png"
-                width={145}
-                height={26}
-              />
-            </Link>
-
-            {links.map((link) => (
-              <NavLink
-                className="desktop"
-                key={link.id}
-                href={link.href}
-                underline="hover"
-              >
-                {link.text}
-              </NavLink>
-            ))}
-          </Box>
-
-          <Box className="responsive-wrapper">
-            <Button
-              className="desktop"
-              color="inherit"
-              href="tel:(404) 513-1683"
-              startIcon={<PhoneIcon />}
+  const desktop = (
+    <>
+      <div className={clsx(toolbar, "desktop")}>
+        <Container variant="lg" className={toolbarContent}>
+          <Stack direction="row" gap="4">
+            <Stack
+              align="center"
+              component={Link}
+              navLink="light"
+              underline="never"
+              href="/"
+              direction="row"
+              gap="2"
             >
-              (404) 513-1683
-            </Button>
-            <Tooltip arrow title={t("header.follow")}>
-              <IconButton
-                href="https://www.instagram.com/aborgia_insurance/"
-                target="_blank"
-                color="inherit"
+              <FontAwesomeIcon color="white" icon={faEarthAmericas} />
+              English
+            </Stack>
+          </Stack>
+          <Stack direction="row" gap="4">
+            {contact.map((c) => (
+              <Stack
+                component={Link}
+                navLink="light"
+                align="center"
+                underline="never"
+                key={c.key}
+                href={c.href}
+                direction="row"
+                gap="2"
               >
-                <Instagram aria-label={t("header.follow")} />
-              </IconButton>
-            </Tooltip>
+                {c.icon}
+                {c.text}
+              </Stack>
+            ))}
+          </Stack>
+        </Container>
+      </div>
 
-            <LanguageSelector />
-          </Box>
-        </Navbar>
-      </Container>
-    </StyledAppbar>
+      <nav className={clsx(navigation, "desktop")}>
+        <Container variant="lg">
+          <Stack direction="row" align="center" justify="spaceBetween">
+            <Stack direction="row" align="center" gap="4">
+              <NextLink
+                href={"/" as any}
+                style={{ display: "block", width: 194, height: 36 }}
+              >
+                <Image alt={dict.siteName} src={Logo} width={194} height={36} />
+              </NextLink>
+              {nav.map((link) => (
+                <Link
+                  navLink="dark"
+                  underline="never"
+                  key={link.key}
+                  href={link.href}
+                >
+                  {link.text}
+                </Link>
+              ))}
+            </Stack>
+
+            <Stack direction="row" align="center" gap="4">
+              <Link navLink="outlined" underline="never" href="/#contact">
+                Request Free Quote
+              </Link>
+            </Stack>
+          </Stack>
+        </Container>
+      </nav>
+    </>
   );
-};
 
-export default ResponsiveAppBar;
+  const mobile = (
+    <>
+      <nav className={clsx(navigation, "mobile")}>
+        <Container variant="lg">
+          <Stack
+            direction="row"
+            align="center"
+            justify="spaceBetween"
+            style={{
+              paddingLeft: theme.spacing[2],
+              paddingRight: theme.spacing[2],
+            }}
+          >
+            <NextLink
+              href={"/" as any}
+              style={{
+                display: "block",
+                width: 121,
+                height: 23,
+              }}
+            >
+              <Image alt={dict.siteName} src={Logo} width={121} height={23} />
+            </NextLink>
+
+            <MobileNav dict={dict} contact={contact} nav={nav} />
+          </Stack>
+        </Container>
+      </nav>
+    </>
+  );
+
+  return (
+    <header className={header}>
+      {desktop}
+      {mobile}
+    </header>
+  );
+}

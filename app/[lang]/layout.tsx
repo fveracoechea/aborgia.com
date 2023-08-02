@@ -4,14 +4,16 @@ import { themeClassname, theme } from "design/theme";
 import "./material-icons.css";
 import "design/theme/globals.css";
 
-import { overlay } from "./styles.css";
-import bgImage from "shared/assets/colorful.png";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 import { getDictionary } from "./dictionaries";
 import { Metadata } from "next";
 import { APP_URL, LOCALES } from "shared/constants";
 import { Container } from "design/Container";
-import { Text } from "design/Text";
+import { Footer } from "components/Footer";
+import { Header } from "components/Header";
 import clsx from "clsx";
 
 type LayoutProps = { params: { lang: string } };
@@ -83,40 +85,22 @@ export default async function RootLayout(
   return (
     <html lang={params.lang}>
       <body className={clsx(themeClassname, font.className)}>
-        <header
-          style={{
-            backgroundColor: theme.color.primary.main,
-            padding: theme.spacing[3],
-          }}
-        >
-          <Container variant="xl">
-            <Text variant="h3" color="light">
-              {dict.siteName}
-            </Text>
-          </Container>
-        </header>
+        <Header dict={dict} />
 
-        <div
+        <Container component="main" variant="lg">
+          {children}
+        </Container>
+
+        {/* <div
           style={{
             backgroundImage: `url("${bgImage.src}")`,
             backgroundRepeat: "repeat",
           }}
         >
-          <div className={overlay}>
-            <Container component="main" variant="lg">
-              {children}
-            </Container>
-          </div>
-        </div>
+          <div className={overlay}></div>
+        </div> */}
 
-        <footer
-          style={{
-            backgroundColor: theme.color.grey.light,
-            padding: theme.spacing[10],
-          }}
-        >
-          Footer
-        </footer>
+        <Footer dict={dict} />
       </body>
     </html>
   );

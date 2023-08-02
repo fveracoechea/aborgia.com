@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { PropsWithChildren, ReactNode } from "react";
 import { Container, Box, styled, Stack } from "@mui/material";
-import Header from "./Header";
+import Header from "./_Header";
 
-import { Footer } from "components/Footer";
+import { Footer } from "components/_Footer";
 
 const Background = styled(Box)`
   background-image: url("/patterns/colorful.png");
@@ -36,7 +36,6 @@ export function Layout(props: Props) {
           </Container>
         </Overlay>
       </Background>
-      <Footer />
     </>
   );
 }

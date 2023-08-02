@@ -15,6 +15,9 @@ export const stackRecipe = recipe({
       },
     },
     justify: {
+      spaceBetween: {
+        justifyContent: "space-between",
+      },
       start: {
         justifyContent: "flex-start",
       },
@@ -43,6 +46,9 @@ export const stackRecipe = recipe({
       none: {
         gap: "0px",
       },
+      "1.5": {
+        gap: theme.spacing[1.5],
+      },
       "2": {
         gap: theme.spacing[2],
       },
@@ -54,6 +60,18 @@ export const stackRecipe = recipe({
       },
       "8": {
         gap: theme.spacing[8],
+      },
+      "10": {
+        gap: theme.spacing[10],
+      },
+      "12": {
+        gap: theme.spacing[12],
+      },
+      "14": {
+        gap: theme.spacing[14],
+      },
+      "16": {
+        gap: theme.spacing[16],
       },
     },
   },

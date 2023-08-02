@@ -7,6 +7,8 @@ type ColorKeys =
   | keyof typeof theme.color.text
   | "primary"
   | "secondary"
+  | "grey"
+  | "inherit"
   | "error";
 
 type ColorVariants = Record<ColorKeys, ComplexStyleRule>;
@@ -14,9 +16,11 @@ type ColorVariants = Record<ColorKeys, ComplexStyleRule>;
 const color = Object.fromEntries(
   Object.entries({
     ...theme.color.text,
-    primary: theme.color.primary.main,
-    secondary: theme.color.secondary.main,
-    error: theme.color.error.main,
+    primary: theme.color.primary.dark,
+    grey: theme.color.grey.main,
+    secondary: theme.color.secondary.dark,
+    error: theme.color.error,
+    inherit: "inherit",
   }).map(([key, value]) => [
     key,
     {
@@ -40,6 +44,9 @@ const fontWeight = Object.fromEntries(
 ) as FontWeightVariants;
 
 export const textRecipe = recipe({
+  base: {
+    textUnderlineOffset: theme.spacing[0.5],
+  },
   variants: {
     variant: {
       display: {
@@ -105,7 +112,7 @@ export const textRecipe = recipe({
     color,
   },
 
-  defaultVariants: { variant: "body1", color: "dark", fontWeight: "normal" },
+  defaultVariants: { variant: "body1", color: "inherit", fontWeight: "normal" },
 });
 
 export type TextVariants = RecipeVariants<typeof textRecipe>;

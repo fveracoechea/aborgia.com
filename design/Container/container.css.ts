@@ -4,8 +4,7 @@ import { theme } from "design/theme";
 export const containerRecipe = recipe({
   base: {
     margin: "0 auto",
-    paddingLeft: theme.spacing["2.5"],
-    paddingRight: theme.spacing["2.5"],
+    padding: theme.spacing["3"],
   },
   variants: {
     variant: {

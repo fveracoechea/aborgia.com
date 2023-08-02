@@ -1,25 +1,28 @@
 import { ComplexStyleRule } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
-import { theme } from "design/theme/vars.css";
-
-type RepeatVariants = Record<keyof typeof theme.gridRepeat, ComplexStyleRule>;
-
-const repeat = Object.fromEntries(
-  Object.entries(theme.gridRepeat).map(([key, value]) => [
-    key,
-    {
-      gridTemplateColumns: value,
-    },
-  ])
-) as RepeatVariants;
+import { breakpoints, theme } from "design/theme/vars.css";
 
 export const gridRecipe = recipe({
   base: {
     display: "grid",
   },
   variants: {
-    repeat,
+    repeat: {
+      "1x": { gridTemplateColumns: "repeat(1, 1fr)" },
+      "2x": {
+        gridTemplateColumns: "repeat(2, 1fr)",
+        "@media": {
+          [`screen and (max-width: ${breakpoints.md})`]: {
+            gridTemplateColumns: "1fr",
+          },
+        },
+      },
+      "3x": { gridTemplateColumns: "repeat(3, 1fr)" },
+      "4x": { gridTemplateColumns: "repeat(4, 1fr)" },
+      "5x": { gridTemplateColumns: "repeat(5, 1fr)" },
+      "6x": { gridTemplateColumns: "repeat(6, 1fr)" },
+    },
     gap: {
       none: {
         gap: "0px",
@@ -35,6 +38,18 @@ export const gridRecipe = recipe({
       },
       "8": {
         gap: theme.spacing[8],
+      },
+      "10": {
+        gap: theme.spacing[10],
+      },
+      "12": {
+        gap: theme.spacing[12],
+      },
+      "14": {
+        gap: theme.spacing[14],
+      },
+      "16": {
+        gap: theme.spacing[16],
       },
     },
   },

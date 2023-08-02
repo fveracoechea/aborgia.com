@@ -1,14 +1,65 @@
 import { createTheme, style } from "@vanilla-extract/css";
+import { lightenColor } from "./utils";
+
+export const breakpoints = {
+  sm: "600px",
+  md: "900px",
+  lg: "1200px",
+  xl: "1536px",
+  "2xl": "1920px",
+};
+
+export const color = {
+  common: {
+    black: "#2B2B2B",
+    white: "#FFFFFF",
+  },
+  primary: {
+    main: "#3CACAE",
+    light: lightenColor("#3CACAE", 20),
+    dark: lightenColor("#3CACAE", -20),
+  },
+  secondary: {
+    main: "#C26DBC",
+    light: lightenColor("#C26DBC", 20),
+    dark: lightenColor("#C26DBC", -20),
+  },
+  text: {
+    dark: "#333333",
+    light: "#FFFFFF",
+    disabled: "rgba(0, 0, 0, 0.38)",
+  },
+  grey: {
+    main: "#BDBDBD",
+    light: "#EEEEEE",
+    dark: "#616161",
+  },
+  error: {
+    main: "#EB0014",
+    light: "#FF99A2",
+    dark: "#C70011",
+  },
+  success: {
+    main: "#1AA251",
+    light: "#6AE79C",
+    dark: "#1AA251",
+  },
+  warning: {
+    main: "#DEA500",
+    light: "#FFDC48",
+    dark: "#AB6800",
+  },
+  info: {
+    main: "#0288d1",
+    light: "#03a9f4",
+    dark: "#01579b",
+  },
+  current: "currentColor",
+};
 
 export const [themeClassname, theme] = createTheme({
   // https://m2.material.io/design/layout/responsive-layout-grid.html#breakpoints
-  breakpoints: {
-    sm: "600px",
-    md: "900px",
-    lg: "1200px",
-    xl: "1536px",
-    "2xl": "1920px",
-  },
+  breakpoints,
 
   // https://tailwindcss.com/docs/customizing-spacing#default-spacing-scale
   spacing: {
@@ -64,53 +115,7 @@ export const [themeClassname, theme] = createTheme({
     "480": "120rem", // 1920px
   },
 
-  color: {
-    common: {
-      black: "#2B2B2B",
-      white: "#FFFFFF",
-    },
-    primary: {
-      main: "#3CACAE",
-      light: "#C8F4F9",
-      // dark: ???
-    },
-    secondary: {
-      main: "#EEB5EB",
-      // light: ???
-      dark: "#C26DBC",
-    },
-    text: {
-      dark: "#333333",
-      light: "#FFFFFF",
-      disabled: "rgba(0, 0, 0, 0.38)",
-    },
-    grey: {
-      main: "#BDBDBD",
-      light: "#EEEEEE",
-      dark: "#616161",
-    },
-    error: {
-      main: "#EB0014",
-      light: "#FF99A2",
-      dark: "#C70011",
-    },
-    success: {
-      main: "#1AA251",
-      light: "#6AE79C",
-      dark: "#1AA251",
-    },
-    warning: {
-      main: "#DEA500",
-      light: "#FFDC48",
-      dark: "#AB6800",
-    },
-    info: {
-      main: "#0288d1",
-      light: "#03a9f4",
-      dark: "#01579b",
-    },
-    current: "currentColor",
-  },
+  color,
 
   fontFamily: `Work Sans, sans-serif`,
 
@@ -152,14 +157,6 @@ export const [themeClassname, theme] = createTheme({
     none: "1em",
   },
 
-  wordSpacing: {
-    normal: "0",
-    base: "0.0125rem",
-    wide: "0.025em",
-    wider: "0.05rem",
-    widest: "0.0625rem",
-  },
-
   /** Borders & radius */
   border: {
     none: "0",
@@ -175,6 +172,7 @@ export const [themeClassname, theme] = createTheme({
 
   shadows: {
     none: "none",
+    "0": "0px 1px 1px -1px rgba(0,0,0,0.15)",
     "1": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
     "2": "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
     "3": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
@@ -201,15 +199,6 @@ export const [themeClassname, theme] = createTheme({
     "24": "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
   },
 
-  gridRepeat: {
-    "1x": "repeat(1, 1fr)",
-    "2x": "repeat(2, 1fr)",
-    "3x": "repeat(3, 1fr)",
-    "4x": "repeat(4, 1fr)",
-    "5x": "repeat(5, 1fr)",
-    "6x": "repeat(6, 1fr)",
-  },
-
   zIndex: {
     "-1": "-1",
     "0": "0",
@@ -218,6 +207,8 @@ export const [themeClassname, theme] = createTheme({
     "30": "30",
     "40": "40",
     "50": "50",
+    overlay: "900",
+    drawer: "1000",
     header: "1100",
     modal: "1200",
     notification: "1300",
@@ -225,7 +216,7 @@ export const [themeClassname, theme] = createTheme({
   },
 
   animation: {
-    easing: "cubic-bezier(0.4, 0, 1, 1)",
+    easing: "ease-in",
     duration: {
       short: "200ms",
       standard: "300ms",

@@ -8,23 +8,33 @@ type PageProps = { params: { lang: string } };
 export default async function HomePage({ params }: PageProps) {
   const dict = await getDictionary(params.lang);
   return (
-    <Stack>
-      <Text variant="h2">{dict.header.services}</Text>
+    <Stack gap="16" style={{ paddingTop: 80, paddingBottom: 80 }}>
       <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
-        voluptates laudantium ipsa natus hic tenetur omnis voluptatibus ipsum
-        accusantium quam quae quis perferendis explicabo suscipit eos dicta, sed
-        consequatur tempore.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+        nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
+        recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
+        expedita fuga. Beatae. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Impedit nesciunt deserunt laborum rem, doloremque
+        repellat hic enim suscipit, recusandae sint laudantium aliquam molestias
+        ab earum nostrum voluptatem expedita fuga. Beatae.
       </Text>
+
       <Text>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
-        voluptates laudantium ipsa natus hic tenetur omnis voluptatibus ipsum
-        accusantium quam quae quis perferendis explicabo suscipit eos dicta, sed
-        consequatur tempore.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+        nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
+        recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
+        expedita fuga. Beatae. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Impedit nesciunt deserunt laborum rem, doloremque
+        repellat hic enim suscipit, recusandae sint laudantium aliquam molestias
+        ab earum nostrum voluptatem expedita fuga. Beatae.
       </Text>
-      <Link color="primary" underline="hover" href="/">
-        Text link
-      </Link>
+
+      <Text>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+        nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
+        recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
+        expedita fuga. Beatae.
+      </Text>
     </Stack>
   );
 }

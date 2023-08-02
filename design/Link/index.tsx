@@ -1,6 +1,6 @@
 import { ElementType, forwardRef, ForwardedRef } from "react";
 import NextLInk from "next/link";
-import { LinkVariants, linkRecipe } from "./styles.css";
+import { LinkVariants, linkRecipe } from "./link.css";
 
 import { OverridableComponent, PolymorphicProps } from "design/theme";
 import { TextProps, Text } from "design/Text";
@@ -18,10 +18,11 @@ export type LinkProps<
 > = PolymorphicProps<LinkTypeMap, RootComponent>;
 
 function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<Element>) {
-  const { component, children, className, underline, ...otherProps } = props;
+  const { component, children, className, underline, navLink, ...otherProps } =
+    props;
 
   const Element = component ?? NextLInk;
-  const styles = linkRecipe({ underline });
+  const styles = linkRecipe({ underline, navLink });
 
   return (
     <Text

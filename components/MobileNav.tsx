@@ -1,67 +1,96 @@
-import { useRef, useState } from "react";
+"use client";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import * as Popover from "@radix-ui/react-popover";
+import * as Dialog from "@radix-ui/react-dialog";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "design/Button";
+import { Dict } from "locales/en";
+import { ReactNode, useState } from "react";
+import {
+  drawer,
+  overlay,
+  drawerContactLink,
+  drawerNavLink,
+} from "./classes.css";
+import { Link } from "design/Link";
+import { Text } from "design/Text";
+import { Stack } from "design/Stack";
+import { theme } from "design/theme";
 
-import MenuIcon from "@mui/icons-material/Menu";
-import PhoneIcon from "@mui/icons-material/Phone";
-import { Button, IconButton, Link, Menu, MenuItem } from "@mui/material";
-
-type Props = {
-  links: {
-    id: string;
-    href: string;
-    text: any;
-  }[];
+type NavLink = {
+  key: string;
+  icon?: ReactNode;
+  href: string;
+  text: string;
 };
 
-export function MobileNav({ links }: Props) {
+type Props = {
+  dict: Dict;
+  nav: NavLink[];
+  contact: NavLink[];
+};
+
+export function MobileNav(props: Props) {
   const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
-  const onOpen = () => setOpen(true);
-  const onClose = () => setOpen(false);
   return (
     <>
-      <IconButton
-        size="large"
-        aria-label="Navigation menu"
-        aria-controls="mobile-nav"
-        aria-haspopup="true"
-        onClick={onOpen}
-        color="inherit"
-        className="mobile"
-        edge="start"
-        ref={anchorRef}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Menu
-        id="mobile-nav"
-        className="mobile"
-        anchorEl={anchorRef.current}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+      <Button
+        color="light"
+        size="sm"
+        onClick={() => {
+          setOpen(!open);
         }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        open={open}
-        onClose={onClose}
       >
-        {links.map((link) => (
-          <MenuItem
-            component={Link}
-            key={link.id}
-            onClick={onClose}
-            href={link.href}
+        <VisuallyHidden.Root>
+          {open ? "Open" : "Close"} Navigation
+        </VisuallyHidden.Root>
+        <FontAwesomeIcon
+          fontSize="1.2rem"
+          color="white"
+          icon={open ? faClose : faBars}
+        />
+      </Button>
+      {open && (
+        <div className={drawer}>
+          {props.nav.map((link) => (
+            <Link
+              key={link.key}
+              color="light"
+              href={link.href}
+              className={drawerNavLink}
+            >
+              {link.text}
+            </Link>
+          ))}
+
+          <Text component="span" className={drawerNavLink}>
+            Contact
+          </Text>
+
+          {props.contact.map((link) => (
+            <Link
+              key={link.key}
+              color="light"
+              href={link.href}
+              className={drawerContactLink}
+            >
+              {link.icon}
+              {link.text}
+            </Link>
+          ))}
+
+          <Stack
+            direction="row"
+            justify="end"
+            style={{ padding: theme.spacing[4] }}
           >
-            {link.text}
-          </MenuItem>
-        ))}
-        <MenuItem component={Link} href="tel:+1 (404) 513-1683">
-          <PhoneIcon /> &nbsp; (404) 513-1683
-        </MenuItem>
-      </Menu>
+            <Link navLink="outlined" underline="never" href="/#contact">
+              Request Free Quote
+            </Link>
+          </Stack>
+        </div>
+      )}
     </>
   );
 }
