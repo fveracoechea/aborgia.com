@@ -7,8 +7,9 @@ export const es: Dict = {
     lang: "Elige tu idioma",
     follow: "Sigueme en Istagram",
     services: "Coberturas",
-    contact: "Contacto",
-    aboutMe: "Acerca de Mi",
+    quote: "Cotización Gratis",
+    blog: "Noticias",
+    aboutMe: "Acerca de Mí",
   },
   hero: {
     title: "Cobertura médica a tu alcance",

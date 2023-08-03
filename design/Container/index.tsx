@@ -19,10 +19,11 @@ function ContainerImpl(
   props: ContainerProps,
   forwardedRef: ForwardedRef<Element>
 ) {
-  const { component, children, className, variant, ...otherProps } = props;
+  const { component, children, className, maxWidth, spacing, ...otherProps } =
+    props;
 
   const Element = component ?? "div";
-  const styles = containerRecipe({ variant });
+  const styles = containerRecipe({ maxWidth, spacing });
 
   return (
     <Element

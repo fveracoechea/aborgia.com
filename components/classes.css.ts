@@ -1,14 +1,25 @@
-import { style } from "@vanilla-extract/css";
+import { style, keyframes } from "@vanilla-extract/css";
 import { theme, breakpoints } from "design/theme";
-import { scaleIn } from "design/theme/keyframes.css";
 
 export const overlay = style({
   position: "fixed",
   inset: 0,
   zIndex: theme.zIndex.overlay,
+  backgroundColor: "rgba(0,0,0, .3)",
+  display: "none",
+  opacity: 0,
+  transition: "opacity",
+  transitionDuration: theme.animation.duration.standard,
+  transitionTimingFunction: theme.animation.easing,
+  selectors: {
+    '&[data-state="open"]': {
+      display: "block",
+      opacity: 1,
+    },
+  },
 });
 
-export const drawer = style({
+export const mobileNav = style({
   backgroundColor: theme.color.common.black,
   color: theme.color.common.white,
   padding: theme.spacing[2],
@@ -17,17 +28,28 @@ export const drawer = style({
   alignItems: "stretch",
   position: "fixed",
   zIndex: theme.zIndex.drawer,
-  top: 55,
+  top: 60,
   left: 0,
   right: 0,
-  minHeight: "40vh",
-  animationName: scaleIn,
-  animationDuration: theme.animation.duration.short,
-  animationTimingFunction: theme.animation.easing,
-  boxShadow: theme.shadows[6],
+  transitionProperty: "transform",
+  transitionDuration: theme.animation.duration.standard,
+  transitionTimingFunction: theme.animation.easing,
+
+  selectors: {
+    '&[data-state="idle"]': {
+      transform: "translateY(calc(-100% - 60px))",
+    },
+    '&[data-state="close"]': {
+      transform: "translateY(calc(-100% - 60px))",
+    },
+    '&[data-state="open"]': {
+      transform: "translateY(0%)",
+      boxShadow: theme.shadows[6],
+    },
+  },
 });
 
-export const drawerNavLink = style({
+export const mobileNavLink = style({
   display: "flex",
   color: theme.color.grey.light,
   padding: theme.spacing[3],
@@ -39,7 +61,7 @@ export const drawerNavLink = style({
   },
 });
 
-export const drawerContactLink = style({
+export const mobileContactLink = style({
   display: "flex",
   alignItems: "center",
   color: theme.color.grey.light,
@@ -59,7 +81,6 @@ export const toolbar = style({
 });
 
 export const toolbarContent = style({
-  padding: theme.spacing[1.5],
   display: "flex",
   justifyContent: "space-between",
 });
@@ -72,14 +93,16 @@ export const footer = style({
 });
 
 export const header = style({
-  width: "100vw",
+  width: "100%",
   boxShadow: theme.shadows[4],
   position: "relative",
   zIndex: theme.zIndex.header,
 });
 
 export const navigation = style({
+  position: "relative",
   backgroundColor: theme.color.primary.dark,
+  zIndex: theme.zIndex.header,
 });
 
 export const divider = style({

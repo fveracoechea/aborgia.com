@@ -4,9 +4,10 @@ export const en = {
   header: {
     lang: "Select your language",
     follow: "Follow me on Istagram",
-    services: "Coverages",
-    contact: "Contact",
     aboutMe: "About Me",
+    services: "Insurance",
+    quote: "Request Free Quote",
+    blog: "News & Updates",
   },
   hero: {
     title: "Medical coverage at your fingertips",

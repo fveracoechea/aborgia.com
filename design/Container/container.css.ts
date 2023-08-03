@@ -4,10 +4,20 @@ import { theme } from "design/theme";
 export const containerRecipe = recipe({
   base: {
     margin: "0 auto",
-    padding: theme.spacing["3"],
   },
   variants: {
-    variant: {
+    spacing: {
+      sm: {
+        padding: `${theme.spacing[1.5]} ${theme.spacing[3]}`,
+      },
+      md: {
+        padding: theme.spacing["3"],
+      },
+      lg: {
+        padding: `${theme.spacing[4]} ${theme.spacing[3]}`,
+      },
+    },
+    maxWidth: {
       md: {
         maxWidth: theme.breakpoints.md,
       },
@@ -21,7 +31,8 @@ export const containerRecipe = recipe({
   },
 
   defaultVariants: {
-    variant: "md",
+    maxWidth: "md",
+    spacing: "md",
   },
 });
 

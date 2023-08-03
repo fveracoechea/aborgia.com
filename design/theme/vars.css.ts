@@ -9,6 +9,11 @@ export const breakpoints = {
   "2xl": "1920px",
 };
 
+export const mediaQueries = {
+  isMobile: `screen and (max-width: ${breakpoints.md}`,
+  isDesktop: `screen and (min-width: ${breakpoints.md}`,
+};
+
 export const color = {
   common: {
     black: "#2B2B2B",
@@ -216,7 +221,7 @@ export const [themeClassname, theme] = createTheme({
   },
 
   animation: {
-    easing: "ease-in",
+    easing: "cubic-bezier(0.46, 0.03, 0.52, 0.96)",
     duration: {
       short: "200ms",
       standard: "300ms",

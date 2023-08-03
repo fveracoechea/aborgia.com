@@ -13,7 +13,7 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   minHeight: "100vh",
-  maxWidth: "100vw",
+  overflowX: "hidden",
   color: theme.color.text.dark,
 });
 

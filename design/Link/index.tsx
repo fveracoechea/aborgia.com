@@ -6,7 +6,7 @@ import { OverridableComponent, PolymorphicProps } from "design/theme";
 import { TextProps, Text } from "design/Text";
 import clsx from "clsx";
 
-type Props = LinkVariants & TextProps & {};
+type Props = LinkVariants & TextProps;
 
 interface LinkTypeMap {
   props: Props;
@@ -18,11 +18,18 @@ export type LinkProps<
 > = PolymorphicProps<LinkTypeMap, RootComponent>;
 
 function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<Element>) {
-  const { component, children, className, underline, navLink, ...otherProps } =
-    props;
+  const {
+    component,
+    children,
+    className,
+    underline,
+    fontWeight,
+    color,
+    ...otherProps
+  } = props;
 
   const Element = component ?? NextLInk;
-  const styles = linkRecipe({ underline, navLink });
+  const styles = linkRecipe({ underline });
 
   return (
     <Text

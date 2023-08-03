@@ -4,25 +4,28 @@ import NextLink from "next/link";
 import { Dict } from "locales/en";
 import { header, navigation, toolbar, toolbarContent } from "./classes.css";
 import { Stack } from "design/Stack";
-import { Link } from "design/Link";
 import Logo from "shared/assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEarthAmericas,
   faEnvelope,
   faPhone,
+  faCaretDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import clsx from "clsx";
 import { MobileNav } from "./MobileNav";
 import { theme } from "design/theme";
+import { Button, ButtonLink } from "design/Button";
+import { LangMap } from "shared/constants";
 
 type Props = {
   dict: Dict;
+  lang: string;
 };
 
-export function Header({ dict }: Props) {
+export function Header({ dict, lang }: Props) {
   const contact = [
     {
       key: "c-phone",
@@ -58,75 +61,56 @@ export function Header({ dict }: Props) {
     {
       key: "nav-news",
       href: "/#news-and-updates",
-      text: "News & Updates",
+      text: dict.header.blog,
     },
   ];
+
+  const logo = (
+    <NextLink
+      href={"/" as any}
+      style={{ display: "block", width: 194, height: 36 }}
+    >
+      <Image alt={dict.siteName} src={Logo} width={194} height={36} />
+    </NextLink>
+  );
 
   const desktop = (
     <>
       <div className={clsx(toolbar, "desktop")}>
-        <Container variant="lg" className={toolbarContent}>
+        <Container maxWidth="lg" spacing="sm" className={toolbarContent}>
           <Stack direction="row" gap="4">
-            <Stack
-              align="center"
-              component={Link}
-              navLink="light"
-              underline="never"
-              href="/"
-              direction="row"
-              gap="2"
-            >
+            <ButtonLink size="sm" href="/">
               <FontAwesomeIcon color="white" icon={faEarthAmericas} />
-              English
-            </Stack>
+              {LangMap[lang]}
+              <FontAwesomeIcon color="white" icon={faCaretDown} />
+            </ButtonLink>
           </Stack>
           <Stack direction="row" gap="4">
-            {contact.map((c) => (
-              <Stack
-                component={Link}
-                navLink="light"
-                align="center"
-                underline="never"
-                key={c.key}
-                href={c.href}
-                direction="row"
-                gap="2"
-              >
-                {c.icon}
-                {c.text}
-              </Stack>
+            {contact.map((link) => (
+              <ButtonLink size="sm" key={link.key} href={link.href}>
+                {link.icon}
+                {link.text}
+              </ButtonLink>
             ))}
           </Stack>
         </Container>
       </div>
 
       <nav className={clsx(navigation, "desktop")}>
-        <Container variant="lg">
+        <Container maxWidth="lg">
           <Stack direction="row" align="center" justify="spaceBetween">
             <Stack direction="row" align="center" gap="4">
-              <NextLink
-                href={"/" as any}
-                style={{ display: "block", width: 194, height: 36 }}
-              >
-                <Image alt={dict.siteName} src={Logo} width={194} height={36} />
-              </NextLink>
+              {logo}
               {nav.map((link) => (
-                <Link
-                  navLink="dark"
-                  underline="never"
-                  key={link.key}
-                  href={link.href}
-                >
+                <ButtonLink size="md" key={link.key} href={link.href}>
                   {link.text}
-                </Link>
+                </ButtonLink>
               ))}
             </Stack>
 
-            <Stack direction="row" align="center" gap="4">
-              <Link navLink="outlined" underline="never" href="/#contact">
-                Request Free Quote
-              </Link>
-            </Stack>
+            <ButtonLink color="light" size="md" href="" variant="outlined">
+              {dict.header.quote}
+            </ButtonLink>
           </Stack>
         </Container>
       </nav>
@@ -136,7 +120,7 @@ export function Header({ dict }: Props) {
   const mobile = (
     <>
       <nav className={clsx(navigation, "mobile")}>
-        <Container variant="lg">
+        <Container>
           <Stack
             direction="row"
             align="center"
@@ -146,16 +130,7 @@ export function Header({ dict }: Props) {
               paddingRight: theme.spacing[2],
             }}
           >
-            <NextLink
-              href={"/" as any}
-              style={{
-                display: "block",
-                width: 121,
-                height: 23,
-              }}
-            >
-              <Image alt={dict.siteName} src={Logo} width={121} height={23} />
-            </NextLink>
+            {logo}
 
             <MobileNav dict={dict} contact={contact} nav={nav} />
           </Stack>

@@ -112,7 +112,7 @@ export const textRecipe = recipe({
     color,
   },
 
-  defaultVariants: { variant: "body1", color: "inherit", fontWeight: "normal" },
+  defaultVariants: { variant: "body1", fontWeight: "normal", color: "inherit" },
 });
 
 export type TextVariants = RecipeVariants<typeof textRecipe>;

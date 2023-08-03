@@ -33,7 +33,30 @@ export default async function HomePage({ params }: PageProps) {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
         nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
         recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
-        expedita fuga. Beatae.
+        expedita fuga. Beatae. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Impedit nesciunt deserunt laborum rem, doloremque
+        repellat hic enim suscipit, recusandae sint laudantium aliquam molestias
+        ab earum nostrum voluptatem expedita fuga. Beatae.
+      </Text>
+
+      <Text>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+        nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
+        recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
+        expedita fuga. Beatae. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Impedit nesciunt deserunt laborum rem, doloremque
+        repellat hic enim suscipit, recusandae sint laudantium aliquam molestias
+        ab earum nostrum voluptatem expedita fuga. Beatae.
+      </Text>
+
+      <Text>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
+        nesciunt deserunt laborum rem, doloremque repellat hic enim suscipit,
+        recusandae sint laudantium aliquam molestias ab earum nostrum voluptatem
+        expedita fuga. Beatae. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Impedit nesciunt deserunt laborum rem, doloremque
+        repellat hic enim suscipit, recusandae sint laudantium aliquam molestias
+        ab earum nostrum voluptatem expedita fuga. Beatae.
       </Text>
     </Stack>
   );

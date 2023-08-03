@@ -85,21 +85,10 @@ export default async function RootLayout(
   return (
     <html lang={params.lang}>
       <body className={clsx(themeClassname, font.className)}>
-        <Header dict={dict} />
-
-        <Container component="main" variant="lg">
+        <Header dict={dict} lang={params.lang} />
+        <Container component="main" maxWidth="lg">
           {children}
         </Container>
-
-        {/* <div
-          style={{
-            backgroundImage: `url("${bgImage.src}")`,
-            backgroundRepeat: "repeat",
-          }}
-        >
-          <div className={overlay}></div>
-        </div> */}
-
         <Footer dict={dict} />
       </body>
     </html>

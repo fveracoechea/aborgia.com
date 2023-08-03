@@ -4,19 +4,33 @@ import * as Popover from "@radix-ui/react-popover";
 import * as Dialog from "@radix-ui/react-dialog";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "design/Button";
+import { Button, ButtonLink } from "design/Button";
 import { Dict } from "locales/en";
-import { ReactNode, useState } from "react";
+import { createPortal } from "react-dom";
+import { ReactNode, useEffect, useRef, useState, useCallback } from "react";
 import {
-  drawer,
   overlay,
-  drawerContactLink,
-  drawerNavLink,
+  mobileContactLink,
+  mobileNavLink,
+  mobileNav,
 } from "./classes.css";
 import { Link } from "design/Link";
 import { Text } from "design/Text";
 import { Stack } from "design/Stack";
-import { theme } from "design/theme";
+import { mediaQueries, theme } from "design/theme";
+import { useMediaQuery } from "shared/hooks/useMediaQuery";
+import { useEscapePress } from "shared/hooks/useEscapePress";
+
+function lockBodyScroll() {
+  document.body.style.position = "fixed";
+  document.body.style.top = `0`;
+}
+
+function unlockBodyScroll() {
+  document.body.style.position = "";
+  document.body.style.top = "";
+  window.scrollTo(0, 0);
+}
 
 type NavLink = {
   key: string;
@@ -31,65 +45,87 @@ type Props = {
   contact: NavLink[];
 };
 
+type NavState = "idle" | "open" | "close";
+
 export function MobileNav(props: Props) {
-  const [open, setOpen] = useState(false);
+  const { dict } = props;
+  const [state, setState] = useState<NavState>("idle");
+
+  function handleToggleNav() {
+    const nextState = state === "open" ? "close" : "open";
+    if (nextState === "open") lockBodyScroll();
+    else unlockBodyScroll();
+    setState(nextState);
+  }
+
+  const onClose = useCallback(() => {
+    if (state !== "close") {
+      unlockBodyScroll();
+      setState("close");
+    }
+  }, [state]);
+
+  useEscapePress(onClose);
+
+  useMediaQuery(mediaQueries.isMobile, (event) => {
+    if (!event.matches) onClose();
+  });
+
   return (
     <>
-      <Button
-        color="light"
-        size="sm"
-        onClick={() => {
-          setOpen(!open);
-        }}
-      >
+      <Button color="light" size="sm" onClick={handleToggleNav}>
         <VisuallyHidden.Root>
-          {open ? "Open" : "Close"} Navigation
+          {state !== "open" ? "Open" : "Close"} Navigation
         </VisuallyHidden.Root>
         <FontAwesomeIcon
           fontSize="1.2rem"
           color="white"
-          icon={open ? faClose : faBars}
+          icon={state === "open" ? faClose : faBars}
         />
       </Button>
-      {open && (
-        <div className={drawer}>
-          {props.nav.map((link) => (
-            <Link
-              key={link.key}
-              color="light"
-              href={link.href}
-              className={drawerNavLink}
+      {createPortal(
+        <>
+          <div className={overlay} data-state={state} onClick={onClose} />
+          <div className={mobileNav} data-state={state}>
+            {props.nav.map((link) => (
+              <Link
+                key={link.key}
+                color="light"
+                href={link.href}
+                className={mobileNavLink}
+              >
+                {link.text}
+              </Link>
+            ))}
+
+            <Text component="span" className={mobileNavLink}>
+              Contact
+            </Text>
+
+            {props.contact.map((link) => (
+              <Link
+                key={link.key}
+                color="light"
+                href={link.href}
+                className={mobileContactLink}
+              >
+                {link.icon}
+                {link.text}
+              </Link>
+            ))}
+
+            <Stack
+              direction="row"
+              justify="end"
+              style={{ padding: theme.spacing[4], marginTop: theme.spacing[8] }}
             >
-              {link.text}
-            </Link>
-          ))}
-
-          <Text component="span" className={drawerNavLink}>
-            Contact
-          </Text>
-
-          {props.contact.map((link) => (
-            <Link
-              key={link.key}
-              color="light"
-              href={link.href}
-              className={drawerContactLink}
-            >
-              {link.icon}
-              {link.text}
-            </Link>
-          ))}
-
-          <Stack
-            direction="row"
-            justify="end"
-            style={{ padding: theme.spacing[4] }}
-          >
-            <Link navLink="outlined" underline="never" href="/#contact">
-              Request Free Quote
-            </Link>
-          </Stack>
-        </div>
+              <ButtonLink variant="outlined" href="/#contact">
+                {dict.header.quote}
+              </ButtonLink>
+            </Stack>
+          </div>
+        </>,
+        document.body
       )}
     </>
   );

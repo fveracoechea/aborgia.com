@@ -7,8 +7,9 @@ export const pt: Dict = {
     lang: "Selecione sua lingua",
     follow: "Me siga no Instagram",
     services: "Coberturas",
-    contact: "Contato",
     aboutMe: "Sobre mim",
+    quote: "Orçamento Gratuito",
+    blog: "Notícias",
   },
   hero: {
     title: "Cobertura médica ao seu alcance",

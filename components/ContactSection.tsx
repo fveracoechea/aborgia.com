@@ -12,7 +12,7 @@ import {
 import Alert from "@mui/material/Alert";
 import ReCAPTCHA from "react-google-recaptcha";
 
-import { useContactForm } from "../hooks/useContactForm";
+import { useContactForm } from "../shared/hooks/useContactForm";
 import { useTranslation } from "next-export-i18n";
 
 const ReCAPTCHA_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;

@@ -53,7 +53,7 @@ export function Footer({ dict }: Props) {
     {
       key: "m-contact",
       href: "/#contact",
-      text: dict.header.contact,
+      text: dict.header.quote,
     },
     {
       key: "m-service",
@@ -145,7 +145,7 @@ export function Footer({ dict }: Props) {
 
   return (
     <footer className={footer}>
-      <Container variant="lg">
+      <Container maxWidth="lg">
         <Grid repeat="2x" gap="12">
           {/* DESKTOP */}
           {desktop}
