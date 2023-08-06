@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
-import { DEFAULT_LOCALE, LOCALES } from "shared/constants";
+import { match } from '@formatjs/intl-localematcher';
+import Negotiator from 'negotiator';
+import { DEFAULT_LOCALE, LOCALES } from 'shared/constants';
 
 function getLocale(request: NextRequest) {
   // Negotiator expects plain object so we need to transform headers
@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
   const pathnameIsMissingLocale = LOCALES.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   // Redirect if there is no locale
@@ -28,16 +28,14 @@ export function middleware(request: NextRequest) {
 
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
-    return NextResponse.redirect(
-      new URL(`/${locale}/${pathname}`, request.url)
-    );
+    return NextResponse.redirect(new URL(`/${locale}/${pathname}`, request.url));
   }
 }
 
 export const config = {
   matcher: [
     // Matcher ignoring `/_next/` and `/api/`
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
     // Optional: only run on root (/) URL
     // '/'
   ],

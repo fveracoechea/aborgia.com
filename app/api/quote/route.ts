@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import Mailjet from "node-mailjet";
+import { NextRequest, NextResponse } from 'next/server';
+
+import Mailjet from 'node-mailjet';
 
 const mailjet = new Mailjet({
   apiKey: process.env.MAILJET_API_KEY,
@@ -21,42 +22,26 @@ type ApiResponse = {
 };
 
 const getEmailHtml = (data: Data) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    age,
-    insurance,
-    additionalInformation,
-    phone,
-  } = data;
+  const { firstName, lastName, email, age, insurance, additionalInformation, phone } = data;
   return `
   <h3 style="color: #c26dbc">
   New Quote request from: ${firstName}
   </h3>
   <p><b style="color: #3cacae">Email: </b> ${email}</p>
   <p><b style="color: #3cacae">First Name: </b> ${firstName}</p>
-  <p><b style="color: #3cacae">Last Name: </b> ${lastName || "none"}</p>
-  <p><b style="color: #3cacae">Age: </b> ${age || "none"}</p>
-  <p><b style="color: #3cacae">Phone: </b> ${phone || "none"}</p>
-  <p><b style="color: #3cacae">Insurance: </b> ${insurance || "none"}</p>
+  <p><b style="color: #3cacae">Last Name: </b> ${lastName || 'none'}</p>
+  <p><b style="color: #3cacae">Age: </b> ${age || 'none'}</p>
+  <p><b style="color: #3cacae">Phone: </b> ${phone || 'none'}</p>
+  <p><b style="color: #3cacae">Insurance: </b> ${insurance || 'none'}</p>
   <p>
   <b style="color: #3cacae">Additional Information: </b>
   </p>
-  <p>${additionalInformation || "none"}</p>
+  <p>${additionalInformation || 'none'}</p>
   `;
 };
 
 const getEmailText = (data: Data) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    age,
-    insurance,
-    additionalInformation,
-    phone,
-  } = data;
+  const { firstName, lastName, email, age, insurance, additionalInformation, phone } = data;
   return `
   New Quote request from: ${firstName}
 
@@ -64,18 +49,18 @@ const getEmailText = (data: Data) => {
 
   First Name: ${firstName}
 
-  Last Name: ${lastName || "none"}
+  Last Name: ${lastName || 'none'}
 
-  Age:  ${age || "none"}
+  Age:  ${age || 'none'}
 
-  Phone: ${phone || "none"}
+  Phone: ${phone || 'none'}
 
-  Insurance: ${insurance || "none"}
+  Insurance: ${insurance || 'none'}
 
   Additional Information:
 
 
-  ${additionalInformation || "none"}
+  ${additionalInformation || 'none'}
   `;
 };
 
@@ -83,17 +68,17 @@ export async function POST(request: NextRequest) {
   try {
     const values = await request.json();
 
-    await mailjet.post("send", { version: "v3.1" }).request({
+    await mailjet.post('send', { version: 'v3.1' }).request({
       Messages: [
         {
           From: {
-            Email: "aborgiainsurance@gmail.com",
-            Name: "Noreply Website: Arelys Borgia",
+            Email: 'aborgiainsurance@gmail.com',
+            Name: 'Noreply Website: Arelys Borgia',
           },
           To: [
             {
-              Email: "aborgiainsurance@gmail.com",
-              Name: "Arelys Borgia",
+              Email: 'aborgiainsurance@gmail.com',
+              Name: 'Arelys Borgia',
             },
           ],
           Subject: `New Quote requested from: ${values.firstName}`,
@@ -105,7 +90,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ error: false });
   } catch (error) {
-    console.log("error ", error);
-    return  NextResponse.json({ error: true });
+    console.log('error ', error);
+    return NextResponse.json({ error: true });
   }
 }

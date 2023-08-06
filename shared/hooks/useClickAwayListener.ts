@@ -1,11 +1,11 @@
-import { useEffect, MutableRefObject } from "react";
+import { MutableRefObject, useEffect } from 'react';
 
 /**
  * Hook that executes a handler when click outside of the passed ref
  */
 export function useClickAwayListener(
   ref: MutableRefObject<HTMLElement | null>,
-  handler: () => void
+  handler: () => void,
 ) {
   useEffect(() => {
     /**
@@ -17,11 +17,11 @@ export function useClickAwayListener(
       }
     }
     // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // Unbind the event listener on clean up
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref, handler]);
 }

@@ -1,11 +1,8 @@
-import Translate from "@mui/icons-material/Translate";
-import { Button, Tooltip, Menu, MenuItem } from "@mui/material";
-import {
-  useLanguageQuery,
-  useTranslation,
-  LanguageSwitcher,
-} from "next-export-i18n";
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
+
+import Translate from '@mui/icons-material/Translate';
+import { Button, Menu, MenuItem, Tooltip } from '@mui/material';
+import { LanguageSwitcher, useLanguageQuery, useTranslation } from 'next-export-i18n';
 
 export function LanguageSelector() {
   const [lang, setLang] = useState(false);
@@ -14,7 +11,7 @@ export function LanguageSelector() {
   const langRef = useRef(null);
   return (
     <>
-      <Tooltip arrow title={t("header.lang")}>
+      <Tooltip arrow title={t('header.lang')}>
         <Button
           color="inherit"
           ref={langRef}
@@ -24,11 +21,7 @@ export function LanguageSelector() {
           {query?.lang}
         </Button>
       </Tooltip>
-      <Menu
-        anchorEl={langRef.current}
-        open={lang}
-        onClose={() => setLang(false)}
-      >
+      <Menu anchorEl={langRef.current} open={lang} onClose={() => setLang(false)}>
         <MenuItem onClick={() => setLang(false)}>
           <LanguageSwitcher lang="es">Español</LanguageSwitcher>
         </MenuItem>

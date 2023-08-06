@@ -1,19 +1,20 @@
-import React from "react";
-import {
-  Grid,
-  TextField,
-  Button,
-  Box,
-  MenuItem,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
-import Alert from "@mui/material/Alert";
-import ReCAPTCHA from "react-google-recaptcha";
+import React from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useContactForm } from "../shared/hooks/useContactForm";
-import { useTranslation } from "next-export-i18n";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import Alert from '@mui/material/Alert';
+import { useTranslation } from 'next-export-i18n';
+
+import { useContactForm } from '../shared/hooks/useContactForm';
 
 const ReCAPTCHA_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!;
 
@@ -23,20 +24,20 @@ export function ContactSection() {
 
   const coverages = [
     {
-      id: "cc-1",
-      name: t("coverages.1.name"),
+      id: 'cc-1',
+      name: t('coverages.1.name'),
     },
     {
-      id: "cc-2",
-      name: t("coverages.2.name"),
+      id: 'cc-2',
+      name: t('coverages.2.name'),
     },
     {
-      id: "cc-3",
-      name: t("coverages.3.name"),
+      id: 'cc-3',
+      name: t('coverages.3.name'),
     },
     {
-      id: "cc-4",
-      name: t("coverages.4.name"),
+      id: 'cc-4',
+      name: t('coverages.4.name'),
     },
   ];
 
@@ -49,22 +50,19 @@ export function ContactSection() {
   return (
     <Stack sx={{ scrollMarginTop: 16 * 6 }} spacing={4} id="contact">
       <Typography textAlign="center" variant="h3">
-        {t("form.title")}
+        {t('form.title')}
       </Typography>
 
       {message?.severity && (
         <Box
           sx={{
-            position: "fixed",
+            position: 'fixed',
             zIndex: 10,
-            right: "2rem",
-            top: "6rem",
+            right: '2rem',
+            top: '6rem',
           }}
         >
-          <Alert
-            sx={{ boxShadow: (t) => t.shadows[4] }}
-            severity={message.severity}
-          >
+          <Alert sx={{ boxShadow: t => t.shadows[4] }} severity={message.severity}>
             {message.text}
           </Alert>
         </Box>
@@ -84,7 +82,7 @@ export function ContactSection() {
               fullWidth
               id="firstName"
               name="firstName"
-              label={t("form.inputs.firstName")}
+              label={t('form.inputs.firstName')}
               required
               value={form.values.firstName}
               onChange={form.handleChange}
@@ -97,7 +95,7 @@ export function ContactSection() {
               fullWidth
               id="lastName"
               name="lastName"
-              label={t("form.inputs.lastName")}
+              label={t('form.inputs.lastName')}
               value={form.values.lastName}
               onChange={form.handleChange}
               error={form.touched.lastName && Boolean(form.errors.lastName)}
@@ -110,7 +108,7 @@ export function ContactSection() {
               id="age"
               name="age"
               type="number"
-              label={t("form.inputs.age")}
+              label={t('form.inputs.age')}
               value={form.values.age}
               onChange={form.handleChange}
               error={form.touched.age && Boolean(form.errors.age)}
@@ -122,7 +120,7 @@ export function ContactSection() {
               fullWidth
               id="email"
               name="email"
-              label={t("form.inputs.email")}
+              label={t('form.inputs.email')}
               required
               value={form.values.email}
               onChange={form.handleChange}
@@ -135,7 +133,7 @@ export function ContactSection() {
               fullWidth
               id="phone"
               name="phone"
-              label={t("form.inputs.phone")}
+              label={t('form.inputs.phone')}
               required
               value={form.values.phone}
               onChange={form.handleChange}
@@ -149,20 +147,20 @@ export function ContactSection() {
               id="insurance"
               name="insurance"
               required
-              label={t("form.inputs.insurance")}
+              label={t('form.inputs.insurance')}
               value={form.values.insurance}
               onChange={form.handleChange}
               error={form.touched.insurance && Boolean(form.errors.insurance)}
               helperText={form.touched.insurance && form.errors.insurance}
               select
             >
-              {coverages.map((item) => (
+              {coverages.map(item => (
                 <MenuItem key={item?.id} value={item?.name}>
                   {item?.name}
                 </MenuItem>
               ))}
-              <MenuItem key="other-key" value={t("other")}>
-                {t("other")}
+              <MenuItem key="other-key" value={t('other')}>
+                {t('other')}
               </MenuItem>
             </TextField>
           </Grid>
@@ -171,32 +169,22 @@ export function ContactSection() {
               fullWidth
               id="additionalInformation"
               name="additionalInformation"
-              label={t("form.inputs.additionalInformation")}
+              label={t('form.inputs.additionalInformation')}
               multiline
               maxRows={4}
               minRows={4}
               value={form.values.additionalInformation}
               onChange={form.handleChange}
               error={
-                form.touched.additionalInformation &&
-                Boolean(form.errors.additionalInformation)
+                form.touched.additionalInformation && Boolean(form.errors.additionalInformation)
               }
-              helperText={
-                form.touched.additionalInformation &&
-                form.errors.additionalInformation
-              }
+              helperText={form.touched.additionalInformation && form.errors.additionalInformation}
             />
           </Grid>
           <Grid item md={4} sm={12} xs={12}>
             <ReCAPTCHA sitekey={ReCAPTCHA_KEY} onChange={onChange} />
           </Grid>
-          <Grid
-            item
-            md={12}
-            sm={12}
-            xs={12}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
-          >
+          <Grid item md={12} sm={12} xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             {isSubmitting ? (
               <CircularProgress />
             ) : (
@@ -204,12 +192,12 @@ export function ContactSection() {
                 variant="contained"
                 size="large"
                 sx={{
-                  minWidth: "14rem",
-                  color: (t) => t.palette.text.secondary,
+                  minWidth: '14rem',
+                  color: t => t.palette.text.secondary,
                 }}
                 type="submit"
               >
-                {t("form.inputs.submit")}
+                {t('form.inputs.submit')}
               </Button>
             )}
           </Grid>

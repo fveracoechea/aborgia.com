@@ -1,12 +1,8 @@
-import { Box, Radio, Stack, styled } from "@mui/material";
-import Image from "next/image";
-import {
-  ChangeEvent,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, PropsWithChildren, useCallback, useEffect, useState } from 'react';
+
+import Image from 'next/image';
+
+import { Box, Radio, Stack, styled } from '@mui/material';
 
 const Img = styled(Image)`
   display: block;
@@ -75,7 +71,7 @@ export function Slider(props: Props) {
 
   const setTimer = useCallback(() => {
     timer = setInterval(() => {
-      setActiveImg((active) => {
+      setActiveImg(active => {
         if (active >= images.length - 1) {
           return 0;
         } else {
@@ -91,7 +87,7 @@ export function Slider(props: Props) {
       setActiveImg(Number(event.target.value));
       setTimer();
     },
-    [setTimer]
+    [setTimer],
   );
 
   useEffect(() => {
@@ -105,7 +101,7 @@ export function Slider(props: Props) {
     <Wrapper>
       {images.map((src, idx) => (
         <Img
-          className={idx === activeImg ? "active" : ""}
+          className={idx === activeImg ? 'active' : ''}
           key={src}
           src={src}
           alt={`hero-image-${idx}`}
@@ -121,7 +117,7 @@ export function Slider(props: Props) {
               key={src}
               value={idx}
               name="slider-bullets"
-              sx={{ svg: { color: "white" } }}
+              sx={{ svg: { color: 'white' } }}
               size="small"
               disableRipple
               checked={idx === activeImg}

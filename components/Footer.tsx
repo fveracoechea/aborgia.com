@@ -1,21 +1,14 @@
-import Image from "next/image";
-import { Dict } from "locales/en";
-import { footer, divider, mobileStack } from "./classes.css";
-import { Container } from "design/Container";
-import { Grid } from "design/Grid";
-import { Stack } from "design/Stack";
-import { Link } from "design/Link";
-import { Text } from "design/Text";
+import Image from 'next/image';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faPhone,
-  faCopyright,
-} from "@fortawesome/free-solid-svg-icons";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-
-import Logo from "shared/assets/logo.png";
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faCopyright, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dict } from 'locales/en';
+import SvgLogo from 'shared/assets/Logo.svg';
+import { Container } from 'shared/ui/Container';
+import { Link } from 'shared/ui/Link';
+import { Stack } from 'shared/ui/Stack';
+import { Text } from 'shared/ui/Text';
 
 type Props = {
   dict: Dict;
@@ -25,133 +18,85 @@ export function Footer({ dict }: Props) {
   const year = new Date().getFullYear();
   const contact = [
     {
-      key: "c-phone",
+      key: 'c-phone',
       icon: <FontAwesomeIcon fontSize="1.2rem" icon={faPhone} />,
-      href: "tel:+1 (404) 513-1683",
-      text: "+1 (404) 513-1683",
+      href: 'tel:+1 (404) 513-1683',
+      text: '+1 (404) 513-1683',
     },
     {
-      key: "c-email",
+      key: 'c-email',
       icon: <FontAwesomeIcon fontSize="1.2rem" icon={faEnvelope} />,
-      href: "mailto:aborgiainsurance@gmail.com",
-      text: "aborgiainsurance@gmail.com",
+      href: 'mailto:aborgiainsurance@gmail.com',
+      text: 'aborgiainsurance@gmail.com',
     },
     {
-      key: "c-insta",
+      key: 'c-insta',
       icon: <FontAwesomeIcon fontSize="1.3rem" icon={faInstagram} />,
-      href: "https://www.instagram.com/aborgia_insurance/",
-      text: "@aborgia_insurance",
+      href: 'https://www.instagram.com/aborgia_insurance/',
+      text: '@aborgia_insurance',
     },
   ];
 
   const menu = [
     {
-      key: "m-about",
-      href: "/#about-me",
+      key: 'm-about',
+      href: '/#about-me',
       text: dict.header.aboutMe,
     },
     {
-      key: "m-contact",
-      href: "/#contact",
+      key: 'm-contact',
+      href: '/#contact',
       text: dict.header.quote,
     },
     {
-      key: "m-service",
-      href: "/#services",
+      key: 'm-service',
+      href: '/#services',
       text: dict.header.services,
     },
   ];
 
-  const desktop = (
-    <>
-      <Stack gap="12" direction="row" className="desktop">
-        <Stack gap="4">
-          <Text fontWeight="bold">CONTACT</Text>
-          {contact.map((link) => (
-            <Stack key={link.key} align="center" direction="row" gap="2">
-              {link.icon}
-              <Link href={link.href}>{link.text}</Link>
-            </Stack>
-          ))}
-        </Stack>
-        <Stack gap="4">
-          <Text fontWeight="bold">MENU</Text>
-          {menu.map((link) => (
-            <Link key={link.key} href={link.href}>
-              {link.text}
-            </Link>
-          ))}
-        </Stack>
-      </Stack>
-
-      <Stack gap="4" align="end" className="desktop">
-        <Stack gap="2" align="end">
-          <Image
-            style={{ maxWidth: "290px", height: "auto" }}
-            alt={dict.siteName}
-            width={290}
-            height={112}
-            src={Logo}
-          />
-          <Text fontWeight="medium" className="text-right">
-            {dict.footer.p1} {dict.footer.p2}
-          </Text>
-        </Stack>
-
-        <div className={divider} />
-
-        <Stack gap="2" direction="row" className={mobileStack}>
-          <FontAwesomeIcon fontSize="1.2rem" icon={faCopyright} />
-          <Text>{year} Copyright. All Rights Reserved.</Text>
-        </Stack>
-      </Stack>
-    </>
-  );
-
-  const mobile = (
-    <>
-      <Stack gap="4" justify="center" align="center" className="mobile">
-        <Text fontWeight="bold">CONTACT</Text>
-        {contact.map((link) => (
-          <Stack key={link.key} align="center" direction="row" gap="2">
-            {link.icon}
-            <Link href={link.href}>{link.text}</Link>
-          </Stack>
-        ))}
-      </Stack>
-
-      <Stack gap="4" justify="center" align="center" className="mobile">
-        <Stack gap="2" justify="center" align="center">
-          <Image
-            style={{ maxWidth: "200px", height: "auto" }}
-            alt={dict.siteName}
-            width={200}
-            src={Logo}
-          />
-          <Text fontWeight="medium" className="text-center">
-            {dict.footer.p1} {dict.footer.p2}
-          </Text>
-        </Stack>
-
-        <div className={divider} />
-
-        <Stack gap="2" direction="row" className="text-center">
-          <FontAwesomeIcon fontSize="1.2rem" icon={faCopyright} />
-          <Text>{year} Copyright. All Rights Reserved.</Text>
-        </Stack>
-      </Stack>
-    </>
-  );
-
   return (
-    <footer className={footer}>
-      <Container maxWidth="lg">
-        <Grid repeat="2x" gap="12">
-          {/* DESKTOP */}
-          {desktop}
-          {/* MOBILE */}
-          {mobile}
-        </Grid>
+    <footer className="text-grey pt-12 pb-12 bg-dark">
+      <Container className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="flex flex-row justify-center md:justify-start gap-8 lg:gap-20">
+          <Stack className="gap-4 text-center md:text-left">
+            <Text variant="h6" className="font-bold">
+              CONTACT
+            </Text>
+            {contact.map(link => (
+              <div key={link.key} className="flex flex-row justify-center md:justify-start gap-2">
+                {link.icon}
+                <Link href={link.href}>{link.text}</Link>
+              </div>
+            ))}
+          </Stack>
+          <Stack className="gap-4 hidden md:flex">
+            <Text variant="h6" className="font-bold">
+              MENU
+            </Text>
+            {menu.map(link => (
+              <Link key={link.key} href={link.href}>
+                {link.text}
+              </Link>
+            ))}
+          </Stack>
+        </div>
+
+        <div className="flex flex-col items-center md:items-end gap-4">
+          <div className="flex flex-col items-center gap-2 md:items-end">
+            <SvgLogo className="fill-grey max-w-xs" />
+            <Text className="text-center md:text-right font-medium">
+              {dict.footer.p1} <br className="hidden xl:block" /> {dict.footer.p2}
+            </Text>
+          </div>
+
+          <div className="hidden md:flex w-full border-solid border-b-[1px] border-grey" />
+
+          <div className="flex flex-row gap-2 items-center">
+            <FontAwesomeIcon fontSize="1.2rem" icon={faCopyright} />
+            <Text>{year} Copyright. All Rights Reserved.</Text>
+          </div>
+        </div>
       </Container>
     </footer>
   );

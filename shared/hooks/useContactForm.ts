@@ -1,8 +1,9 @@
-import { useState } from "react";
-import * as yup from "yup";
-import { useFormik } from "formik";
-import { AlertColor } from "@mui/material";
-import { useTranslation } from "next-export-i18n";
+import { useState } from 'react';
+
+import { AlertColor } from '@mui/material';
+import { useFormik } from 'formik';
+import { useTranslation } from 'next-export-i18n';
+import * as yup from 'yup';
 
 interface MessageState {
   text?: string;
@@ -20,19 +21,19 @@ export const useContactForm = () => {
   const validationSchema = yup.object({
     email: yup
       .string()
-      .email(t("form.messages.email.invalid"))
-      .required(t("form.messages.email.required")),
-    firstName: yup.string().required(t("form.messages.firstName.required")),
+      .email(t('form.messages.email.invalid'))
+      .required(t('form.messages.email.required')),
+    firstName: yup.string().required(t('form.messages.firstName.required')),
     lastName: yup.string(),
     age: yup
       .number()
       .integer()
-      .min(12, t("form.messages.age.invalid"))
-      .max(120, t("form.messages.age.invalid")),
+      .min(12, t('form.messages.age.invalid'))
+      .max(120, t('form.messages.age.invalid')),
     phone: yup
       .string()
-      .min(9, t("form.messages.phone.invalid"))
-      .required(t("form.messages.phone.required")),
+      .min(9, t('form.messages.phone.invalid'))
+      .required(t('form.messages.phone.required')),
     additionalInformation: yup.string(),
   });
 
@@ -49,57 +50,57 @@ export const useContactForm = () => {
 
   const form = useFormik({
     initialValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      age: "",
-      phone: "",
-      insurance: "",
-      additionalInformation: "",
+      email: '',
+      firstName: '',
+      lastName: '',
+      age: '',
+      phone: '',
+      insurance: '',
+      additionalInformation: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: values => {
       setIsSubmitting(true);
 
       if (!reCAPTCHA) {
         createAlert({
-          text: t("form.messages.reCAPTCHA.required"),
-          severity: "error",
+          text: t('form.messages.reCAPTCHA.required'),
+          severity: 'error',
         });
         setIsSubmitting(false);
         return;
       }
       // TODO: send to sendgrid
 
-      fetch("/api/sendQuote", {
-        method: "POST",
+      fetch('/api/sendQuote', {
+        method: 'POST',
         body: JSON.stringify(values),
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
-        .then((r) => r.json())
+        .then(r => r.json())
         .then(({ error }) => {
           if (error) {
             createAlert({
-              text: t("form.messages.error"),
-              severity: "error",
+              text: t('form.messages.error'),
+              severity: 'error',
             });
             setIsSubmitting(false);
             return;
           }
           createAlert({
-            text: t("form.messages.success"),
-            severity: "success",
+            text: t('form.messages.success'),
+            severity: 'success',
           });
           setIsSubmitting(false);
           form.resetForm();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           createAlert({
-            text: t("form.messages.error"),
-            severity: "error",
+            text: t('form.messages.error'),
+            severity: 'error',
           });
           setIsSubmitting(false);
         });
