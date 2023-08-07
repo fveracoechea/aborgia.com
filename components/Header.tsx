@@ -9,16 +9,16 @@ import {
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dict } from 'locales/en';
 
 import SvgLogo from 'shared/assets/Logo.svg';
 import { LangMap } from 'shared/constants';
+import { Dict } from 'shared/locales/en';
 import { ButtonLink } from 'shared/ui/Button';
 import { Container } from 'shared/ui/Container';
 import { Link } from 'shared/ui/Link';
 import { Stack } from 'shared/ui/Stack';
 
-import { MobileNav } from './MobileNav';
+import { MobileNavButton } from './MobileNavButton';
 
 type Props = {
   dict: Dict;
@@ -71,45 +71,52 @@ export function Header({ dict, lang }: Props) {
       <Container
         disablePadding
         className="hidden md:flex bg-dark flex-row justify-between gap-4 py-1.5 px-3"
+        component="nav"
+        aria-label={dict.header.nav2}
       >
-        <div className="flex flex-row gap-4">
-          <ButtonLink size="sm" color="light" variant="text" href="/">
-            <FontAwesomeIcon icon={faEarthAmericas} />
-            {LangMap[lang]}
-            <FontAwesomeIcon icon={faCaretDown} />
-          </ButtonLink>
-        </div>
-        <div className="flex flex-row md:gap-2 lg:gap-4">
+        <ButtonLink size="sm" color="light" variant="text" href="/">
+          <FontAwesomeIcon icon={faEarthAmericas} />
+          {LangMap[lang]}
+          <FontAwesomeIcon icon={faCaretDown} />
+        </ButtonLink>
+
+        <ul className="flex flex-row md:gap-2 lg:gap-4">
           {contact.map(link => (
-            <ButtonLink size="sm" color="light" variant="text" key={link.key} href={link.href}>
-              {link.icon}
-              {link.text}
-            </ButtonLink>
+            <li key={link.key}>
+              <ButtonLink size="sm" color="light" variant="text" href={link.href}>
+                {link.icon}
+                {link.text}
+              </ButtonLink>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
 
       <div className="relative bg-primary z-40 text-white">
         <Container
           disablePadding
           component="nav"
+          aria-label={dict.header.nav1}
           className="p-3 flex flex-row items-center justify-between gap-4"
         >
-          <Stack direction="row" align="center" className="gap-4">
-            <Link href="/" className="block w-[194px] h-[36px]">
-              <SvgLogo className="fill-white" />
-            </Link>
+          <Stack component="ul" direction="row" align="center" className="gap-4">
+            <li>
+              <Link href="/" className="block w-[194px] h-[36px]">
+                <SvgLogo aria-label={dict.siteName} className="fill-white" />
+              </Link>
+            </li>
             {nav.map(link => (
-              <ButtonLink
-                className="hidden md:flex lg:text-base lg:py-2 lg:px-3 lg:gap-2.5"
-                size="sm"
-                color="light"
-                variant="text"
-                key={link.key}
-                href={link.href}
-              >
-                {link.text}
-              </ButtonLink>
+              <li key={link.key} className="hidden md:flex">
+                <ButtonLink
+                  className="lg:text-base lg:py-2 lg:px-3 lg:gap-2.5"
+                  size="sm"
+                  color="light"
+                  variant="text"
+                  href={link.href}
+                >
+                  {link.text}
+                </ButtonLink>
+              </li>
             ))}
           </Stack>
 
@@ -118,11 +125,12 @@ export function Header({ dict, lang }: Props) {
             size="sm"
             href="/"
             variant="outlined"
-            className="hover:text-primary hidden md:flex lg:text-base lg:py-2 lg:px-3 lg:gap-2.5"
+            className="hidden md:flex hover:text-primary lg:text-base lg:py-2 lg:px-3 lg:gap-2.5"
           >
             {dict.header.quote}
           </ButtonLink>
-          <MobileNav dict={dict} contact={contact} nav={nav} />
+
+          <MobileNavButton dict={dict} contact={contact} nav={nav} />
         </Container>
       </div>
     </header>

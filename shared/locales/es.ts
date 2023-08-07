@@ -4,6 +4,8 @@ export const es: Dict = {
   siteName: 'Arelys Borgia',
   keywords: 'salud, vida, seguro, ObamaCare, cobertura',
   header: {
+    nav1: 'Navegacion primaria',
+    nav2: 'Idiomas y Enlaces de contacto',
     lang: 'Elige tu idioma',
     follow: 'Sigueme en Istagram',
     services: 'Coberturas',

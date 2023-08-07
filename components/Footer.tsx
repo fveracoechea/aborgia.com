@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faCopyright, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dict } from 'locales/en';
+
 import SvgLogo from 'shared/assets/Logo.svg';
+import { Dict } from 'shared/locales/en';
 import { Container } from 'shared/ui/Container';
 import { Link } from 'shared/ui/Link';
 import { Stack } from 'shared/ui/Stack';

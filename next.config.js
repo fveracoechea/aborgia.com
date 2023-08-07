@@ -1,6 +1,3 @@
-const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
-
-const withVanillaExtract = createVanillaExtractPlugin();
 const withSvgr = require('next-plugin-svgr');
 
 /** @type {import('next').NextConfig} */
@@ -14,4 +11,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withSvgr(withVanillaExtract(nextConfig));
+module.exports = withSvgr(nextConfig);

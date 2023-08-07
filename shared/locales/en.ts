@@ -2,6 +2,8 @@ export const en = {
   siteName: 'Arelys Borgia',
   keywords: 'health, life, insurance, ObamaCare, coverage',
   header: {
+    nav1: 'Primary navigation',
+    nav2: 'Languages and Contact links',
     lang: 'Select your language',
     follow: 'Follow me on Istagram',
     aboutMe: 'About Me',
