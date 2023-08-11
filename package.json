@@ -1,57 +1,30 @@
 {
-  "name": "website",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "format": "prettier . --write"
-  },
-  "dependencies": {
-    "@formatjs/intl-localematcher": "^0.4.0",
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/icons-material": "^5.13.7",
-    "@mui/material": "^5.13.7",
-    "clsx": "^2.0.0",
-    "formik": "^2.2.9",
-    "negotiator": "^0.6.3",
-    "next": "13.4.12",
-    "next-export-i18n": "^2.0.3",
-    "node-mailjet": "^5.1.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-google-recaptcha": "^2.1.0",
-    "server-only": "^0.0.1",
-    "sharp": "^0.32.4",
-    "yup": "^0.32.11"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md,svg}\""
   },
   "devDependencies": {
     "@svgr/plugin-prettier": "^8.0.1",
-    "@svgr/webpack": "^8.0.1",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@types/negotiator": "^0.6.1",
-    "@types/node": "17.0.21",
-    "@types/react": "18.2.14",
-    "@types/react-dom": "^18.2.7",
-    "@types/react-google-recaptcha": "^2.1.5",
-    "autoprefixer": "^10.4.14",
-    "eslint": "8.11.0",
-    "eslint-config-next": "13.4.12",
-    "next-plugin-svgr": "^1.1.8",
-    "postcss": "^8.4.27",
+    "eslint": "^7.32.0",
     "prettier": "3.0.1",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "tailwindcss": "^3.3.3",
-    "typescript": "5.1.6"
+    "turbo": "1.10.12"
+  },
+  "name": "aborgia.com",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
   },
   "volta": {
-    "node": "18.16.0",
-    "yarn": "3.5.0"
-  }
+    "node": "18.17.0",
+    "npm": "9.6.7"
+  },
+  "workspaces": [
+    "frontend",
+    "strapi-cms"
+  ]
 }
