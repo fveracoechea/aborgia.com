@@ -42,6 +42,15 @@ export function Select(props: SelectProps) {
     buttonProps = {},
   } = props;
 
+  const size = buttonProps.size ?? 'md';
+
+  const sizeClasses = clsx(
+    size === 'sm' && 'text-sm',
+    size === 'md' && 'text-base',
+    size === 'lg' && 'text-lg',
+    'leading-none',
+  );
+
   return (
     <RS.Root value={value} name={name} defaultValue={defaultValue} onValueChange={onValueChange}>
       <RS.Trigger asChild>
@@ -74,7 +83,9 @@ export function Select(props: SelectProps) {
                 )}
               >
                 <RS.ItemText asChild>
-                  <Text component="span">{opt.label}</Text>
+                  <Text className={sizeClasses} component="span">
+                    {opt.label}
+                  </Text>
                 </RS.ItemText>
               </RS.Item>
             ))}

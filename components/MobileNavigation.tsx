@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
 
-import { cms } from 'shared/api';
 import { Dict } from 'shared/locales/en';
 import { ButtonLink } from 'shared/ui/Button';
 import { Link } from 'shared/ui/Link';
@@ -28,7 +27,6 @@ type Props = {
 
 export default function MobileNavigation(props: Props) {
   const { state, onClose, dialogRef, dict, nav, contact } = props;
-  // cms.get('/api/i18n/locales').json().then(console.log).catch(console.log);
   return createPortal(
     <>
       <div
@@ -46,13 +44,13 @@ export default function MobileNavigation(props: Props) {
         data-state={state}
         className={clsx([
           'bg-dark text-white p-2 flex flex-col items-start w-[100vw]',
-          'fixed z-30 top-[60px] left-0 right-0 transition-transform duration-300',
-          'translate-y-[calc(-100%-60px)] data-[state=open]:translate-y-0 md:hidden',
+          'fixed z-30 top-[45px] left-0 right-0 transition-transform duration-300',
+          'translate-y-[calc(-100%-45px)] data-[state=open]:translate-y-0 md:hidden',
         ])}
       >
         <nav className="w-full">
           <ul className="w-full" aria-label="Mobile Navigaiton menu">
-            {props.nav.map((link, i) => (
+            {nav.map((link, i) => (
               <li key={link.key} className="border-greyDark border-b">
                 <Link href={link.href} autoFocus={i === 0} className="flex text-grey p-3">
                   {link.text}
@@ -64,7 +62,7 @@ export default function MobileNavigation(props: Props) {
               Contact
             </Text>
 
-            {props.contact.map(link => (
+            {contact.map(link => (
               <li key={link.key}>
                 <Link href={link.href} className="flex items-center text-grey py-3 px-6 gap-3">
                   {link.icon}

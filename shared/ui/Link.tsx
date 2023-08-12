@@ -32,7 +32,7 @@ function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<Element>) {
   const Element = component ?? NextLInk;
 
   const baseClasses = clsx(
-    'font-serif font-normal leading-tight cursor-pointer transition outline-none',
+    'font-serif font-normal leading-normal cursor-pointer transition outline-none',
   );
 
   const colorClasses = clsx(

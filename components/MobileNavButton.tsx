@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode, useCallback, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import dynamic from 'next/dynamic';
 
@@ -74,11 +73,11 @@ export function MobileNavButton(props: Props) {
 
   return (
     <>
-      <Button color="light" size="sm" className="md:hidden" onClick={handleToggleNav}>
+      <Button color="primary" size="sm" className="md:hidden" onClick={handleToggleNav}>
         <span className="sr-only">{state !== 'open' ? 'Open' : 'Close'} Navigation</span>
         <FontAwesomeIcon
           fontSize="1.4rem"
-          color="white"
+          color="currentColor"
           icon={state === 'open' ? faClose : faBars}
         />
       </Button>

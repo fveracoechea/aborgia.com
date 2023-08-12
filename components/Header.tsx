@@ -68,45 +68,45 @@ export async function Header({ dict, lang }: Props) {
   ];
 
   return (
-    <header className="w-full shadow-md relative">
+    <header className="relative md:fixed  w-[100vw] overflow-x-hidden z-40 top-0 left-0">
       <h1 className="sr-only">Arelys Borgia</h1>
-      <Container
-        disablePadding
-        className="hidden md:flex bg-dark flex-row justify-between gap-4 py-1.5 px-3"
-        component="nav"
-        aria-label={dict.header.nav2}
-      >
-        <LanguageSelector locales={locales} currentLocale={currentLocale} />
-
-        <ul className="flex flex-row md:gap-2 lg:gap-4">
-          {contact.map(link => (
-            <li key={link.key}>
-              <ButtonLink size="sm" color="light" variant="text" href={link.href}>
-                {link.icon}
-                {link.text}
-              </ButtonLink>
-            </li>
-          ))}
-        </ul>
-      </Container>
-
-      <div className="relative bg-white z-40 text-primary">
+      <div className="relative bg-dark hidden md:block">
         <Container
-          disablePadding
+          className="flex flex-row items-center justify-between gap-4 !py-1.5"
+          component="nav"
+          aria-label={dict.header.nav2}
+        >
+          <LanguageSelector locales={locales} currentLocale={currentLocale} />
+
+          <ul className="flex flex-row md:gap-2 lg:gap-4">
+            {contact.map(link => (
+              <li key={link.key}>
+                <ButtonLink size="sm" color="light" variant="text" href={link.href}>
+                  {link.icon}
+                  {link.text}
+                </ButtonLink>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </div>
+
+      <div className="bg-white md:bg-transparentLight7 z-40 text-primary">
+        <Container
           component="nav"
           aria-label={dict.header.nav1}
-          className="p-3 flex flex-row items-center justify-between gap-4"
+          className="flex flex-row items-center justify-between gap-4"
         >
           <Stack component="ul" direction="row" align="center" className="gap-4">
             <li>
-              <Link underline="none" href="/" className="block w-60">
+              <Link underline="none" href="/" className="block w-44 xl:w-60">
                 <SvgLogo aria-label={dict.siteName} className="fill-current" />
               </Link>
             </li>
             {nav.map(link => (
               <li key={link.key} className="hidden md:flex">
                 <ButtonLink
-                  className={clsx('lg:text-base lg:py-2 lg:px-3 lg:gap-2.5')}
+                  className={clsx('xl:text-base xl:py-2 xl:px-3 xl:gap-2.5')}
                   size="sm"
                   color="primary"
                   variant="text"
@@ -123,7 +123,7 @@ export async function Header({ dict, lang }: Props) {
             size="sm"
             href="/"
             variant="outlined"
-            className="hidden uppercase md:flex lg:text-base lg:py-2 lg:px-3 lg:gap-2.5"
+            className="hidden uppercase md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
           >
             {dict.header.quote}
           </ButtonLink>

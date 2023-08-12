@@ -1,44 +1,53 @@
 import React from 'react';
 
-import { Box, Stack, Theme, Typography, styled, useMediaQuery } from '@mui/material';
-import { useTranslation } from 'next-export-i18n';
+import Image from 'next/image';
 
-const Image = styled('img')`
-  width: 100%;
-  max-width: 350px;
-  height: auto;
-  display: block;
-  border-radius: 50%;
-  border: solid 5px ${p => p.theme.palette.secondary.main};
-`;
+import { z } from 'zod';
 
-export function AboutMe() {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const { t } = useTranslation();
+import { api } from 'shared/api';
+import { LOCALES } from 'shared/constants';
+import { SingleMediaSchema } from 'shared/schema';
+import { Container } from 'shared/ui/Container';
 
+const AboutMeSchema = z.object({
+  data: z.object({
+    id: z.number().int().nonnegative(),
+    attributes: z.object({
+      content: z.string().nonempty(),
+      avatar: SingleMediaSchema,
+      locale: z.enum(LOCALES),
+    }),
+  }),
+});
+
+function fetchAboutMe(lang: string) {
+  return api
+    .get('/api/about-me')
+    .appendSearchParam('locale', lang)
+    .appendSearchParam('populate[avatar]', '*')
+    .json(AboutMeSchema.parse);
+}
+
+export async function AboutMe({ lang }: { lang: string }) {
+  const aboutMe = await fetchAboutMe(lang);
   return (
-    <Stack
-      spacing={4}
-      paddingTop={8}
-      direction={isMobile ? 'column' : 'row'}
-      sx={{ scrollMarginTop: 16 }}
+    <Container
+      component="section"
       id="about-me"
+      className="flex flex-col justify-center items-center lg:flex-row gap-12"
     >
-      <Box flex="2" display="flex" justifyContent="center" alignItems="center">
-        <Image src="/profile.jpg" alt="Arelys Borgia" width={350} height={350} />
-      </Box>
-      <Stack spacing={4} flex="4" textAlign={isMobile ? 'center' : 'justify'}>
-        <Typography variant="h3">{t('siteName')}</Typography>
-        <Typography variant="body1" lineHeight="1.8rem">
-          {t('aboutMe.p1')}
-        </Typography>
-        <Typography variant="body1" lineHeight="1.8rem">
-          {t('aboutMe.p2')}
-        </Typography>
-        <Typography variant="body1" lineHeight="1.8rem" fontWeight="medium">
-          {t('aboutMe.p3')}
-        </Typography>
-      </Stack>
-    </Stack>
+      <Image
+        src={aboutMe.data.attributes.avatar.data.attributes.url}
+        alt="Profile avatar"
+        width={288}
+        height={288}
+        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-72"
+      />
+
+      <article
+        className="cms-content text-justify"
+        dangerouslySetInnerHTML={{ __html: aboutMe.data.attributes.content }}
+      />
+    </Container>
   );
 }

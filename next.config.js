@@ -4,7 +4,20 @@ const withSvgr = require('next-plugin-svgr');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['127.0.0.1', 'localhost'],
+    remotePatterns: [
+      {
+        hostname: '127.0.0.1',
+      },
+      {
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/df6alabjg/image/**',
+      },
+    ],
   },
   experimental: {
     serverActions: true,

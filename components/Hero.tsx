@@ -1,29 +1,43 @@
 import { ApiHeroHero } from 'typings/generated/contentTypes';
+import { z } from 'zod';
 
 import { api } from 'shared/api';
+import { LOCALES } from 'shared/constants';
+import { MultiMediaSchema } from 'shared/schema';
 import { Slider } from 'shared/ui/Slider';
 import { Text } from 'shared/ui/Text';
 
-async function fetchHero(lang: string): Promise<{ data: ApiHeroHero }> {
+const HeroSchema = z.object({
+  data: z.object({
+    id: z.number().int().nonnegative(),
+    attributes: z.object({
+      title: z.string().nullable().default('Medical coverage at your fingertips'),
+      description: z.string().nullable().default('WE GUIDE YOU IN EVERY STEP'),
+      locale: z.enum(LOCALES),
+      images: MultiMediaSchema,
+    }),
+  }),
+});
+
+function fetchHero(lang: string) {
   return api
     .get('/api/hero')
     .appendSearchParam('locale', lang)
     .appendSearchParam('populate[images]', '*')
-    .json();
+    .json(HeroSchema.parse);
 }
 
 export async function Hero({ lang }: { lang: string }) {
   const hero = await fetchHero(lang);
-  const images = hero.data.attributes;
-  console.log('images = ', images.data)
+  const images = hero.data.attributes.images.data.map(img => img.attributes.url);
   return (
-    <section className="h-[45vh] w-full relative my-0 mx-auto overflow-hidden sm:h-[75vh]">
-      <Slider images={[]}>
-        <Text variant="h2" component="h2" className="text-primaryDark font-semibold xl:text-6xl">
-          {(hero.data.attributes.title as any) ?? null}
+    <section className="w-full relative my-0 mx-auto overflow-hidden aspect-square h-[42vh] md:h-[60vh] xl:h-[65vh] 2xl:h-[75vh]">
+      <Slider images={images}>
+        <Text variant="h2" className="text-primaryDark font-semibold">
+          {hero.data.attributes.title}
         </Text>
-        <Text variant="h4" className="text-primaryDark font-medium">
-          {(hero.data.attributes.description as any) ?? null}
+        <Text variant="h5" className="text-primaryDark font-semibold">
+          {hero.data.attributes.description}
         </Text>
       </Slider>
     </section>
