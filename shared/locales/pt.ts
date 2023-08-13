@@ -26,7 +26,7 @@ export const pt: Dict = {
     '6': 'Colaboração',
   },
   coverages: {
-    title: 'Ajudamo-lo a obter a melhor cobertura de saúde ao melhor preço.',
+    title: 'Obtenha a melhor cobertura de saúde ao melhor preço!',
     '1': {
       name: 'ObamaCare',
       description:

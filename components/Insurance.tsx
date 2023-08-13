@@ -1,113 +1,60 @@
 import Image from 'next/image';
 
-import { Box, Grid, Typography, styled } from '@mui/material';
-import { useTranslation } from 'next-export-i18n';
+import Img1 from 'shared/assets/coverages/1.jpeg';
+import Img2 from 'shared/assets/coverages/2.jpeg';
+import Img4 from 'shared/assets/coverages/4.jpeg';
+import Img3 from 'shared/assets/coverages/5.jpg';
+import { Dict } from 'shared/locales/en';
+import { Text } from 'shared/ui/Text';
 
-const InnerWrapper = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  [theme.breakpoints.up('md')]: {
-    height: 350,
-  },
-  [theme.breakpoints.down('md')]: {
-    height: 280,
-  },
-  '& img': {
-    zIndex: 1,
-    display: 'block',
-    position: 'absolute',
-    width: '100%',
-    left: 0,
-    top: 0,
-    height: '100%',
-    objectFit: 'cover',
-    objectPosition: 'center',
-  },
-}));
-
-const Content = styled(Box)(({ theme }) => ({
-  zIndex: 2,
-  position: 'absolute',
-  transition: 'all .4s ease',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  padding: theme.spacing(2),
-  alignItems: 'center',
-  '&.overlay': {
-    backgroundColor: 'rgba(0,0,0,.6)',
-  },
-  '&.active': {
-    backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
-    flexDirection: 'column',
-    opacity: '0',
-    '&:hover': {
-      opacity: '1',
-    },
-  },
-}));
-
-export const Insurance = () => {
-  const { t } = useTranslation();
-
+export function Insurance({ dict }: { dict: Dict }) {
   const coverages = [
     {
       id: 'c-1',
-      image: '/coverages/1.jpeg',
-      name: t('coverages.1.name'),
-      description: t('coverages.1.description'),
+      image: Img1,
+      name: dict.coverages[1].name,
+      description: dict.coverages[1].description,
     },
     {
       id: 'c-2',
-      image: '/coverages/2.jpeg',
-      name: t('coverages.2.name'),
-      description: t('coverages.2.description'),
+      image: Img2,
+      name: dict.coverages[2].name,
+      description: dict.coverages[2].description,
     },
     {
       id: 'c-3',
-      image: '/coverages/3.jpeg',
-      name: t('coverages.3.name'),
-      description: t('coverages.3.description'),
+      image: Img3,
+      name: dict.coverages[3].name,
+      description: dict.coverages[3].description,
     },
     {
       id: 'c-4',
-      image: '/coverages/4.jpeg',
-      name: t('coverages.4.name'),
-      description: t('coverages.4.description'),
+      image: Img4,
+      name: dict.coverages[4].name,
+      description: dict.coverages[4].description,
     },
   ];
 
   return (
-    <Box paddingBottom={12}>
-      <Grid container id="services" sx={{ scrollMarginTop: 20 }} spacing={8}>
-        <Grid item xs={12}>
-          <Typography textAlign="center" variant="h4">
-            {t('coverages.title')}
-          </Typography>
-        </Grid>
+    <section className="w-full text-center flex flex-col gap-12">
+      <Text variant="h3" className="text-primaryDark capitalize font-semibold">
+        {dict.coverages.title}
+      </Text>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         {coverages.map(({ id, name, image, description }) => (
-          <Grid key={id} item xs={12} sm={12} md={6}>
-            <InnerWrapper>
-              <Image alt={name as string} src={image} fill />
-              <Content className="overlay">
-                <Typography aria-hidden="true" color="textSecondary" variant="h5">
-                  {name}
-                </Typography>
-              </Content>
-              <Content className="active">
-                <Typography color="textSecondary" variant="h6" sx={{ textAlign: 'center' }}>
-                  {name}
-                </Typography>
-                <Typography sx={{ textAlign: 'center' }} color="textSecondary" variant="body1">
-                  {description}
-                </Typography>
-              </Content>
-            </InnerWrapper>
-          </Grid>
+          <figure
+            key={id}
+            className="aspect-video md:aspect-[3/2] relative flex justify-center items-center"
+          >
+            <Image className="object-cover" alt={description} src={image} fill />
+            <figcaption className="absolute inset-0 flex items-center justify-center p-8 bg-transparentLight5 text-primaryDark">
+              <Text component="span" variant="h5" className="font-semibold uppercase xl:text-2xl">
+                {name}
+              </Text>
+            </figcaption>
+          </figure>
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </section>
   );
-};
+}

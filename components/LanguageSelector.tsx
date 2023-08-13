@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 
 import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons';
-import { StrapiLocale } from 'typings/strapi';
 
+import { StrapiLocale } from 'shared/schema';
 import { Select } from 'shared/ui/Select';
 
 type Props = {
@@ -17,7 +17,7 @@ export function LanguageSelector(props: Props) {
   const router = useRouter();
   return (
     <Select
-      onValueChange={value => router.push(`/${value}`)}
+      onValueChange={value => router.push(`/${value}`, { scroll: false })}
       icon={faEarthAmericas}
       defaultValue={currentLocale.code}
       buttonProps={{ size: 'sm', color: 'light', variant: 'text' }}

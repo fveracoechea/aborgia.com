@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+}
+
 .cms-content {
   @apply font-serif text-dark;
 }

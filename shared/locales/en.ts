@@ -24,7 +24,7 @@ export const en = {
     '6': 'Collaboration',
   },
   coverages: {
-    title: 'We help you obtain the best health coverage at the best price.',
+    title: 'Get the best health coverage at the best price!',
     '1': {
       name: 'ObamaCare',
       description:

@@ -1,4 +1,4 @@
-import { ApiHeroHero } from 'typings/generated/contentTypes';
+import clsx from 'clsx';
 import { z } from 'zod';
 
 import { api } from 'shared/api';
@@ -31,12 +31,21 @@ export async function Hero({ lang }: { lang: string }) {
   const hero = await fetchHero(lang);
   const images = hero.data.attributes.images.data.map(img => img.attributes.url);
   return (
-    <section className="w-full relative my-0 mx-auto overflow-hidden aspect-square h-[42vh] md:h-[60vh] xl:h-[65vh] 2xl:h-[75vh]">
+    <section
+      className={clsx(
+        'w-full relative my-0 mx-auto overflow-hidden aspect-square',
+        'h-[40vh] md:h-[calc(55vh+65px)] xl:h-[calc(65vh+75px)] 2xl:h-[calc(70vh+75px)]"',
+      )}
+    >
       <Slider images={images}>
-        <Text variant="h2" className="text-primaryDark font-semibold">
+        <Text
+          variant="h2"
+          component="h2"
+          className="text-primaryDark capitalize font-medium lg:text-6xl"
+        >
           {hero.data.attributes.title}
         </Text>
-        <Text variant="h5" className="text-primaryDark font-semibold">
+        <Text variant="h5" className="text-primaryDark font-semibold xl:text-2xl">
           {hero.data.attributes.description}
         </Text>
       </Slider>

@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { LOCALES } from './constants';
+
 export const MediaDataSchema = z.object({
   id: z.number().int().nonnegative(),
   attributes: z.object({
@@ -19,3 +21,14 @@ export const SingleMediaSchema = z.object({
 export const MultiMediaSchema = z.object({
   data: z.array(MediaDataSchema).catch([]),
 });
+
+export const StrapiLocaleSchema = z.object({
+  id: z.number().int().nonnegative(),
+  name: z.string().nonempty(),
+  code: z.enum(LOCALES),
+  isDefault: z.boolean(),
+});
+
+export const StrapiLocaleArraySchema = z.array(StrapiLocaleSchema);
+
+export type StrapiLocale = z.infer<typeof StrapiLocaleSchema>;

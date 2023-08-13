@@ -35,7 +35,7 @@ export default function MobileNavigation(props: Props) {
         className={clsx([
           'fixed inset-0 z-30 bg-transparentDark',
           'hidden opacity-0 transition-opacity duration-300',
-          'data-[state=open]:block data-[state=open]:opacity-100 md:hidden',
+          'data-[state=open]:block data-[state=open]:opacity-1f00 md:hidden',
         ])}
       />
       <dialog

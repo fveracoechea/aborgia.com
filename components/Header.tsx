@@ -4,11 +4,11 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import { StrapiLocale } from 'typings/strapi';
 
 import { api } from 'shared/api';
 import SvgLogo from 'shared/assets/Logo.svg';
 import { Dict } from 'shared/locales/en';
+import { StrapiLocaleArraySchema } from 'shared/schema';
 import { ButtonLink } from 'shared/ui/Button';
 import { Container } from 'shared/ui/Container';
 import { Link } from 'shared/ui/Link';
@@ -23,7 +23,7 @@ type Props = {
 };
 
 export async function Header({ dict, lang }: Props) {
-  const locales = (await api.get('/api/i18n/locales').json()) as StrapiLocale[];
+  const locales = await api.get('/api/i18n/locales').json(StrapiLocaleArraySchema.parse);
   const currentLocale = locales.find(l => l.code === lang);
 
   if (!currentLocale) redirect('/');
@@ -52,7 +52,7 @@ export async function Header({ dict, lang }: Props) {
   const nav = [
     {
       key: 'nav-about',
-      href: '/',
+      href: `/${lang}/#about-me`,
       text: dict.header.aboutMe,
     },
     {
@@ -68,7 +68,7 @@ export async function Header({ dict, lang }: Props) {
   ];
 
   return (
-    <header className="relative md:fixed  w-[100vw] overflow-x-hidden z-40 top-0 left-0">
+    <header className="relative md:fixed shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40 top-0 left-0">
       <h1 className="sr-only">Arelys Borgia</h1>
       <div className="relative bg-dark hidden md:block">
         <Container
@@ -91,7 +91,7 @@ export async function Header({ dict, lang }: Props) {
         </Container>
       </div>
 
-      <div className="bg-white md:bg-transparentLight7 z-40 text-primary">
+      <div className="bg-white md:bg-transparentLight8 z-40 text-primary">
         <Container
           component="nav"
           aria-label={dict.header.nav1}
@@ -99,7 +99,14 @@ export async function Header({ dict, lang }: Props) {
         >
           <Stack component="ul" direction="row" align="center" className="gap-4">
             <li>
-              <Link underline="none" href="/" className="block w-44 xl:w-60">
+              <Link
+                underline="none"
+                href="/"
+                className={clsx(
+                  'block w-44 xl:w-60 transition-shadow rounded-sm',
+                  'ring-primary focus:ring-2',
+                )}
+              >
                 <SvgLogo aria-label={dict.siteName} className="fill-current" />
               </Link>
             </li>
