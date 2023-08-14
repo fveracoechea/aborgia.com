@@ -39,9 +39,9 @@ export async function AboutMe({ lang }: { lang: string }) {
       <Image
         src={aboutMe.data.attributes.avatar.data.attributes.url}
         alt="Profile avatar"
-        width={288}
-        height={288}
-        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-72"
+        width={320}
+        height={338}
+        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-full max-w-[320px]"
       />
 
       <article

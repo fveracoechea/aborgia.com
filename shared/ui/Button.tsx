@@ -23,18 +23,22 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
 
   const variantClasses = clsx(
     variant === 'text' && [
-      'border-none',
+      'ring-0',
       color === 'light' && 'text-white ring-white hover:bg-transparentLight',
       color === 'dark' && 'text-dark ring-dark hover:bg-transparentDark',
       color === 'primary' && 'text-primaryDark ring-primary hover:bg-transparentPrimary',
     ],
     variant === 'outlined' && [
-      'border bg-transparent',
-      color === 'light' && 'text-white  border-white hover:bg-white hover:text-dark',
+      'bg-transparent',
+      color === 'light' && [
+        'ring-2 text-white  ring-white hover:bg-transparentDark6',
+        'focus:ring-4',
+      ],
       color === 'dark' && 'text-dark border-dark hover:bg-white hover:text-white',
       color === 'primary' && [
-        'text-primary border-2 border-primary',
-        'hover:bg-transparentPrimary hover:text-primaryDark hover:border-primaryDark',
+        'text-primary ring-offset-white ring-offset-4 ring-primary border-2 border-primary',
+        'hover:bg-primary focus:bg-primary hover:text-white focus:text-white',
+        'focus:ring-2',
       ],
     ],
     variant === 'contained' && [color === 'light' && 'bg-disabled text-white hover:bg-dark'],
