@@ -32,7 +32,7 @@ export function Values(props: Props) {
   return (
     <Container
       component="section"
-      className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-between gap-8 text-greyDark"
+      className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-between gap-8 text-dark"
     >
       <>
         {values.map(item => (

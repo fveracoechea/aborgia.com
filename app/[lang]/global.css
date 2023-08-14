@@ -20,11 +20,11 @@ body {
 
 .cms-content h2,
 .cms-content h1 {
-  @apply text-center text-4xl font-medium leading-normal text-primaryDark lg:text-left;
+  @apply text-center text-4xl font-medium leading-normal text-primary lg:text-left;
 }
 
 .cms-content h3 {
-  @apply text-3xl font-medium leading-relaxed text-primaryDark;
+  @apply text-3xl font-medium leading-relaxed text-primary;
 }
 
 .cms-content h4 {

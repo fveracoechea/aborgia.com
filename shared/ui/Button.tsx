@@ -4,21 +4,7 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 import clsx from 'clsx';
 
-import { OverridableComponent, PolymorphicProps } from './types';
-
-type Props = {
-  variant?: 'text' | 'outlined' | 'contained';
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'light' | 'dark' | 'primary';
-};
-
-interface ButtonTypeMap {
-  props: Props;
-  defaultComponent: 'button';
-}
-
-export type ButtonProps<RootComponent extends ElementType = ButtonTypeMap['defaultComponent']> =
-  PolymorphicProps<ButtonTypeMap, RootComponent>;
+import { DefaultComponentProps, OverridableComponent, PolymorphicProps } from './types';
 
 function getClassNames(props: Required<Props>, externalClasses?: string) {
   const { variant, size, color } = props;
@@ -57,6 +43,20 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
   return clsx(defaultClasses, sizeClasses, variantClasses, externalClasses);
 }
 
+type Props = {
+  variant?: 'text' | 'outlined' | 'contained';
+  size?: 'sm' | 'md' | 'lg';
+  color?: 'light' | 'dark' | 'primary';
+};
+
+interface ButtonTypeMap {
+  props: Props;
+  defaultComponent: 'button';
+}
+
+export type ButtonProps<RootComponent extends ElementType = ButtonTypeMap['defaultComponent']> =
+  PolymorphicProps<ButtonTypeMap, RootComponent>;
+
 function ButtonImpl(props: ButtonProps, forwardedRef: ForwardedRef<Element>) {
   const {
     component,
@@ -80,7 +80,12 @@ function ButtonImpl(props: ButtonProps, forwardedRef: ForwardedRef<Element>) {
 
 export const Button = forwardRef(ButtonImpl) as OverridableComponent<ButtonTypeMap>;
 
-type ButtonLinkProps = Props & NextLinkProps & { children?: ReactNode; className?: string };
+interface ButtonLinkTypeMap {
+  props: Props & NextLinkProps;
+  defaultComponent: 'a';
+}
+
+export type ButtonLinkProps = DefaultComponentProps<ButtonLinkTypeMap>;
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>((props, forwardedRef) => {
   const {
@@ -96,7 +101,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>((props,
   const styles = getClassNames({ variant, size, color }, className);
 
   return (
-    <NextLink {...otherProps} href={href as string} className={styles} ref={forwardedRef}>
+    <NextLink {...otherProps} href={href} className={styles} ref={forwardedRef}>
       {children}
     </NextLink>
   );

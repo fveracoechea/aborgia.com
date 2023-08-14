@@ -34,18 +34,14 @@ export async function Hero({ lang }: { lang: string }) {
     <section
       className={clsx(
         'w-full relative my-0 mx-auto overflow-hidden aspect-square',
-        'h-[40vh] md:h-[calc(55vh+65px)] xl:h-[calc(65vh+75px)] 2xl:h-[calc(70vh+75px)]"',
+        'h-[40vh] md:h-[55vh] lg:h-[calc(100vh-118px)]',
       )}
     >
       <Slider images={images}>
-        <Text
-          variant="h2"
-          component="h2"
-          className="text-primaryDark capitalize font-medium lg:text-6xl"
-        >
+        <Text variant="h2" component="h2" className="capitalize font-medium lg:text-6xl">
           {hero.data.attributes.title}
         </Text>
-        <Text variant="h5" className="text-primaryDark font-semibold xl:text-2xl">
+        <Text variant="h5" component="h3" className="font-semibold xl:text-2xl">
           {hero.data.attributes.description}
         </Text>
       </Slider>

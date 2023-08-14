@@ -77,11 +77,14 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
   const dict = await getDictionary(params.lang);
   return (
     <html lang={params.lang}>
-      <body className={clsx(lora.variable, 'font-serif bg-dark w-[100vw] overflow-x-hidden')}>
+      <body
+        className={clsx(
+          lora.variable,
+          'pt-14 md:pt-0 font-serif bg-dark w-[100vw] overflow-x-hidden',
+        )}
+      >
         <Header dict={dict} lang={params.lang} />
-        <main className="pt-0 md:pt-10 w-full bg-white text-dark flex flex-col gap-12">
-          {children}
-        </main>
+        <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
         <Footer dict={dict} />
       </body>
     </html>

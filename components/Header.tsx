@@ -68,9 +68,9 @@ export async function Header({ dict, lang }: Props) {
   ];
 
   return (
-    <header className="relative md:fixed shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40 top-0 left-0">
+    <header className="relative shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40">
       <h1 className="sr-only">Arelys Borgia</h1>
-      <div className="relative bg-dark hidden md:block">
+      <div className="bg-dark hidden md:block">
         <Container
           className="flex flex-row items-center justify-between gap-4 !py-1.5"
           component="nav"
@@ -91,11 +91,11 @@ export async function Header({ dict, lang }: Props) {
         </Container>
       </div>
 
-      <div className="bg-white md:bg-transparentLight8 z-40 text-primary">
+      <div className="fixed top-0 left-0 w-full shadow-md md:shadow-none md:relative bg-white z-40 text-primary">
         <Container
           component="nav"
           aria-label={dict.header.nav1}
-          className="flex flex-row items-center justify-between gap-4"
+          className="py-3 flex flex-row items-center justify-between gap-4"
         >
           <Stack component="ul" direction="row" align="center" className="gap-4">
             <li>

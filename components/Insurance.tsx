@@ -36,8 +36,8 @@ export function Insurance({ dict }: { dict: Dict }) {
   ];
 
   return (
-    <section className="w-full text-center flex flex-col gap-12">
-      <Text variant="h3" className="text-primaryDark capitalize font-semibold">
+    <section className="p-5 md:p-0 w-full text-center text-white flex flex-col gap-12">
+      <Text variant="h3" component="h4" className="text-primary capitalize">
         {dict.coverages.title}
       </Text>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
@@ -47,7 +47,7 @@ export function Insurance({ dict }: { dict: Dict }) {
             className="aspect-video md:aspect-[3/2] relative flex justify-center items-center"
           >
             <Image className="object-cover" alt={description} src={image} fill />
-            <figcaption className="absolute inset-0 flex items-center justify-center p-8 bg-transparentLight5 text-primaryDark">
+            <figcaption className="absolute inset-0 flex items-center justify-center p-8 bg-transparentDark6">
               <Text component="span" variant="h5" className="font-semibold uppercase xl:text-2xl">
                 {name}
               </Text>

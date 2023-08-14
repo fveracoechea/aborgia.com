@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useCallback, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -13,17 +13,28 @@ import { Dict } from 'shared/locales/en';
 import { Button } from 'shared/ui/Button';
 import theme from 'shared/ui/theme';
 
+let scrollY = '0px';
+
 const MobileNavigation = dynamic(() => import('./MobileNavigation'), { ssr: false });
 
 function lockBodyScroll() {
   document.body.style.position = 'fixed';
-  document.body.style.top = `0`;
+  document.body.style.top = `-${scrollY}`;
 }
 
 function unlockBodyScroll() {
+  scrollY = document.body.style.top;
   document.body.style.position = '';
   document.body.style.top = '';
-  window.scrollTo(0, 0);
+  window.scrollTo({
+    top: parseInt(scrollY || '0') * -1,
+    left: 0,
+    behavior: 'instant',
+  });
+}
+
+function onScroll() {
+  scrollY = `${window.scrollY}px`;
 }
 
 type NavLink = {
@@ -43,16 +54,13 @@ type NavState = 'idle' | 'open' | 'close';
 
 export function MobileNavButton(props: Props) {
   const [state, setState] = useState<NavState>('idle');
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
 
   function handleToggleNav() {
     const nextState = state === 'open' ? 'close' : 'open';
     if (nextState === 'open') {
       lockBodyScroll();
-      dialogRef.current?.show();
     } else {
       unlockBodyScroll();
-      dialogRef.current?.close();
     }
     setState(nextState);
   }
@@ -60,16 +68,21 @@ export function MobileNavButton(props: Props) {
   const onClose = useCallback(() => {
     if (state !== 'close') {
       unlockBodyScroll();
-      dialogRef.current?.close();
       setState('close');
     }
   }, [state]);
 
   useEscapePress(onClose);
 
-  useMediaQuery(`screen and (max-width: ${theme.screens.md})`, event => {
+  const isMobile = useMediaQuery(`screen and (max-width: ${theme.screens.md})`, event => {
     if (!event.matches) onClose();
   });
+
+  useEffect(() => {
+    if (!isMobile) return;
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isMobile]);
 
   return (
     <>
@@ -81,7 +94,7 @@ export function MobileNavButton(props: Props) {
           icon={state === 'open' ? faClose : faBars}
         />
       </Button>
-      <MobileNavigation {...props} state={state} onClose={onClose} dialogRef={dialogRef} />
+      <MobileNavigation {...props} state={state} onClose={onClose} />
     </>
   );
 }
