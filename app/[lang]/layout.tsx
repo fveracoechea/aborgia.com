@@ -75,6 +75,7 @@ export async function generateStaticParams() {
 export default async function RootLayout(props: PropsWithChildren<LayoutProps>) {
   const { children, params } = props;
   const dict = await getDictionary(params.lang);
+  const pageTitle = dict.siteName;
   return (
     <html lang={params.lang}>
       <body
@@ -83,7 +84,7 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
           'pt-14 md:pt-0 font-serif bg-dark w-[100vw] overflow-x-hidden',
         )}
       >
-        <Header dict={dict} lang={params.lang} />
+        <Header dict={dict} lang={params.lang} title={pageTitle} />
         <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
         <Footer dict={dict} />
       </body>

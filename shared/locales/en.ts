@@ -1,5 +1,5 @@
 export const en = {
-  siteName: 'Arelys Borgia',
+  siteName: 'Arelys Borgia Insurance Agent',
   keywords: 'health, life, insurance, ObamaCare, coverage',
   header: {
     nav1: 'Primary navigation',

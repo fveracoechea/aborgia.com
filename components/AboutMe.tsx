@@ -41,7 +41,7 @@ export async function AboutMe({ lang }: { lang: string }) {
         alt="Profile avatar"
         width={320}
         height={338}
-        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-full max-w-[320px]"
+        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-[320px] h-auto"
       />
 
       <article

@@ -19,10 +19,12 @@ import { MobileNavButton } from './MobileNavButton';
 
 type Props = {
   dict: Dict;
+  title: string;
   lang: string;
 };
 
-export async function Header({ dict, lang }: Props) {
+export async function Header(props: Props) {
+  const { dict, lang, title } = props;
   const locales = await api.get('/api/i18n/locales').json(StrapiLocaleArraySchema.parse);
   const currentLocale = locales.find(l => l.code === lang);
 
@@ -57,7 +59,7 @@ export async function Header({ dict, lang }: Props) {
     },
     {
       key: 'nav-service',
-      href: '/',
+      href: '/#insurance',
       text: dict.header.services,
     },
     {
@@ -69,7 +71,6 @@ export async function Header({ dict, lang }: Props) {
 
   return (
     <header className="relative shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40">
-      <h1 className="sr-only">Arelys Borgia</h1>
       <div className="bg-dark hidden md:block">
         <Container
           className="flex flex-row items-center justify-between gap-4 !py-1.5"
@@ -95,21 +96,22 @@ export async function Header({ dict, lang }: Props) {
         <Container
           component="nav"
           aria-label={dict.header.nav1}
-          className="py-3 flex flex-row items-center justify-between gap-4"
+          className="py-3 flex flex-row items-center justify-stretch gap-4"
         >
+          <h1>
+            <Link
+              underline="none"
+              href="/"
+              className={clsx(
+                'block w-44 xl:w-60 transition-shadow rounded-sm',
+                'ring-primary focus:ring-2',
+              )}
+            >
+              <SvgLogo aria-hidden="true" className="fill-current" />
+              <span className="sr-only">{title}</span>
+            </Link>
+          </h1>
           <Stack component="ul" direction="row" align="center" className="gap-4">
-            <li>
-              <Link
-                underline="none"
-                href="/"
-                className={clsx(
-                  'block w-44 xl:w-60 transition-shadow rounded-sm',
-                  'ring-primary focus:ring-2',
-                )}
-              >
-                <SvgLogo aria-label={dict.siteName} className="fill-current" />
-              </Link>
-            </li>
             {nav.map(link => (
               <li key={link.key} className="hidden md:flex">
                 <ButtonLink
@@ -125,12 +127,14 @@ export async function Header({ dict, lang }: Props) {
             ))}
           </Stack>
 
+          <div className="flex-grow" />
+
           <ButtonLink
             color="primary"
             size="sm"
             href="/"
             variant="outlined"
-            className="hidden uppercase md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
+            className="hidden uppercase self-end md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
           >
             {dict.header.quote}
           </ButtonLink>

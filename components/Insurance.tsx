@@ -7,6 +7,7 @@ import Img3 from 'shared/assets/coverages/5.jpg';
 import { Dict } from 'shared/locales/en';
 import { Button } from 'shared/ui/Button';
 import { Text } from 'shared/ui/Text';
+import theme from 'shared/ui/theme';
 
 export function Insurance({ dict }: { dict: Dict }) {
   const coverages = [
@@ -37,7 +38,7 @@ export function Insurance({ dict }: { dict: Dict }) {
   ];
 
   return (
-    <section className="p-5 md:p-0 w-full text-center text-white flex flex-col gap-12">
+    <section id="insurance" className="p-5 md:p-0 w-full text-center text-white flex flex-col gap-12">
       <Text variant="h3" component="h4" className="text-primary capitalize">
         {dict.coverages.title}
       </Text>
@@ -47,7 +48,13 @@ export function Insurance({ dict }: { dict: Dict }) {
             key={id}
             className="aspect-video 2xl:aspect-[3/2] relative flex justify-center items-center"
           >
-            <Image className="object-cover" alt={description} src={image} fill />
+            <Image
+              className="object-cover"
+              alt={description}
+              src={image}
+              fill
+              sizes={`100vw, (min-width: ${theme.screens.md}) 50vw, (min-width: ${theme.screens['2xl']}) 25vw`}
+            />
             <figcaption className="absolute inset-0 flex items-center justify-center p-8 bg-transparentDark6">
               <Button variant="outlined" color="light" className="font-semibold uppercase text-lg">
                 {name}

@@ -86,7 +86,14 @@ export function MobileNavButton(props: Props) {
 
   return (
     <>
-      <Button color="primary" size="sm" className="md:hidden" onClick={handleToggleNav}>
+      <Button
+        color="primary"
+        size="sm"
+        aria-expanded={state === 'open' ? 'true' : 'false'}
+        aria-controls="mobile-nav"
+        className="md:hidden"
+        onClick={handleToggleNav}
+      >
         <span className="sr-only">{state !== 'open' ? 'Open' : 'Close'} Navigation</span>
         <FontAwesomeIcon
           fontSize="1.4rem"

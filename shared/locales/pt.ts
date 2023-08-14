@@ -1,7 +1,7 @@
 import { Dict } from './en';
 
 export const pt: Dict = {
-  siteName: 'Arelys Borgia',
+  siteName: 'Arelys Borgia Agente de Seguros',
   keywords: 'saúde, vida, seguro, ObamaCare, cobertura',
   header: {
     nav1: 'Navegação Primária',

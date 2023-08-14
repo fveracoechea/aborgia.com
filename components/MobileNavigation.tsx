@@ -46,8 +46,8 @@ export default function MobileNavigation(props: Props) {
           'translate-y-[calc(-100%-57px)] data-[state=open]:translate-y-0 md:hidden',
         ])}
       >
-        <nav className="w-full">
-          <ul className="w-full" aria-label="Mobile Navigaiton menu">
+        <nav className="w-full" role="navigation">
+          <ul className="w-full" id="mobile-nav" aria-label="Mobile Navigaiton menu">
             {nav.map((link, i) => (
               <li key={link.key} className="border-greyDark border-b">
                 <Link
