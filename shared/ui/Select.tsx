@@ -14,6 +14,7 @@ type Props = {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
+  label?: string;
   options: Array<{
     key: string;
     label: string;
@@ -39,6 +40,7 @@ export function Select(props: SelectProps) {
     options,
     icon,
     onValueChange,
+    label = '',
     buttonProps = {},
   } = props;
 
@@ -56,6 +58,7 @@ export function Select(props: SelectProps) {
       <RS.Trigger asChild>
         <Button className="relative" {...buttonProps}>
           {icon && <FontAwesomeIcon icon={icon} />}
+          {label}
           <RS.Value placeholder={placeholder} />
           <RS.Icon>
             <FontAwesomeIcon fontSize="0.8rem" icon={faChevronDown} />
@@ -65,7 +68,7 @@ export function Select(props: SelectProps) {
       <RS.Portal>
         <RS.Content
           position="popper"
-          className="overflow-hidden rounded bg-white border border-greyDark shadow-xl p-2 z-50"
+          className="overflow-hidden rounded bg-white border border-grey shadow-dark shadow-lg p-2 z-50"
           style={{ minWidth: 'var(--radix-select-trigger-width)' }}
         >
           <RS.ScrollUpButton className="flex items-center justify-center cursor-default">

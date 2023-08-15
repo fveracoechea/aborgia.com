@@ -27,6 +27,7 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
       color === 'light' && 'text-white ring-white hover:bg-transparentLight',
       color === 'dark' && 'text-dark ring-dark hover:bg-transparentDark',
       color === 'primary' && 'text-primaryDark ring-primary hover:bg-transparentPrimary',
+      color === 'grey' && 'text-grey ring-grey hover:text-greyLight',
     ],
     variant === 'outlined' && [
       'bg-transparent',
@@ -50,7 +51,7 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
 type Props = {
   variant?: 'text' | 'outlined' | 'contained';
   size?: 'sm' | 'md' | 'lg';
-  color?: 'light' | 'dark' | 'primary';
+  color?: 'light' | 'dark' | 'primary' | 'grey';
 };
 
 interface ButtonTypeMap {

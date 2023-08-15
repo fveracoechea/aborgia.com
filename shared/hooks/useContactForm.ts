@@ -97,7 +97,7 @@ export const useContactForm = () => {
           form.resetForm();
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           createAlert({
             text: t('form.messages.error'),
             severity: 'error',

@@ -14,41 +14,13 @@ body {
   }
 }
 
-.cms-content {
-  @apply font-serif text-dark;
+.prose {
+  --tw-prose-body: theme(colors.dark);
+  --tw-prose-headings: theme(colors.primary);
+  --tw-prose-bold: theme(colors.primaryDark);
+  --tw-prose-bullets: theme(colors.primaryDark);
 }
 
-.cms-content h2,
-.cms-content h1 {
-  @apply text-center text-4xl font-medium leading-normal text-primary lg:text-left;
-}
-
-.cms-content h3 {
-  @apply text-3xl font-medium leading-relaxed text-primary;
-}
-
-.cms-content h4 {
-  @apply text-2xl font-medium leading-relaxed;
-}
-.cms-content h5 {
-  @apply text-xl font-medium leading-relaxed;
-}
-.cms-content h6 {
-  @apply text-lg font-medium leading-relaxed;
-}
-
-.cms-content p {
-  @apply text-base font-light leading-normal;
-}
-
-.cms-content strong {
-  @apply font-bold text-primaryDark;
-}
-
-.cms-content strong {
-  @apply font-bold text-primaryDark;
-}
-
-.cms-content a {
-  @apply border-b border-b-current font-medium leading-normal text-primary hover:border-b-2;
+.prose a {
+  @apply border-b border-b-current font-medium leading-normal text-primary no-underline hover:border-b-2;
 }

@@ -41,7 +41,7 @@ export async function Hero({ lang }: { lang: string }) {
         <Text variant="h2" component="h2" className="capitalize font-medium lg:text-6xl">
           {hero.data.attributes.title}
         </Text>
-        <Text variant="h5" component="h3" className="font-semibold xl:text-2xl">
+        <Text variant="h5" component="h3" className="font-medium uppercase xl:text-2xl">
           {hero.data.attributes.description}
         </Text>
       </Slider>

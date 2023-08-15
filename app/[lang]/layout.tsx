@@ -86,7 +86,7 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
       >
         <Header dict={dict} lang={params.lang} title={pageTitle} />
         <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
-        <Footer dict={dict} />
+        <Footer dict={dict} lang={params.lang} />
       </body>
     </html>
   );

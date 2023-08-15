@@ -5,7 +5,7 @@ import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
-import { api } from 'shared/api';
+import { fetchLocales } from 'shared/api';
 import SvgLogo from 'shared/assets/Logo.svg';
 import { Dict } from 'shared/locales/en';
 import { StrapiLocaleArraySchema } from 'shared/schema';
@@ -25,8 +25,7 @@ type Props = {
 
 export async function Header(props: Props) {
   const { dict, lang, title } = props;
-  const locales = await api.get('/api/i18n/locales').json(StrapiLocaleArraySchema.parse);
-  const currentLocale = locales.find(l => l.code === lang);
+  const { locales, currentLocale } = await fetchLocales(lang);
 
   if (!currentLocale) redirect('/');
 
@@ -103,8 +102,8 @@ export async function Header(props: Props) {
               underline="none"
               href="/"
               className={clsx(
-                'block w-44 xl:w-60 transition-shadow rounded-sm',
-                'ring-primary focus:ring-2',
+                'block w-44 xl:w-60 transition-colors rounded-sm',
+                'focus:text-primaryDark hover:text-primaryLight',
               )}
             >
               <SvgLogo aria-hidden="true" className="fill-current" />

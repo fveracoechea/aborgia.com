@@ -45,7 +45,7 @@ export async function AboutMe({ lang }: { lang: string }) {
       />
 
       <article
-        className="cms-content text-justify"
+        className="prose text-center lg:text-justify max-w-none"
         dangerouslySetInnerHTML={{ __html: aboutMe.data.attributes.content }}
       />
     </Container>

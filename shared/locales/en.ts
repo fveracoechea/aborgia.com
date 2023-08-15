@@ -81,15 +81,7 @@ export const en = {
       submit: 'Submit',
     },
   },
-  aboutMe: {
-    p1: 'An insurance agent with a broad range of experience in various types of insurance and insurance systems at both national and international levels. This experience equips her with a comprehensive understanding of the intricacies and nuances of insurance, allowing her to provide valuable insights and guidance to clients.',
-    p2: 'The primary objective is to assist individuals in finding the best medical insurance plan tailored to their specific needs. She recognizes the importance of comprehensive healthcare coverage and is dedicated to helping clients navigate the complex landscape of insurance options.',
-    p3: 'Take care of your present looking towards the future.',
-  },
-  footer: {
-    p1: 'Obtain the best health coverage with the best benefits at the best price.',
-    p2: 'We take care of your present looking towards the future.',
-  },
+  footer: 'Take care of your present looking towards the future.',
 };
 
 export type Dict = typeof en;

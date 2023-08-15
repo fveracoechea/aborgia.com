@@ -83,13 +83,5 @@ export const pt: Dict = {
       submit: 'Enviar',
     },
   },
-  aboutMe: {
-    p1: 'Um agente de seguros com uma vasta experiência em vários tipos de seguros e sistemas de seguros a nível nacional e internacional. Essa experiência a equipa com uma compreensão abrangente das complexidades e nuances do seguro, permitindo que ela forneça informações e orientações valiosas aos clientes.',
-    p2: 'O objetivo principal é ajudar os indivíduos a encontrar o melhor plano de seguro médico adaptado às suas necessidades específicas. Ela reconhece a importância da cobertura abrangente de assistência médica e se dedica a ajudar os clientes a navegar no complexo cenário de opções de seguro.',
-    p3: 'Cuide do seu presente olhando para o futuro.',
-  },
-  footer: {
-    p1: 'Obtenha a melhor cobertura de saúde com os melhores benefícios ao melhor preço.',
-    p2: 'Cuidamos do seu presente olhando para o futuro.',
-  },
+  footer: 'Cuide do seu presente olhando para o futuro.',
 };
