@@ -7,12 +7,9 @@ export default async function HomePage({ params }: PageProps) {
   const { privacy } = await fetchPolicies(params.lang);
 
   return (
-    <>
-      <Text variant="h2">{privacy.data.attributes.title}</Text>
-      <article
-        className="prose"
-        dangerouslySetInnerHTML={{ __html: privacy.data.attributes.content }}
-      />
-    </>
+    <article
+      className="prose"
+      dangerouslySetInnerHTML={{ __html: privacy.data.attributes.content }}
+    />
   );
 }

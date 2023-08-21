@@ -16,7 +16,7 @@ export default async function HomePage({ params }: PageProps) {
       <Hero lang={params.lang} />
       <Values dict={dict} />
       <AboutMe lang={params.lang} />
-      <Insurance dict={dict} />
+      <Insurance dict={dict} lang={params.lang} />
       <Container />
     </>
   );

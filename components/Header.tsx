@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import { fetchLocales } from 'shared/api';
 import SvgLogo from 'shared/assets/Logo.svg';
 import { Dict } from 'shared/locales/en';
-import { StrapiLocaleArraySchema } from 'shared/schema';
 import { ButtonLink } from 'shared/ui/Button';
 import { Container } from 'shared/ui/Container';
 import { Link } from 'shared/ui/Link';
@@ -57,8 +56,8 @@ export async function Header(props: Props) {
       text: dict.header.aboutMe,
     },
     {
-      key: 'nav-service',
-      href: '/#insurance',
+      key: 'nav-insurance',
+      href: `/${lang}/insurance`,
       text: dict.header.services,
     },
     {
@@ -69,7 +68,7 @@ export async function Header(props: Props) {
   ];
 
   return (
-    <header className="relative shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40">
+    <header className="relative shadow-md w-[100vw] overflow-x-hidden z-40">
       <div className="bg-dark hidden md:block">
         <Container
           className="flex flex-row items-center justify-between gap-4 !py-1.5"

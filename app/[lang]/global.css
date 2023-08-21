@@ -15,10 +15,12 @@ body {
 }
 
 .prose {
-  --tw-prose-body: theme(colors.dark);
-  --tw-prose-headings: theme(colors.primary);
+  --tw-prose-body: theme(colors.transparentDark8);
+  --tw-prose-headings: theme(colors.dark);
   --tw-prose-bold: theme(colors.primaryDark);
   --tw-prose-bullets: theme(colors.primaryDark);
+
+  @apply max-w-none text-justify;
 }
 
 .prose a {

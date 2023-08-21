@@ -82,7 +82,7 @@ export async function Footer({ dict, lang }: Props) {
                 {link.icon}
                 <Link
                   underline="none"
-                  className="hover:text-greyLight focus:underline"
+                  className="hover:text-greyLight focus:underline underline-offset-4"
                   href={link.href}
                 >
                   {link.text}
@@ -97,7 +97,7 @@ export async function Footer({ dict, lang }: Props) {
             {menu.map(link => (
               <Link
                 underline="none"
-                className="hover:text-greyLight focus:underline"
+                className="hover:text-greyLight focus:underline underline-offset-4"
                 key={link.key}
                 href={link.href}
               >
@@ -112,17 +112,17 @@ export async function Footer({ dict, lang }: Props) {
 
             <Link
               underline="none"
-              className="hover:text-greyLight focus:underline"
-              href={`/${lang}/privacy-policy`}
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${privacy.data.attributes.link.url}`}
             >
-              {privacy.data.attributes.title}
+              {privacy.data.attributes.link.text}
             </Link>
             <Link
               underline="none"
-              className="hover:text-greyLight focus:underline"
-              href={`/${lang}/terms-and-conditions`}
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${terms.data.attributes.link.url}`}
             >
-              {terms.data.attributes.title}
+              {terms.data.attributes.link.text}
             </Link>
             <LanguageSelector
               locales={locales}
@@ -130,7 +130,7 @@ export async function Footer({ dict, lang }: Props) {
               buttonProps={{
                 color: 'grey',
                 className:
-                  'justify-center lg:justify-start focus:underline !p-0 !ring-0 !text-base',
+                  'justify-center lg:justify-start focus:underline underline-offset-4 !p-0 !ring-0 !text-base',
               }}
             />
           </Stack>

@@ -52,7 +52,7 @@ function TextImpl(props: TextProps, forwardedRef: ForwardedRef<Element>) {
       'text-base leading-relaxed': variant === 'h6',
       'text-base leading-loose': variant === 'subtitle1',
       'text-sm leading-normal': variant === 'subtitle2',
-      'text-base leading-normal': variant === 'body1',
+      'text-base leading-7': variant === 'body1',
       'text-sm leading-loose': variant === 'body2',
       'text-sx leading-normal': variant === 'caption',
       'text-sm leading-loose font-medium': variant === 'label',

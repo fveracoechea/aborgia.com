@@ -33,13 +33,45 @@ export const StrapiLocaleArraySchema = z.array(StrapiLocaleSchema);
 
 export type StrapiLocale = z.infer<typeof StrapiLocaleSchema>;
 
+export const LinkSchema = z.object({
+  id: z.number().int().nonnegative(),
+  text: z.string().nonempty(),
+  url: z.string().nonempty(),
+});
+
 export const PolicySchema = z.object({
   data: z.object({
     id: z.number().int().nonnegative(),
     attributes: z.object({
-      title: z.string().nonempty(),
+      content: z.string().nonempty(),
+      locale: z.enum(LOCALES),
+      link: LinkSchema,
+    }),
+  }),
+});
+
+export const InsuranceSchema = z.object({
+  data: z.object({
+    id: z.number().int().nonnegative(),
+    attributes: z.object({
       content: z.string().nonempty(),
       locale: z.enum(LOCALES),
     }),
   }),
+});
+
+export const CoverageListSchema = z.object({
+  data: z.array(
+    z.object({
+      id: z.number().int().nonnegative(),
+      attributes: z.object({
+        title: z.string().nonempty(),
+        description: z.string().nonempty(),
+        content: z.string().nonempty(),
+        locale: z.enum(LOCALES),
+        link: LinkSchema,
+        image: SingleMediaSchema,
+      }),
+    }),
+  ),
 });
