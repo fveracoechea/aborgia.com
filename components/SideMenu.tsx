@@ -1,5 +1,3 @@
-import { headers } from 'next/headers';
-
 import clsx from 'clsx';
 
 import { fetchCoverages, fetchPolicies } from 'shared/api';
@@ -15,8 +13,6 @@ export async function SideMenu(props: Props) {
   const {
     params: { lang },
   } = props;
-
-  const activePath = headers().get('x-invoke-path');
 
   const [{ privacy, terms }, coverages] = await Promise.all([
     fetchPolicies(lang),
