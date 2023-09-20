@@ -27,9 +27,10 @@ export function LanguageSelector(props: Props) {
         router.push(pathname.replace(String(params.lang), value), { scroll: false })
       }
       icon={showIcon ? faEarthAmericas : undefined}
-      label={showIcon ? '' : 'Lang:'}
+      variant="text"
+      prefix={showIcon ? '' : 'Lang:'}
       defaultValue={currentLocale.code}
-      buttonProps={{ size: 'sm', color: 'light', variant: 'text', ...buttonProps }}
+      buttonProps={buttonProps}
       options={locales.map(l => ({ key: String(l.id), label: l.name, value: l.code }))}
     />
   );

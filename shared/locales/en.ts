@@ -47,10 +47,37 @@ export const en = {
     },
   },
   other: 'Other',
+  quote: {
+    name: {
+      label: 'Name',
+      required: 'Name is required',
+    },
+    email: {
+      label: 'Email',
+      invalid: 'Enter a valid email',
+      required: 'Email is required',
+    },
+    phone: {
+      label: 'Phone Number',
+      required: 'Phone number is required',
+      invalid: 'Enter a valid phone number',
+    },
+    reCAPTCHA: {
+      required: 'ReCAPTCHA is a required field',
+    },
+    success: 'Your quote request has been sent!',
+    additionalInfo: {
+      label: 'Additional Information',
+      placeholder: 'Select Insurance',
+    },
+    error: 'Something went wrong, please try again...',
+    submit: 'Submit',
+  },
   form: {
     messages: {
-      firstName: {
-        required: 'First Name is required',
+      name: {
+        label: 'Name',
+        required: 'Name is required',
       },
       email: {
         invalid: 'Enter a valid email',
@@ -62,9 +89,6 @@ export const en = {
       },
       reCAPTCHA: {
         required: 'ReCAPTCHA is a required field',
-      },
-      age: {
-        invalid: 'Age must be greater than or equal to 12',
       },
       success: 'Your quote request has been sent!',
       error: 'Something went wrong, please try again...',

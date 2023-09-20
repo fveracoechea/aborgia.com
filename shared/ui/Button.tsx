@@ -6,19 +6,37 @@ import clsx from 'clsx';
 
 import { DefaultComponentProps, OverridableComponent, PolymorphicProps } from './types';
 
+type Props = {
+  variant?: 'text' | 'outlined' | 'contained' | 'custom';
+  size?: 'sm' | 'md' | 'lg';
+  color?: 'light' | 'dark' | 'primary' | 'grey';
+};
+
+interface ButtonTypeMap {
+  props: Props;
+  defaultComponent: 'button';
+}
+
 function getClassNames(props: Required<Props>, externalClasses?: string) {
   const { variant, size, color } = props;
 
   const defaultClasses = clsx(
-    'flex flex-row items-center no-underline cursor-pointer font-serif',
-    'transition rounded border-solid font-medium outline-none no-underline',
-    'ring-current focus:ring-2',
+    variant === 'custom'
+      ? [
+          'flex flex-row no-underline cursor-pointer font-serif',
+          'transition rounded border-solid font-medium outline-none no-underline',
+        ]
+      : [
+          'flex flex-row items-center no-underline cursor-pointer font-serif',
+          'transition rounded border-solid font-medium outline-none no-underline',
+          'ring-current focus:ring-2',
+        ],
   );
 
   const sizeClasses = clsx(
     size === 'sm' && 'text-sm py-1 px-2 gap-2',
-    size === 'md' && 'text-base py-2 px-3 gap-2.5',
-    size === 'lg' && 'text-lg py-4 px-4 gap-3',
+    size === 'md' && 'text-base py-2 px-4 gap-2.5',
+    size === 'lg' && 'text-lg py-4 px-6 gap-3',
   );
 
   const variantClasses = clsx(
@@ -46,17 +64,6 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
   );
 
   return clsx(defaultClasses, sizeClasses, variantClasses, externalClasses);
-}
-
-type Props = {
-  variant?: 'text' | 'outlined' | 'contained';
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'light' | 'dark' | 'primary' | 'grey';
-};
-
-interface ButtonTypeMap {
-  props: Props;
-  defaultComponent: 'button';
 }
 
 export type ButtonProps<RootComponent extends ElementType = ButtonTypeMap['defaultComponent']> =

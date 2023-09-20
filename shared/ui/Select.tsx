@@ -1,5 +1,7 @@
 'use client';
 
+import { ReactNode } from 'react';
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,14 +9,17 @@ import * as RS from '@radix-ui/react-select';
 import clsx from 'clsx';
 
 import { Button, ButtonProps } from './Button';
+import { Label } from './Label';
 import { Text } from './Text';
+import theme from './theme';
 import { DefaultComponentProps } from './types';
 
 type Props = {
+  variant?: 'text' | 'outlined';
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
-  label?: string;
+  prefix?: string;
   options: Array<{
     key: string;
     label: string;
@@ -22,6 +27,9 @@ type Props = {
   }>;
   icon?: IconProp;
   buttonProps?: ButtonProps;
+  required?: boolean;
+  label?: ReactNode;
+  containerClassname?: string;
 };
 
 type SelectTypeMap = {
@@ -33,6 +41,7 @@ export type SelectProps = DefaultComponentProps<SelectTypeMap>;
 
 export function Select(props: SelectProps) {
   const {
+    variant = 'text',
     value,
     placeholder,
     name,
@@ -40,35 +49,78 @@ export function Select(props: SelectProps) {
     options,
     icon,
     onValueChange,
-    label = '',
+    prefix = '',
+    required,
+    label,
+    id,
     buttonProps = {},
+    containerClassname,
   } = props;
 
-  const size = buttonProps.size ?? 'md';
+  let selectBtnProps: ButtonProps = {};
 
-  const sizeClasses = clsx(
+  if (variant === 'text')
+    selectBtnProps = { size: 'sm', color: 'light', variant: 'text', ...buttonProps };
+
+  if (variant === 'outlined')
+    selectBtnProps = {
+      variant: 'custom',
+      size: 'md',
+      className: clsx(
+        'font-serif text-dark outline-none rounded border transition ring-0',
+        'justify-between bg-transparent focus:ring-1',
+        'border-greyDark ring-primary hover:border-dark focus:border-primary',
+      ),
+      ...buttonProps,
+    };
+
+  const wrapper = clsx('flex flex-col', containerClassname);
+
+  const size = selectBtnProps.size ?? 'sm';
+
+  const isPlaceholder = !value && !defaultValue;
+
+  const optionClassnames = clsx(
     size === 'sm' && 'text-sm',
     size === 'md' && 'text-base',
     size === 'lg' && 'text-lg',
+    variant === 'outlined' && '!text-dark',
     'leading-none',
   );
 
   return (
-    <RS.Root value={value} name={name} defaultValue={defaultValue} onValueChange={onValueChange}>
-      <RS.Trigger asChild>
-        <Button className="relative" {...buttonProps}>
-          {icon && <FontAwesomeIcon icon={icon} />}
-          {label}
-          <RS.Value placeholder={placeholder} />
-          <RS.Icon>
-            <FontAwesomeIcon fontSize="0.8rem" icon={faChevronDown} />
-          </RS.Icon>
-        </Button>
-      </RS.Trigger>
+    <RS.Root
+      required={required}
+      value={value}
+      name={name}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+    >
+      <div className={wrapper}>
+        {label && (
+          <Label htmlFor={id} required={required}>
+            {label}
+          </Label>
+        )}
+        <RS.Trigger asChild>
+          <Button
+            {...selectBtnProps}
+            className={clsx(selectBtnProps.className, isPlaceholder && 'btn-placeholder')}
+          >
+            {icon && <FontAwesomeIcon icon={icon} />}
+            {prefix}
+            <RS.Value id={id} placeholder={placeholder} />
+            <RS.Icon>
+              <FontAwesomeIcon fontSize="0.8rem" icon={faChevronDown} />
+            </RS.Icon>
+          </Button>
+        </RS.Trigger>
+      </div>
       <RS.Portal>
         <RS.Content
           position="popper"
-          className="overflow-hidden rounded bg-white border border-grey shadow-dark shadow-lg p-2 z-50"
+          sideOffset={4}
+          className="overflow-hidden rounded bg-white border-2 border-grey p-2 z-50"
           style={{ minWidth: 'var(--radix-select-trigger-width)' }}
         >
           <RS.ScrollUpButton className="flex items-center justify-center cursor-default">
@@ -86,7 +138,7 @@ export function Select(props: SelectProps) {
                 )}
               >
                 <RS.ItemText asChild>
-                  <Text className={sizeClasses} component="span">
+                  <Text className={optionClassnames} component="span">
                     {opt.label}
                   </Text>
                 </RS.ItemText>

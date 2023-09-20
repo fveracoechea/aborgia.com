@@ -1,10 +1,12 @@
+import Script from 'next/script';
+
 import { AboutMe } from 'components/AboutMe';
 import { Hero } from 'components/Hero';
 import { Insurance } from 'components/Insurance';
+import { RequestQuote } from 'components/RequestQuote';
 import { Values } from 'components/Values';
 
 import { getDictionary } from 'shared/dictionaries';
-import { Container } from 'shared/ui/Container';
 
 type PageProps = { params: { lang: string } };
 
@@ -17,7 +19,8 @@ export default async function HomePage({ params }: PageProps) {
       <Values dict={dict} />
       <AboutMe lang={params.lang} />
       <Insurance dict={dict} lang={params.lang} />
-      <Container />
+      <RequestQuote dict={dict} lang={params.lang} />
+      <Script src="https://www.google.com/recaptcha/api.js" />
     </>
   );
 }

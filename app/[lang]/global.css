@@ -26,3 +26,18 @@ body {
 .prose a {
   @apply border-b border-b-current font-medium leading-normal text-primary no-underline hover:border-b-2;
 }
+
+input::placeholder,
+.placeholder,
+.btn-placeholder span:first-child {
+  @apply font-normal text-greyDark;
+}
+
+input[type="checkbox"]:checked ~ span {
+
+}
+
+input[type="checkbox"] ~ span {
+  
+}
+
