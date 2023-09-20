@@ -19,14 +19,13 @@ type NavLink = {
 type Props = {
   state: 'idle' | 'open' | 'close';
   onClose: () => void;
-  dialogRef: React.MutableRefObject<HTMLDialogElement | null>;
   dict: Dict;
   nav: NavLink[];
   contact: NavLink[];
 };
 
 export default function MobileNavigation(props: Props) {
-  const { state, onClose, dialogRef, dict, nav, contact } = props;
+  const { state, onClose, dict, nav, contact } = props;
   return createPortal(
     <>
       <div
@@ -38,21 +37,25 @@ export default function MobileNavigation(props: Props) {
           'data-[state=open]:block data-[state=open]:opacity-1f00 md:hidden',
         ])}
       />
-      <dialog
-        ref={dialogRef}
-        open={state === 'open'}
+      <div
         data-state={state}
         className={clsx([
           'bg-dark text-white p-2 flex flex-col items-start w-[100vw]',
-          'fixed z-30 top-[45px] left-0 right-0 transition-transform duration-300',
-          'translate-y-[calc(-100%-45px)] data-[state=open]:translate-y-0 md:hidden',
+          'border-primaryDark border border-solid shadow-transparentPrimary05 shadow-2xl',
+          'fixed z-30 top-[57px] left-0 right-0 transition-transform duration-300',
+          'translate-y-[calc(-100%-57px)] data-[state=open]:translate-y-0 md:hidden',
         ])}
       >
-        <nav className="w-full">
-          <ul className="w-full" aria-label="Mobile Navigaiton menu">
+        <nav className="w-full" role="navigation">
+          <ul className="w-full" id="mobile-nav" aria-label="Mobile Navigaiton menu">
             {nav.map((link, i) => (
               <li key={link.key} className="border-greyDark border-b">
-                <Link href={link.href} autoFocus={i === 0} className="flex text-grey p-3">
+                <Link
+                  href={link.href}
+                  onClick={onClose}
+                  autoFocus={i === 0}
+                  className="flex text-grey p-3"
+                >
                   {link.text}
                 </Link>
               </li>
@@ -71,13 +74,13 @@ export default function MobileNavigation(props: Props) {
               </li>
             ))}
             <li className="flex w-full justify-end p-4 mt-8">
-              <ButtonLink variant="outlined" color="light" href="/#contact">
+              <ButtonLink variant="outlined" color="light" onClick={onClose} href="/en#about-me">
                 {dict.header.quote}
               </ButtonLink>
             </li>
           </ul>
         </nav>
-      </dialog>
+      </div>
     </>,
     document.body,
   );

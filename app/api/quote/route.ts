@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ error: false });
   } catch (error) {
-    console.log('error ', error);
+    console.error('error ', error);
     return NextResponse.json({ error: true });
   }
 }

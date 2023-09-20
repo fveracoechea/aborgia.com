@@ -5,10 +5,9 @@ import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
-import { api } from 'shared/api';
+import { fetchLocales } from 'shared/api';
 import SvgLogo from 'shared/assets/Logo.svg';
 import { Dict } from 'shared/locales/en';
-import { StrapiLocaleArraySchema } from 'shared/schema';
 import { ButtonLink } from 'shared/ui/Button';
 import { Container } from 'shared/ui/Container';
 import { Link } from 'shared/ui/Link';
@@ -19,12 +18,13 @@ import { MobileNavButton } from './MobileNavButton';
 
 type Props = {
   dict: Dict;
+  title: string;
   lang: string;
 };
 
-export async function Header({ dict, lang }: Props) {
-  const locales = await api.get('/api/i18n/locales').json(StrapiLocaleArraySchema.parse);
-  const currentLocale = locales.find(l => l.code === lang);
+export async function Header(props: Props) {
+  const { dict, lang, title } = props;
+  const { locales, currentLocale } = await fetchLocales(lang);
 
   if (!currentLocale) redirect('/');
 
@@ -56,8 +56,8 @@ export async function Header({ dict, lang }: Props) {
       text: dict.header.aboutMe,
     },
     {
-      key: 'nav-service',
-      href: '/',
+      key: 'nav-insurance',
+      href: `/${lang}/insurance`,
       text: dict.header.services,
     },
     {
@@ -68,9 +68,8 @@ export async function Header({ dict, lang }: Props) {
   ];
 
   return (
-    <header className="relative md:fixed shadow-none md:shadow-md w-[100vw] overflow-x-hidden z-40 top-0 left-0">
-      <h1 className="sr-only">Arelys Borgia</h1>
-      <div className="relative bg-dark hidden md:block">
+    <header className="relative shadow-md w-[100vw] overflow-x-hidden z-40">
+      <div className="bg-dark hidden md:block">
         <Container
           className="flex flex-row items-center justify-between gap-4 !py-1.5"
           component="nav"
@@ -91,25 +90,26 @@ export async function Header({ dict, lang }: Props) {
         </Container>
       </div>
 
-      <div className="bg-white md:bg-transparentLight8 z-40 text-primary">
+      <div className="fixed top-0 left-0 w-full shadow-md md:shadow-none md:relative bg-white z-40 text-primary">
         <Container
           component="nav"
           aria-label={dict.header.nav1}
-          className="flex flex-row items-center justify-between gap-4"
+          className="py-3 flex flex-row items-center justify-stretch gap-4"
         >
+          <h1>
+            <Link
+              underline="none"
+              href="/"
+              className={clsx(
+                'block w-44 xl:w-60 transition-colors rounded-sm',
+                'focus:text-primaryDark hover:text-primaryLight',
+              )}
+            >
+              <SvgLogo aria-hidden="true" className="fill-current" />
+              <span className="sr-only">{title}</span>
+            </Link>
+          </h1>
           <Stack component="ul" direction="row" align="center" className="gap-4">
-            <li>
-              <Link
-                underline="none"
-                href="/"
-                className={clsx(
-                  'block w-44 xl:w-60 transition-shadow rounded-sm',
-                  'ring-primary focus:ring-2',
-                )}
-              >
-                <SvgLogo aria-label={dict.siteName} className="fill-current" />
-              </Link>
-            </li>
             {nav.map(link => (
               <li key={link.key} className="hidden md:flex">
                 <ButtonLink
@@ -125,12 +125,14 @@ export async function Header({ dict, lang }: Props) {
             ))}
           </Stack>
 
+          <div className="flex-grow" />
+
           <ButtonLink
             color="primary"
             size="sm"
             href="/"
             variant="outlined"
-            className="hidden uppercase md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
+            className="hidden uppercase self-end md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
           >
             {dict.header.quote}
           </ButtonLink>

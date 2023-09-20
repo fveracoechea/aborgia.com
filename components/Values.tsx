@@ -32,21 +32,24 @@ export function Values(props: Props) {
   return (
     <Container
       component="section"
-      className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-between gap-8 text-greyDark"
+      className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-between gap-8"
     >
-      <>
-        {values.map(item => (
-          <div
-            className="flex flex-col gap-2 text-center justify-center items-center w-full lg:w-auto"
-            key={item.id}
-          >
-            <FontAwesomeIcon fontSize="2.4rem" color="currentColor" icon={item.icon} />
-            <Text variant="subtitle1" className="text-dark">
-              {item.text}
-            </Text>
-          </div>
-        ))}
-      </>
+      {values.map(item => (
+        <div
+          className="flex flex-col gap-2 text-center justify-center items-center w-full lg:w-auto"
+          key={item.id}
+        >
+          <FontAwesomeIcon
+            fontSize="2.4rem"
+            color="currentColor"
+            className="text-greyDark"
+            icon={item.icon}
+          />
+          <Text variant="subtitle1" className="text-dark">
+            {item.text}
+          </Text>
+        </div>
+      ))}
     </Container>
   );
 }

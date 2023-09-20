@@ -1,35 +1,25 @@
-import { ElementType, ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, ReactNode, forwardRef } from 'react';
 
-import NextLInk from 'next/link';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 import clsx from 'clsx';
 
-import { OverridableComponent, PolymorphicProps } from './types';
+import { DefaultComponentProps, OverridableComponent, PolymorphicProps } from './types';
 
 type Props = {
   underline?: 'always' | 'hover' | 'none';
   color?: 'primary' | 'dark' | 'inherit';
-};
+} & NextLinkProps;
 
 interface LinkTypeMap {
   props: Props;
   defaultComponent: 'a';
 }
 
-export type LinkProps<RootComponent extends ElementType = LinkTypeMap['defaultComponent']> =
-  PolymorphicProps<LinkTypeMap, RootComponent>;
+export type LinkProps = DefaultComponentProps<LinkTypeMap>;
 
-function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<Element>) {
-  const {
-    component,
-    children,
-    className,
-    underline = 'hover',
-    color = 'inherit',
-    ...otherProps
-  } = props;
-
-  const Element = component ?? NextLInk;
+function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<HTMLAnchorElement>) {
+  const { children, className, underline = 'hover', color = 'inherit', ...otherProps } = props;
 
   const baseClasses = clsx(
     'font-serif font-normal leading-normal cursor-pointer transition outline-none',
@@ -50,9 +40,9 @@ function LinkImpl(props: LinkProps, forwardedRef: ForwardedRef<Element>) {
   const styles = clsx(baseClasses, colorClasses, underlineClasses, className);
 
   return (
-    <Element {...otherProps} className={styles} ref={forwardedRef}>
+    <NextLink {...otherProps} className={styles} ref={forwardedRef}>
       {children}
-    </Element>
+    </NextLink>
   );
 }
 

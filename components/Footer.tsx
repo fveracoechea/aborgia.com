@@ -1,9 +1,11 @@
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faCopyright, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { fetchLocales, fetchPolicies } from 'shared/api';
 import SvgLogo from 'shared/assets/Logo.svg';
 import { Dict } from 'shared/locales/en';
 import { Container } from 'shared/ui/Container';
@@ -11,12 +13,20 @@ import { Link } from 'shared/ui/Link';
 import { Stack } from 'shared/ui/Stack';
 import { Text } from 'shared/ui/Text';
 
+import { LanguageSelector } from './LanguageSelector';
+
 type Props = {
   dict: Dict;
+  lang: string;
 };
 
-export function Footer({ dict }: Props) {
+export async function Footer({ dict, lang }: Props) {
   const year = new Date().getFullYear();
+  const { privacy, terms } = await fetchPolicies(lang);
+  const { locales, currentLocale } = await fetchLocales(lang);
+
+  if (!currentLocale) redirect('/');
+
   const contact = [
     {
       key: 'c-phone',
@@ -58,29 +68,36 @@ export function Footer({ dict }: Props) {
 
   return (
     <footer className="text-grey pt-12 pb-12 bg-dark">
-      <Container className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="flex flex-row justify-center md:justify-start gap-8 lg:gap-20">
-          <Stack className="gap-4 text-center md:text-left">
+      <Container className="flex flex-col lg:flex-row gap-10">
+        <div className="flex flex-col md:flex-row flex-wrap gap-10 flex-[2] xl:flex-[3] lg:flex-row justify-center md:justify-start">
+          <Stack className="gap-4 text-center lg:text-left">
             <Text variant="h6" className="font-bold">
               CONTACT
             </Text>
             {contact.map(link => (
-              <div key={link.key} className="flex flex-row justify-center md:justify-start gap-2">
+              <div
+                key={link.key}
+                className="flex flex-row justify-center text-center lg:text-left lg:justify-start gap-2"
+              >
                 {link.icon}
-                <Link underline="none" className="hover:text-greyLight" href={link.href}>
+                <Link
+                  underline="none"
+                  className="hover:text-greyLight focus:underline underline-offset-4"
+                  href={link.href}
+                >
                   {link.text}
                 </Link>
               </div>
             ))}
           </Stack>
-          <Stack className="gap-4 hidden md:flex">
+          <Stack className="gap-4 text-center lg:text-left">
             <Text variant="h6" className="font-bold">
               MENU
             </Text>
             {menu.map(link => (
               <Link
                 underline="none"
-                className="hover:text-greyLight"
+                className="hover:text-greyLight focus:underline underline-offset-4"
                 key={link.key}
                 href={link.href}
               >
@@ -88,17 +105,44 @@ export function Footer({ dict }: Props) {
               </Link>
             ))}
           </Stack>
+          <Stack className="gap-4 text-center lg:text-left">
+            <Text variant="h6" className="font-bold">
+              INFORMATION
+            </Text>
+
+            <Link
+              underline="none"
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${privacy.data.attributes.link.url}`}
+            >
+              {privacy.data.attributes.link.text}
+            </Link>
+            <Link
+              underline="none"
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${terms.data.attributes.link.url}`}
+            >
+              {terms.data.attributes.link.text}
+            </Link>
+            <LanguageSelector
+              locales={locales}
+              currentLocale={currentLocale}
+              buttonProps={{
+                color: 'grey',
+                className:
+                  'justify-center lg:justify-start focus:underline underline-offset-4 !p-0 !ring-0 !text-base',
+              }}
+            />
+          </Stack>
         </div>
 
-        <div className="flex flex-col items-center md:items-end gap-4">
+        <div className="flex flex-col items-center gap-6 flex-[2] lg:items-end">
           <div className="flex flex-col items-center gap-2 md:items-end">
-            <SvgLogo className="fill-current max-w-xs" />
-            <Text className="text-center md:text-right font-medium">
-              {dict.footer.p1} <br className="hidden xl:block" /> {dict.footer.p2}
-            </Text>
+            <SvgLogo className="fill-current max-w-sm" />
+            <Text className="text-center md:text-right font-medium">{dict.footer}</Text>
           </div>
 
-          <div className="hidden md:flex w-full border-solid border-b-[1px] border-grey" />
+          <div className="flex w-full border-solid border-b-[1px] border-grey" />
 
           <div className="flex flex-row gap-2 items-center">
             <FontAwesomeIcon fontSize="1.2rem" icon={faCopyright} />

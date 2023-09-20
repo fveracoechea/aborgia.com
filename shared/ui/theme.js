@@ -9,7 +9,7 @@ const error = '#a94682';
 const warning = '#a96d46';
 const info = '#4651a9';
 const dark = '#152732';
-const white = '#F6F4EB';
+const white = '#FFFFFF';
 const grey = '#b6c6d0';
 
 function hexToRgbA(hex, transparency = 1) {

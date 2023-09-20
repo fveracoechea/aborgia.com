@@ -23,7 +23,7 @@ function ContainerImpl(props: ContainerProps, forwardedRef: ForwardedRef<Element
   const Element = component ?? 'div';
   const styles = clsx(
     'container my-0 mx-auto',
-    !disablePadding && 'pl-4 pr-4 py-1.5 md:py-3 md:pr-5 lg:py-4',
+    !disablePadding && 'pl-5 pr-5 py-1.5 md:py-3 lg:py-4',
     className,
   );
 

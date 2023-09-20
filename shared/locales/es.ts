@@ -1,7 +1,7 @@
 import { Dict } from './en';
 
 export const es: Dict = {
-  siteName: 'Arelys Borgia',
+  siteName: 'Arelys Borgia Agente de Seguros',
   keywords: 'salud, vida, seguro, ObamaCare, cobertura',
   header: {
     nav1: 'Navegacion primaria',
@@ -83,13 +83,5 @@ export const es: Dict = {
       submit: 'Enviar',
     },
   },
-  aboutMe: {
-    p1: 'Agente de seguros con amplia experiencia en diversos tipos de seguros y sistemas de seguros tanto a nivel nacional como internacional. Esta experiencia la equipa con una comprensión integral de las complejidades y los matices de los seguros, lo que le permite brindar información valiosa y orientación a los clientes.',
-    p2: 'El objetivo principal es ayudar a las personas a encontrar el mejor plan de seguro médico adaptado a sus necesidades específicas. Ella reconoce la importancia de la cobertura integral de atención médica y se dedica a ayudar a los clientes a navegar el complejo panorama de las opciones de seguro.',
-    p3: 'Cuida tu presente mirando hacia el futuro.',
-  },
-  footer: {
-    p1: 'Obtenga la mejor cobertura de salud con los mejores beneficios, al mejor precio.',
-    p2: 'Cuidamos tu presente mirando hacia el futuro.',
-  },
+  footer: 'Cuida tu presente mirando hacia el futuro.',
 };

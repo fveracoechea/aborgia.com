@@ -1,5 +1,5 @@
 export const en = {
-  siteName: 'Arelys Borgia',
+  siteName: 'Arelys Borgia Insurance Agent',
   keywords: 'health, life, insurance, ObamaCare, coverage',
   header: {
     nav1: 'Primary navigation',
@@ -47,10 +47,37 @@ export const en = {
     },
   },
   other: 'Other',
+  quote: {
+    name: {
+      label: 'Name',
+      required: 'Name is required',
+    },
+    email: {
+      label: 'Email',
+      invalid: 'Enter a valid email',
+      required: 'Email is required',
+    },
+    phone: {
+      label: 'Phone Number',
+      required: 'Phone number is required',
+      invalid: 'Enter a valid phone number',
+    },
+    reCAPTCHA: {
+      required: 'ReCAPTCHA is a required field',
+    },
+    success: 'Your quote request has been sent!',
+    additionalInfo: {
+      label: 'Additional Information',
+      placeholder: 'Select Insurance',
+    },
+    error: 'Something went wrong, please try again...',
+    submit: 'Submit',
+  },
   form: {
     messages: {
-      firstName: {
-        required: 'First Name is required',
+      name: {
+        label: 'Name',
+        required: 'Name is required',
       },
       email: {
         invalid: 'Enter a valid email',
@@ -62,9 +89,6 @@ export const en = {
       },
       reCAPTCHA: {
         required: 'ReCAPTCHA is a required field',
-      },
-      age: {
-        invalid: 'Age must be greater than or equal to 12',
       },
       success: 'Your quote request has been sent!',
       error: 'Something went wrong, please try again...',
@@ -81,15 +105,7 @@ export const en = {
       submit: 'Submit',
     },
   },
-  aboutMe: {
-    p1: 'An insurance agent with a broad range of experience in various types of insurance and insurance systems at both national and international levels. This experience equips her with a comprehensive understanding of the intricacies and nuances of insurance, allowing her to provide valuable insights and guidance to clients.',
-    p2: 'The primary objective is to assist individuals in finding the best medical insurance plan tailored to their specific needs. She recognizes the importance of comprehensive healthcare coverage and is dedicated to helping clients navigate the complex landscape of insurance options.',
-    p3: 'Take care of your present looking towards the future.',
-  },
-  footer: {
-    p1: 'Obtain the best health coverage with the best benefits at the best price.',
-    p2: 'We take care of your present looking towards the future.',
-  },
+  footer: 'Take care of your present looking towards the future.',
 };
 
 export type Dict = typeof en;

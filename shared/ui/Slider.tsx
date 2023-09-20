@@ -48,7 +48,7 @@ export function Slider(props: Props) {
   }, [setTimer]);
 
   return (
-    <div className="block w-full relative h-full">
+    <div className="text-white block w-full relative h-full">
       {images.map((src, idx) => (
         <Image
           className={clsx(
@@ -68,7 +68,7 @@ export function Slider(props: Props) {
       <div
         className={clsx(
           'flex justify-center items-center text-center gap-4 flex-col absolute',
-          'left-0 top-0 w-full h-full bg-transparentLight5 p-6',
+          'left-0 top-0 w-full h-full bg-transparentDark6 p-6',
         )}
       >
         {children}
@@ -78,13 +78,13 @@ export function Slider(props: Props) {
           {images.map((src, idx) => (
             <Button
               className="rounded-full !p-2"
-              color="primary"
+              color="light"
               onClick={onBulletChange(idx)}
               key={src}
             >
               <FontAwesomeIcon
                 fontSize="0.8rem"
-                className="text-primaryDark"
+                color="currentColor"
                 icon={idx === activeImg ? faCircleSolid : faCircleRegular}
               />
             </Button>
