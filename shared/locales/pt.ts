@@ -83,5 +83,34 @@ export const pt: Dict = {
       submit: 'Enviar',
     },
   },
+  quote: {
+    name: {
+      label: 'Name',
+      required: 'Name is required',
+    },
+    email: {
+      label: 'Email',
+      invalid: 'Enter a valid email',
+      required: 'Email is required',
+    },
+    phone: {
+      label: 'Phone Number',
+      required: 'Phone number is required',
+      invalid: 'Enter a valid phone number',
+    },
+    reCAPTCHA: {
+      required: 'ReCAPTCHA is a required field',
+    },
+    additionalInfo: {
+      label: 'Additional Information',
+    },
+    insurance: {
+      label: 'Insurance coverage',
+      placeholder: 'Select Insurance',
+    },
+    success: 'Your quote request has been sent!',
+    error: 'Something went wrong, please try again...',
+    submit: 'Submit',
+  },
   footer: 'Cuide do seu presente olhando para o futuro.',
 };

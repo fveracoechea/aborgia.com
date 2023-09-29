@@ -65,11 +65,14 @@ export const en = {
     reCAPTCHA: {
       required: 'ReCAPTCHA is a required field',
     },
-    success: 'Your quote request has been sent!',
     additionalInfo: {
       label: 'Additional Information',
+    },
+    insurance: {
+      label: 'Insurance coverage',
       placeholder: 'Select Insurance',
     },
+    success: 'Your quote request has been sent!',
     error: 'Something went wrong, please try again...',
     submit: 'Submit',
   },

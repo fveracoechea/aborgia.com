@@ -52,15 +52,19 @@ export async function RequestQuote(props: Props) {
           required
           variant="outlined"
           buttonProps={{ size: 'md' }}
-          label={dict.quote.additionalInfo.label}
-          placeholder={dict.quote.additionalInfo.placeholder}
+          label={dict.quote.insurance.label}
+          placeholder={dict.quote.insurance.placeholder}
           options={coverages.data.map(({ id, attributes }) => ({
             key: String(id),
             label: attributes.title,
             value: attributes.title,
           }))}
         />
-        <Textarea containerClassname="col-span-2" id="add" label="Additional Information" />
+        <Textarea
+          id="add"
+          containerClassname="col-span-2"
+          label={dict.quote.additionalInfo.label}
+        />
         <div className="col-span-2 flex flex-col gap-4">
           <Checkbox
             name="acknowledgement"
@@ -73,7 +77,13 @@ export async function RequestQuote(props: Props) {
               className="g-recaptcha"
               data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
             />
-            <Button color="primary" variant="outlined" type="submit">
+            <Button
+              size="lg"
+              color="primary"
+              variant="outlined"
+              type="submit"
+              className="self-start"
+            >
               Submit Request
             </Button>
           </div>
