@@ -30,7 +30,7 @@ function CheckboxImpl(props: CheckboxProps, forwardedRef: ForwardedRef<HTMLInput
   const iconStyles = clsx(error ? 'text-error' : 'text-primaryDark');
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-0">
       <Label
         required={required}
         variant="body1"

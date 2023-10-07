@@ -62,9 +62,6 @@ export const en = {
       required: 'Phone number is required',
       invalid: 'Enter a valid phone number',
     },
-    reCAPTCHA: {
-      required: 'ReCAPTCHA is a required field',
-    },
     additionalInfo: {
       label: 'Additional Information',
     },
@@ -78,6 +75,9 @@ export const en = {
         'I acknowledge that by clicking submit, I am agreeing with the Terms and Privacy Notice.',
       required:
         'To use our services, you need to agree to our Terms and Privacy Notice. Please check the box to confirm.',
+    },
+    recaptcha: {
+      required: 'reCAPTCHA verification is required.',
     },
     success: 'Your quote request has been sent!',
     error: 'Something went wrong, please try again...',

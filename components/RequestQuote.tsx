@@ -12,6 +12,7 @@ import { Button } from 'shared/ui/Button';
 import { Checkbox } from 'shared/ui/Checkbox';
 import { Container } from 'shared/ui/Container';
 import { Input } from 'shared/ui/Input';
+import { PhoneInput } from 'shared/ui/PhoneInput';
 import { Select } from 'shared/ui/Select';
 import { Text } from 'shared/ui/Text';
 import { Textarea } from 'shared/ui/Textarea';
@@ -34,20 +35,18 @@ export function RequestQuote(props: Props) {
         insurance: z.string().refine(val => coverages.data.some(c => c.attributes.title === val), {
           message: dict.quote.insurance.required,
         }),
-        acknowledgement: z.coerce.boolean().refine(
-          val => {
-            console.log('acknowledgement = ', val);
-            return val;
-          },
-          {
-            message: dict.quote.acknowledgement.required,
-          },
-        ),
+        acknowledgement: z.coerce.boolean().refine(val => val, {
+          message: dict.quote.acknowledgement.required,
+        }),
+        ['g-recaptcha-response']: z.coerce.boolean().refine(val => val, {
+          message: dict.quote.recaptcha.required,
+        }),
       }),
     [dict, coverages],
   );
 
-  const { formProps, errors } = useFormValidation(RequestFormSchema, values => {
+  const { formProps, errors } = useFormValidation(RequestFormSchema, (values, event) => {
+    event.preventDefault();
     createQuoteRequest(values);
   });
 
@@ -78,11 +77,10 @@ export function RequestQuote(props: Props) {
           placeholder="johndoe@gmail.com"
           error={errors.email}
         />
-        <Input
+        <PhoneInput
           id="phone"
           name="phone"
           required
-          type="tel"
           label={dict.quote.phone.label}
           placeholder="(xxx) xxx-xxxx"
           error={errors.phone}
@@ -115,10 +113,15 @@ export function RequestQuote(props: Props) {
           />
 
           <div className="flex justify-between">
-            <div
-              className="g-recaptcha"
-              data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-            />
+            <div className="flex flex-col gap-1">
+              <div
+                className="g-recaptcha"
+                data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+              />
+              {errors['g-recaptcha-response'] && (
+                <Text className="!text-error text-sm">{errors['g-recaptcha-response']}</Text>
+              )}
+            </div>
             <Button
               size="lg"
               color="primary"

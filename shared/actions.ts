@@ -6,6 +6,7 @@ type QuoteData = {
   phone: string;
   insurance: string;
   acknowledgement: boolean;
+  ['g-recaptcha-response']: boolean;
 };
 
 export async function createQuoteRequest(data: QuoteData) {
