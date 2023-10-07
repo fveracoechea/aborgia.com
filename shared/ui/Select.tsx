@@ -30,6 +30,7 @@ type Props = {
   required?: boolean;
   label?: ReactNode;
   containerClassname?: string;
+  error?: string | null;
 };
 
 type SelectTypeMap = {
@@ -55,6 +56,7 @@ export function Select(props: SelectProps) {
     id,
     buttonProps = {},
     containerClassname,
+    error,
   } = props;
 
   let selectBtnProps: ButtonProps = {};
@@ -69,6 +71,7 @@ export function Select(props: SelectProps) {
       className: clsx(
         'font-serif text-dark outline-none rounded border transition ring-0',
         'justify-between bg-transparent focus:ring-1',
+        error && '!border-error !ring-error',
         'border-greyDark ring-primary hover:border-dark focus:border-primary',
       ),
       ...buttonProps,
@@ -87,6 +90,9 @@ export function Select(props: SelectProps) {
     variant === 'outlined' && '!text-dark',
     'leading-none',
   );
+
+  const errorId = `${id}-error-hint`;
+  if (error) selectBtnProps['aria-describedby'] = errorId;
 
   return (
     <RS.Root
@@ -115,6 +121,11 @@ export function Select(props: SelectProps) {
             </RS.Icon>
           </Button>
         </RS.Trigger>
+        {error && typeof error === 'string' && (
+          <Text id={errorId} variant="caption" className="!text-error pl-1">
+            {error}
+          </Text>
+        )}
       </div>
       <RS.Portal>
         <RS.Content

@@ -75,3 +75,5 @@ export const CoverageListSchema = z.object({
     }),
   ),
 });
+
+export type CoverageList = z.infer<typeof CoverageListSchema>;

@@ -6,12 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
 import { Label } from './Label';
+import { Text } from './Text';
 import theme from './theme';
 import { DefaultComponentProps } from './types';
 
 type Props = {
   label: ReactNode;
   iconSize?: keyof (typeof theme)['spacing'];
+  error?: string | null;
 };
 
 type CheckboxTypeMap = {
@@ -22,41 +24,49 @@ type CheckboxTypeMap = {
 export type CheckboxProps = DefaultComponentProps<CheckboxTypeMap>;
 
 function CheckboxImpl(props: CheckboxProps, forwardedRef: ForwardedRef<HTMLInputElement>) {
-  const { required, checked, label, iconSize = '6', ...otherProps } = props;
+  const { required, checked, label, iconSize = '6', error, ...otherProps } = props;
   const checkIconSize = '1.6rem';
 
-  const iconStyles = clsx('text-primaryDark');
+  const iconStyles = clsx(error ? 'text-error' : 'text-primaryDark');
+
   return (
-    <Label
-      required={required}
-      variant="body1"
-      className={clsx(
-        'flex gap-2 items-center transition-colors rounded outline-offset-4 outline-grey',
-        'focus-within:outline-dashed hover:text-primaryDark',
-      )}
-    >
-      <input
+    <div className="flex flex-col gap-1">
+      <Label
         required={required}
-        checked={checked}
-        type="checkbox"
-        className="appearance-none sr-only peer"
-        ref={forwardedRef}
-        {...otherProps}
-      />
-      <span
-        style={{ height: checkIconSize }}
-        className={clsx(iconStyles, 'hidden peer-checked:inline-block')}
+        variant="body1"
+        className={clsx(
+          'flex gap-2 items-center transition-colors rounded outline-offset-4 outline-grey',
+          'focus-within:outline-dashed hover:text-primaryDark',
+        )}
       >
-        <FontAwesomeIcon fontSize={checkIconSize} icon={faSquareCheck} />
-      </span>
-      <span
-        style={{ height: checkIconSize }}
-        className={clsx(iconStyles, 'inline-block peer-checked:hidden')}
-      >
-        <FontAwesomeIcon fontSize={checkIconSize} icon={faSquare} />
-      </span>
-      {label}
-    </Label>
+        <input
+          required={required}
+          checked={checked}
+          type="checkbox"
+          className="appearance-none sr-only peer"
+          ref={forwardedRef}
+          {...otherProps}
+        />
+        <span
+          style={{ height: checkIconSize }}
+          className={clsx(iconStyles, 'hidden peer-checked:inline-block')}
+        >
+          <FontAwesomeIcon fontSize={checkIconSize} icon={faSquareCheck} />
+        </span>
+        <span
+          style={{ height: checkIconSize }}
+          className={clsx(iconStyles, 'inline-block peer-checked:hidden')}
+        >
+          <FontAwesomeIcon fontSize={checkIconSize} icon={faSquare} />
+        </span>
+        {label}
+      </Label>
+      {error && typeof error === 'string' && (
+        <Text variant="caption" className="!text-error pl-1">
+          {error}
+        </Text>
+      )}
+    </div>
   );
 }
 

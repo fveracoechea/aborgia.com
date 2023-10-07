@@ -71,6 +71,13 @@ export const en = {
     insurance: {
       label: 'Insurance coverage',
       placeholder: 'Select Insurance',
+      required: 'Select an insurance coverage',
+    },
+    acknowledgement: {
+      label:
+        'I acknowledge that by clicking submit, I am agreeing with the Terms and Privacy Notice.',
+      required:
+        'To use our services, you need to agree to our Terms and Privacy Notice. Please check the box to confirm.',
     },
     success: 'Your quote request has been sent!',
     error: 'Something went wrong, please try again...',
