@@ -65,7 +65,7 @@ async function sendNotificationEmail(request: QuoteRquest) {
 
 export async function validateReCaptcha(response: FormDataEntryValue | null) {
   const params = new URLSearchParams({
-    secret: process.env.RECAPTCHA_SITE_KEY!,
+    secret: process.env.RECAPTCHA_SECRET_KEY!,
     response: String(response),
   });
 
