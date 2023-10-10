@@ -22,6 +22,7 @@ type Props = {
   lang: string;
 };
 
+// TODO fix "as any"
 export async function Header(props: Props) {
   const { dict, lang, title } = props;
   const { locales, currentLocale } = await fetchLocales(lang);
@@ -80,7 +81,7 @@ export async function Header(props: Props) {
           <ul className="flex flex-row md:gap-2 lg:gap-4">
             {contact.map(link => (
               <li key={link.key}>
-                <ButtonLink size="sm" color="light" variant="text" href={link.href}>
+                <ButtonLink size="sm" color="light" variant="text" href={link.href as any}>
                   {link.icon}
                   {link.text}
                 </ButtonLink>
@@ -117,7 +118,7 @@ export async function Header(props: Props) {
                   size="sm"
                   color="primary"
                   variant="text"
-                  href={link.href}
+                  href={link.href as any}
                 >
                   {link.text}
                 </ButtonLink>
@@ -130,7 +131,7 @@ export async function Header(props: Props) {
           <ButtonLink
             color="primary"
             size="sm"
-            href="/"
+            href={`/${lang}` as any}
             variant="outlined"
             className="hidden uppercase self-end md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
           >
