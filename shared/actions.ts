@@ -35,20 +35,23 @@ const mailjet = new Mailjet({
   apiSecret: process.env.MAILJET_SECRET_KEY,
 });
 
-const Email = 'aborgiainsurance@gmail.com';
-
 async function sendNotificationEmail(request: QuoteRquest) {
   await mailjet.post('send', { version: 'v3.1' }).request({
     Messages: [
       {
         From: {
-          Email,
+          Email: 'aborgiainsurance@gmail.com',
           Name: 'Noreply Website: Arelys Borgia',
         },
         To: [
           {
-            Email: 'f.v.borgia@gmail.com',
+            Email: 'aborgiainsurance@gmail.com',
             Name: 'Arelys Borgia',
+          },
+          ,
+          {
+            Email: 'veracoecheafrancisco@gmail.com',
+            Name: 'Francisco Veracoechea',
           },
         ],
         Subject: `${request.name} - Quote Request - aborgia.com`,
