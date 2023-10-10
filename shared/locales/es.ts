@@ -49,68 +49,46 @@ export const es: Dict = {
     },
   },
   other: 'Otro',
-  form: {
-    messages: {
-      firstName: {
-        required: 'Se requiere el primer nombre',
-      },
-      age: {
-        invalid: 'La edad debe ser mayor o igual a 12',
-      },
-      email: {
-        invalid: 'Introduzca un correo electrónico válido',
-        required: 'Correo electronico es requerido',
-      },
-      phone: {
-        required: 'Se requiere el número de teléfono',
-        invalid: 'Introduce un número de teléfono válido',
-      },
-      reCAPTCHA: {
-        required: 'ReCAPTCHA es un campo obligatorio',
-      },
-      success: 'Su solicitud de cotización ha sido enviada!',
-      error: 'Algo salió mal. Por favor, vuelva a intentarlo...',
-    },
-    title: 'Consigue una cotización',
-    inputs: {
-      firstName: 'Primer nombre',
-      lastName: 'Apellido',
-      email: 'Correo electrónico',
-      age: 'Edad',
-      phone: 'Número de teléfono',
-      insurance: 'Cobertura del seguro',
-      additionalInformation: 'Información Adicional',
-      submit: 'Enviar',
-    },
-  },
   quote: {
     name: {
-      label: 'Name',
-      required: 'Name is required',
+      label: 'Nombre',
+      required: 'Se requiere el nombre.',
+      min: 'El nombre es muy corto.',
     },
     email: {
       label: 'Email',
-      invalid: 'Enter a valid email',
-      required: 'Email is required',
+      invalid: 'Introduzca un correo electrónico válido.',
+      required: 'Correo electronico es requerido.',
     },
     phone: {
-      label: 'Phone Number',
-      required: 'Phone number is required',
-      invalid: 'Enter a valid phone number',
-    },
-    reCAPTCHA: {
-      required: 'ReCAPTCHA is a required field',
+      label: 'Número de teléfono',
+      required: 'Se requiere número de teléfono.',
+      invalid: 'Introduce un número de teléfono válido.',
     },
     additionalInfo: {
-      label: 'Additional Information',
+      label: 'Información adicional',
+      max: 'La información adicional no debe exceder los 500 caracteres.',
     },
     insurance: {
-      label: 'Insurance coverage',
-      placeholder: 'Select Insurance',
+      label: 'Cobertura de seguro',
+      placeholder: 'Selecciona un tipo de aseguranza',
+      required: 'Selecciona un tipo de aseguranza.',
     },
-    success: 'Your quote request has been sent!',
-    error: 'Something went wrong, please try again...',
-    submit: 'Submit',
+    acknowledgement: {
+      label: 'Reconozco que al hacer clic en enviar, acepto los Términos y el Aviso de privacidad.',
+      required:
+        'Para utilizar nuestros servicios, debe aceptar nuestros Términos y Aviso de privacidad. Por favor marque la casilla para confirmar.',
+    },
+    recaptcha: {
+      required: 'Se requiere verificación reCAPTCHA.',
+    },
+    success:
+      '¡Gracias! Hemos recibido su información y nos comunicaremos con usted lo antes posible con un presupuesto personalizado.',
+    error:
+      'Lo sentimos, nuestro servidor encontró un problema al procesar su solicitud. Por favor, inténtelo de nuevo más tarde.',
+    uniqueError:
+      'Parece que ya has enviado una solicitud de cotización anteriormente. Estamos trabajando en ello y nos comunicaremos con usted lo antes posible.',
+    submit: 'Enviar Cotización',
   },
   footer: 'Cuida tu presente mirando hacia el futuro.',
 };

@@ -14,6 +14,7 @@ type Props = {
   label: ReactNode;
   iconSize?: keyof (typeof theme)['spacing'];
   error?: string | null;
+  containerClassname?: string;
 };
 
 type CheckboxTypeMap = {
@@ -24,18 +25,26 @@ type CheckboxTypeMap = {
 export type CheckboxProps = DefaultComponentProps<CheckboxTypeMap>;
 
 function CheckboxImpl(props: CheckboxProps, forwardedRef: ForwardedRef<HTMLInputElement>) {
-  const { required, checked, label, iconSize = '6', error, ...otherProps } = props;
+  const {
+    required,
+    checked,
+    label,
+    iconSize = '6',
+    error,
+    containerClassname,
+    ...otherProps
+  } = props;
   const checkIconSize = '1.6rem';
 
-  const iconStyles = clsx(error ? 'text-error' : 'text-primaryDark');
+  const iconStyles = clsx(error ? 'text-error' : 'text-primaryDark', 'mr-2');
 
   return (
-    <div className="flex flex-col gap-0">
+    <div className={clsx(containerClassname, 'flex flex-col gap-0')}>
       <Label
         required={required}
         variant="body1"
         className={clsx(
-          'flex gap-2 items-center transition-colors rounded outline-offset-4 outline-grey',
+          'flex items-center transition-colors rounded outline-offset-4 outline-grey',
           'focus-within:outline-dashed hover:text-primaryDark',
         )}
       >

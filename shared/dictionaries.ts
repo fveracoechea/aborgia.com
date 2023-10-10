@@ -1,6 +1,8 @@
 import 'server-only';
 
-import { Dict } from './locales/en';
+import { Dict as DictType } from './locales/en';
+
+export type Dict = DictType;
 
 const en = () => import('./locales/en').then(module => module.en);
 const es = () => import('./locales/es').then(module => module.es);

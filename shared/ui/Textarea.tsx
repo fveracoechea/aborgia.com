@@ -25,7 +25,7 @@ function TextareaImpl(props: TextareaProps, forwardedRef: ForwardedRef<HTMLTextA
     props;
 
   const Textarea = clsx(
-    'font-serif text-dark outline-none py-2 px-4 rounded border transition ring-0 resize-none h-20',
+    'font-serif text-dark outline-none py-2 px-4 rounded border transition ring-0 resize-none h-28',
     error
       ? 'ring-error border-errorLight hover:border-error'
       : 'border-greyDark ring-primary hover:border-dark focus:border-primary',

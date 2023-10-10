@@ -50,25 +50,27 @@ export const en = {
   quote: {
     name: {
       label: 'Name',
-      required: 'Name is required',
+      required: 'Name is required.',
+      min: 'Name is too short.',
     },
     email: {
       label: 'Email',
-      invalid: 'Enter a valid email',
-      required: 'Email is required',
+      invalid: 'Enter a valid email.',
+      required: 'Email is required.',
     },
     phone: {
       label: 'Phone Number',
-      required: 'Phone number is required',
-      invalid: 'Enter a valid phone number',
+      required: 'Phone number is required.',
+      invalid: 'Enter a valid phone number.',
     },
     additionalInfo: {
       label: 'Additional Information',
+      max: 'Additional Information should not exceed 500 characters.',
     },
     insurance: {
       label: 'Insurance coverage',
       placeholder: 'Select Insurance',
-      required: 'Select an insurance coverage',
+      required: 'Select an insurance coverage.',
     },
     acknowledgement: {
       label:
@@ -79,41 +81,13 @@ export const en = {
     recaptcha: {
       required: 'reCAPTCHA verification is required.',
     },
-    success: 'Your quote request has been sent!',
-    error: 'Something went wrong, please try again...',
+    success:
+      "Thanks! We've received your information and will get back to you as soon as possible with a personalized quote.",
+    error:
+      "We're sorry, our server encountered an issue while processing your request. Please try again later.",
+    uniqueError:
+      "It appears you've previously submitted a quote request. We're working on it and will get back to you as soon as possible.",
     submit: 'Submit',
-  },
-  form: {
-    messages: {
-      name: {
-        label: 'Name',
-        required: 'Name is required',
-      },
-      email: {
-        invalid: 'Enter a valid email',
-        required: 'Email is required',
-      },
-      phone: {
-        required: 'Phone number is required',
-        invalid: 'Enter a valid phone number',
-      },
-      reCAPTCHA: {
-        required: 'ReCAPTCHA is a required field',
-      },
-      success: 'Your quote request has been sent!',
-      error: 'Something went wrong, please try again...',
-    },
-    title: 'Get a Quote',
-    inputs: {
-      firstName: 'First Name',
-      lastName: 'Last Name',
-      email: 'Email',
-      age: 'Age',
-      phone: 'Phone Number',
-      insurance: 'Insurance Coverage',
-      additionalInformation: 'Additional Information',
-      submit: 'Submit',
-    },
   },
   footer: 'Take care of your present looking towards the future.',
 };

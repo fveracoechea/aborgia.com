@@ -1,4 +1,4 @@
-import { ElementType, ForwardedRef, ReactNode, forwardRef } from 'react';
+import { ElementType, ForwardedRef, forwardRef } from 'react';
 
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
@@ -10,6 +10,7 @@ type Props = {
   variant?: 'text' | 'outlined' | 'contained' | 'custom';
   size?: 'sm' | 'md' | 'lg';
   color?: 'light' | 'dark' | 'primary' | 'grey';
+  // loading?: boolean;
 };
 
 interface ButtonTypeMap {
@@ -77,11 +78,13 @@ function ButtonImpl(props: ButtonProps, forwardedRef: ForwardedRef<Element>) {
     variant = 'text',
     size = 'md',
     color = 'dark',
+    // loading = false,
     ...otherProps
   } = props;
 
   const Element = component ?? 'button';
   const styles = getClassNames({ variant, size, color }, className);
+  // const child
 
   return (
     <Element {...otherProps} className={styles} ref={forwardedRef}>
@@ -93,7 +96,7 @@ function ButtonImpl(props: ButtonProps, forwardedRef: ForwardedRef<Element>) {
 export const Button = forwardRef(ButtonImpl) as OverridableComponent<ButtonTypeMap>;
 
 interface ButtonLinkTypeMap {
-  props: Props & NextLinkProps;
+  props: Props & NextLinkProps<unknown>;
   defaultComponent: 'a';
 }
 

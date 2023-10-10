@@ -1,4 +1,5 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FormErrors, validateSchema } from 'shared/formErrors';
 
 import { z } from 'zod';
 
@@ -6,10 +7,6 @@ export type ValidatedFormSubmit<Schema extends z.ZodTypeAny> = (
   values: z.infer<Schema>,
   event: FormEvent<HTMLFormElement>,
 ) => void;
-
-export type FormErrors<Schema extends z.ZodTypeAny> = Partial<
-  Record<keyof z.infer<Schema>, string>
->;
 
 export function validateEntries<Schema extends z.ZodTypeAny>(
   entries: IterableIterator<[string | number, unknown]>,
@@ -22,47 +19,7 @@ function isInputElement(element: unknown): element is HTMLInputElement | HTMLTex
   return element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement;
 }
 
-type FormValidation<Schema extends z.ZodTypeAny> =
-  | {
-      success: true;
-      values: z.infer<Schema>;
-    }
-  | {
-      success: false;
-      errors: FormErrors<Schema>;
-    };
-
-export function validateSchema<Schema extends z.ZodTypeAny>(
-  data: FormData | URLSearchParams,
-  schema: Schema,
-): FormValidation<Schema> {
-  console.log('form entries = ', Object.fromEntries(data.entries()));
-  const result = schema.safeParse(Object.fromEntries(data.entries()));
-  if (result.success) {
-    return {
-      success: true,
-      values: result.data as z.infer<Schema>,
-    };
-  }
-
-  const fieldErrors = result.error.formErrors.fieldErrors;
-  const issues: Record<string, string> = {};
-  for (const key in fieldErrors) {
-    if (Object.prototype.hasOwnProperty.call(fieldErrors, key)) {
-      const messages = fieldErrors[key];
-      if (messages && messages[0]) {
-        issues[key] = messages[0];
-      }
-    }
-  }
-
-  return {
-    success: false,
-    errors: issues as FormErrors<Schema>,
-  };
-}
-
-export function useFormValidation<Schema extends z.ZodTypeAny>(
+export function useFormValidation<Schema extends z.AnyZodObject>(
   formSchema: Schema,
   handleSubmit?: ValidatedFormSubmit<Schema>,
 ) {

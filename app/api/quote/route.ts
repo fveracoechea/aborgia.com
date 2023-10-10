@@ -21,25 +21,6 @@ type ApiResponse = {
   error: boolean;
 };
 
-const getEmailHtml = (data: Data) => {
-  const { firstName, lastName, email, age, insurance, additionalInformation, phone } = data;
-  return `
-  <h3 style="color: #c26dbc">
-  New Quote request from: ${firstName}
-  </h3>
-  <p><b style="color: #3cacae">Email: </b> ${email}</p>
-  <p><b style="color: #3cacae">First Name: </b> ${firstName}</p>
-  <p><b style="color: #3cacae">Last Name: </b> ${lastName || 'none'}</p>
-  <p><b style="color: #3cacae">Age: </b> ${age || 'none'}</p>
-  <p><b style="color: #3cacae">Phone: </b> ${phone || 'none'}</p>
-  <p><b style="color: #3cacae">Insurance: </b> ${insurance || 'none'}</p>
-  <p>
-  <b style="color: #3cacae">Additional Information: </b>
-  </p>
-  <p>${additionalInformation || 'none'}</p>
-  `;
-};
-
 const getEmailText = (data: Data) => {
   const { firstName, lastName, email, age, insurance, additionalInformation, phone } = data;
   return `
@@ -81,9 +62,9 @@ export async function POST(request: NextRequest) {
               Name: 'Arelys Borgia',
             },
           ],
-          Subject: `New Quote requested from: ${values.firstName}`,
+          Subject: `${values.firstName} ${values}`,
           TextPart: getEmailText(values),
-          HTMLPart: getEmailHtml(values),
+
         },
       ],
     });

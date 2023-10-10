@@ -49,68 +49,46 @@ export const pt: Dict = {
     },
   },
   other: 'Outro',
-  form: {
-    messages: {
-      firstName: {
-        required: 'O primeiro nome é necessário',
-      },
-      email: {
-        invalid: 'Entre com um email válido',
-        required: 'O e-mail é obrigatório',
-      },
-      phone: {
-        required: 'O número de telefone é obrigatório',
-        invalid: 'Insira um número de telefone válido',
-      },
-      reCAPTCHA: {
-        required: 'ReCAPTCHA é um campo obrigatório',
-      },
-      age: {
-        invalid: 'A idade deve ser maior ou igual a 12',
-      },
-      success: 'Seu pedido de orçamento foi enviado!',
-      error: 'Alguma coisa deu errado. Por favor tente outra vez...',
-    },
-    title: 'Faça uma cotação',
-    inputs: {
-      firstName: 'Primeiro nome',
-      lastName: 'Sobrenome',
-      email: 'E-mail',
-      age: 'Era',
-      phone: 'Número de telefone',
-      insurance: 'Cobertura do seguro',
-      additionalInformation: 'Informação Adicional',
-      submit: 'Enviar',
-    },
-  },
   quote: {
     name: {
-      label: 'Name',
-      required: 'Name is required',
+      label: 'Nome',
+      required: 'O nome é obrigatório.',
+      min: 'Nome muito curto.',
     },
     email: {
       label: 'Email',
-      invalid: 'Enter a valid email',
-      required: 'Email is required',
+      invalid: 'Entre com um email válido.',
+      required: 'O e-mail é obrigatório.',
     },
     phone: {
-      label: 'Phone Number',
-      required: 'Phone number is required',
-      invalid: 'Enter a valid phone number',
-    },
-    reCAPTCHA: {
-      required: 'ReCAPTCHA is a required field',
+      label: 'Número de telefone',
+      required: 'O número de telefone é obrigatório.',
+      invalid: 'Insira um número de telefone válido.',
     },
     additionalInfo: {
-      label: 'Additional Information',
+      label: 'Informações adicionais',
+      max: 'As Informações Adicionais não devem exceder 500 caracteres.',
     },
     insurance: {
-      label: 'Insurance coverage',
-      placeholder: 'Select Insurance',
+      label: 'Cobertura do seguro',
+      placeholder: 'Selecione uma cobertura de seguro.',
+      required: 'Selecione uma cobertura de seguro.',
     },
-    success: 'Your quote request has been sent!',
-    error: 'Something went wrong, please try again...',
-    submit: 'Submit',
+    acknowledgement: {
+      label: 'Reconheço que, ao clicar em enviar, concordo com os Termos e o Aviso de Privacidade.',
+      required:
+        'Para usar nossos serviços, você precisa concordar com nossos Termos e Aviso de Privacidade. Marque a caixa para confirmar.',
+    },
+    recaptcha: {
+      required: 'A verificação reCAPTCHA é necessária.',
+    },
+    success:
+      'Obrigado! Recebemos suas informações e entraremos em contato o mais breve possível com um orçamento personalizado.',
+    error:
+      'Lamentamos, mas nosso servidor encontrou um problema ao processar sua solicitação. Por favor, tente novamente mais tarde.',
+    uniqueError:
+      'Parece que você já enviou uma solicitação de orçamento. Estamos trabalhando nisso e entraremos em contato com você o mais breve possível.',
+    submit: 'Enviar cotação',
   },
   footer: 'Cuide do seu presente olhando para o futuro.',
 };

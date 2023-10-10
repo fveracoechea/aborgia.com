@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { z } from 'zod';
 
-import { api } from 'shared/api';
+import { strapi } from 'shared/api';
 import { LOCALES } from 'shared/constants';
 import { SingleMediaSchema } from 'shared/schema';
 import { Container } from 'shared/ui/Container';
@@ -21,7 +21,7 @@ const AboutMeSchema = z.object({
 });
 
 function fetchAboutMe(lang: string) {
-  return api
+  return strapi
     .get('/api/about-me')
     .appendSearchParam('locale', lang)
     .appendSearchParam('populate[avatar]', '*')

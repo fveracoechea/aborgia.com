@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { z } from 'zod';
 
-import { api } from 'shared/api';
+import { strapi } from 'shared/api';
 import { LOCALES } from 'shared/constants';
 import { MultiMediaSchema } from 'shared/schema';
 import { Slider } from 'shared/ui/Slider';
@@ -20,7 +20,7 @@ const HeroSchema = z.object({
 });
 
 function fetchHero(lang: string) {
-  return api
+  return strapi
     .get('/api/hero')
     .appendSearchParam('locale', lang)
     .appendSearchParam('populate[images]', '*')
