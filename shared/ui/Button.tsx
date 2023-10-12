@@ -2,6 +2,8 @@ import { ElementType, ForwardedRef, forwardRef } from 'react';
 
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
 import { DefaultComponentProps, OverridableComponent, PolymorphicProps } from './types';
@@ -10,7 +12,8 @@ type Props = {
   variant?: 'text' | 'outlined' | 'contained' | 'custom';
   size?: 'sm' | 'md' | 'lg';
   color?: 'light' | 'dark' | 'primary' | 'grey';
-  // loading?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 interface ButtonTypeMap {
@@ -18,8 +21,11 @@ interface ButtonTypeMap {
   defaultComponent: 'button';
 }
 
-function getClassNames(props: Required<Props>, externalClasses?: string) {
-  const { variant, size, color } = props;
+export type ButtonProps<RootComponent extends ElementType = ButtonTypeMap['defaultComponent']> =
+  PolymorphicProps<ButtonTypeMap, RootComponent>;
+
+function getClassNames(props: Props, externalClasses?: string) {
+  const { variant = 'text', size = 'md', color = 'dark', disabled = false } = props;
 
   const defaultClasses = clsx(
     variant === 'custom'
@@ -39,6 +45,8 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
     size === 'md' && 'text-base py-2 px-4 gap-2.5',
     size === 'lg' && 'text-lg py-4 px-6 gap-3',
   );
+
+  const disabledCss = clsx('bg-disabled text-white cursor-not-allowed', 'border-2 border-dark');
 
   const variantClasses = clsx(
     variant === 'text' && [
@@ -61,34 +69,39 @@ function getClassNames(props: Required<Props>, externalClasses?: string) {
         'focus:ring-2',
       ],
     ],
-    variant === 'contained' && [color === 'light' && 'bg-disabled text-white hover:bg-dark'],
+    variant === 'contained' && [
+      color === 'light' && 'bg-disabled text-white hover:bg-dark',
+      color === 'primary' && [
+        'bg-primary text-white hover:bg-primaryDark',
+        'ring-offset-white ring-offset-4 ring-primary focus:ring-3',
+      ],
+    ],
   );
 
-  return clsx(defaultClasses, sizeClasses, variantClasses, externalClasses);
+  return clsx(
+    defaultClasses,
+    sizeClasses,
+    disabled ? disabledCss : variantClasses,
+    externalClasses,
+  );
 }
 
-export type ButtonProps<RootComponent extends ElementType = ButtonTypeMap['defaultComponent']> =
-  PolymorphicProps<ButtonTypeMap, RootComponent>;
-
 function ButtonImpl(props: ButtonProps, forwardedRef: ForwardedRef<Element>) {
-  const {
-    component,
-    children,
-    className,
-    variant = 'text',
-    size = 'md',
-    color = 'dark',
-    // loading = false,
-    ...otherProps
-  } = props;
+  const { component, children, className, loading = false, ...otherProps } = props;
 
   const Element = component ?? 'button';
-  const styles = getClassNames({ variant, size, color }, className);
-  // const child
+  const styles = getClassNames(otherProps, className);
 
   return (
     <Element {...otherProps} className={styles} ref={forwardedRef}>
-      {children}
+      {loading ? (
+        <>
+          <FontAwesomeIcon className="animate-spin" fontSize="1.2rem" icon={faSpinner} />
+          Loading
+        </>
+      ) : (
+        children
+      )}
     </Element>
   );
 }
@@ -103,21 +116,20 @@ interface ButtonLinkTypeMap {
 export type ButtonLinkProps = DefaultComponentProps<ButtonLinkTypeMap>;
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>((props, forwardedRef) => {
-  const {
-    children,
-    className,
-    variant = 'text',
-    size = 'md',
-    color = 'dark',
-    href,
-    ...otherProps
-  } = props;
+  const { children, className, href, loading = false, ...otherProps } = props;
 
-  const styles = getClassNames({ variant, size, color }, className);
+  const styles = getClassNames(otherProps, className);
 
   return (
     <NextLink {...otherProps} href={href} className={styles} ref={forwardedRef}>
-      {children}
+      {loading ? (
+        <>
+          <FontAwesomeIcon className="animate-spin" fontSize="1.2rem" icon={faSpinner} />
+          Loading
+        </>
+      ) : (
+        children
+      )}
     </NextLink>
   );
 });

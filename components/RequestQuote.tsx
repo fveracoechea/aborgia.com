@@ -5,10 +5,7 @@ import {
   experimental_useFormStatus as useFormStatus,
 } from 'react-dom';
 
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { QuoteRequestResponse, createQuoteRequest } from 'shared/actions';
+import { QuoteRequestResponse, createQuoteRequest } from 'shared/actions/createQuoteRequest';
 import { Dict } from 'shared/locales/en';
 import { CoverageList } from 'shared/schema';
 import { Button } from 'shared/ui/Button';
@@ -37,18 +34,13 @@ function SubmitButton({ dict }: { dict: Dict }) {
     <Button
       size="lg"
       color="primary"
-      variant="outlined"
-      type={pending ? 'button' : 'submit'}
-      className="min-w-[200px] w-full justify-center md:w-auto md:self-start"
+      variant="contained"
+      type="submit"
+      loading={pending}
+      disabled={pending}
+      className="min-w-[200px] w-full justify-center uppercase md:w-auto md:self-start"
     >
-      {pending ? (
-        <>
-          <FontAwesomeIcon className="animate-spin" fontSize="1.2rem" icon={faSpinner} />
-          Loading
-        </>
-      ) : (
-        dict.quote.submit
-      )}
+      {dict.quote.submit}
     </Button>
   );
 }

@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import Script from 'next/script';
+
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import clsx from 'clsx';
@@ -87,6 +89,7 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
         <Header dict={dict} lang={params.lang} title={pageTitle} />
         <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
         <Footer dict={dict} lang={params.lang} />
+        <Script src="https://www.google.com/recaptcha/api.js" />
       </body>
     </html>
   );

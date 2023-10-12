@@ -25,7 +25,6 @@ export default async function HomePage(props: PageProps) {
       <AboutMe lang={params.lang} />
       <Insurance dict={dict} lang={params.lang} />
       <RequestQuote dict={dict} lang={params.lang} coverages={coverages} />
-      <Script src="https://www.google.com/recaptcha/api.js" />
     </>
   );
 }

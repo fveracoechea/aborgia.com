@@ -55,6 +55,11 @@ export const es: Dict = {
       required: 'Se requiere el nombre.',
       min: 'El nombre es muy corto.',
     },
+    fullname: {
+      label: 'Nombre completo',
+      required: 'Se requiere nombre completo.',
+      min: 'El nombre completo es demasiado corto.',
+    },
     email: {
       label: 'Email',
       invalid: 'Introduzca un correo electrónico válido.',

@@ -53,6 +53,11 @@ export const en = {
       required: 'Name is required.',
       min: 'Name is too short.',
     },
+    fullname: {
+      label: 'Full name',
+      required: 'Full name is required.',
+      min: 'Full name is too short.',
+    },
     email: {
       label: 'Email',
       invalid: 'Enter a valid email.',

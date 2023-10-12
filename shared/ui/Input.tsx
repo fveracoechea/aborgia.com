@@ -8,7 +8,7 @@ import { DefaultComponentProps } from './types';
 
 type Props = {
   id: string;
-  label: ReactNode;
+  label?: ReactNode;
   containerClassname?: string;
   error?: boolean | string | null;
 };
@@ -36,6 +36,11 @@ function InputImpl(props: InputProps, forwardedRef: ForwardedRef<HTMLInputElemen
   const wrapper = clsx('flex flex-col', containerClassname);
   const errorId = `${id}-error-hint`;
   if (error) otherProps['aria-describedby'] = errorId;
+
+  if (!label)
+    return (
+      <input id={id} required={required} className={input} {...otherProps} ref={forwardedRef} />
+    );
 
   return (
     <div className={wrapper}>

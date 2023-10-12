@@ -8,7 +8,6 @@ type LayoutProps = PropsWithChildren<{ params: { lang: string; coverageUrl: stri
 
 export default async function PoliciesLayout(props: LayoutProps) {
   const { params, children } = props;
-  console.log('PoliciesLayout = ', props);
   return (
     <Container className="flex gap-12 relative">
       <SideMenu params={params} />
