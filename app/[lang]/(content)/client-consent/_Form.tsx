@@ -5,7 +5,11 @@ import {
   experimental_useFormStatus as useFormStatus,
 } from 'react-dom';
 
-import { ConcentRequestResponse, sendClientConcent } from 'shared/actions/sentClientConcent';
+import { faCheck, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
+
+import { ConsentRequestResponse, sendClientConsent } from 'shared/actions/sentClientConsent';
 import { Dict } from 'shared/dictionaries';
 import { Button } from 'shared/ui/Button';
 import { Checkbox } from 'shared/ui/Checkbox';
@@ -18,19 +22,53 @@ type Props = {
   lang: string;
 };
 
-const intialState: Awaited<ConcentRequestResponse> = {
+const intialState: Awaited<ConsentRequestResponse> = {
   message: null,
   status: 'initial',
 };
 
+function SubmitBtn() {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      className="col-span-2 justify-center uppercase"
+      color="primary"
+      variant="contained"
+      type="submit"
+      size="lg"
+      loading={pending}
+      disabled={pending}
+    >
+      Submit Consent
+    </Button>
+  );
+}
+
 export function Form(props: Props) {
   const { dict, lang } = props;
-  const requestQuoteWithLang = sendClientConcent.bind(null, lang);
-  const [{ message, errors, status }, formAction] = useFormState(requestQuoteWithLang, intialState);
+  const consentWithLang = sendClientConsent.bind(null, lang);
+  const [{ message, errors, status }, formAction] = useFormState(consentWithLang, intialState);
+
+  if (status === 'success' && message) {
+    return (
+      <div className="p-4 max-w-screen-lg my-0 mx-auto">
+        <div
+          className={clsx(
+            'col-span-2 flex gap-4 px-4 py-2 rounded',
+            'items-center bg-transparentPrimary border-primary border-2 text-primaryDark',
+          )}
+        >
+          <FontAwesomeIcon icon={faCheck} fontSize="1.6rem" color="currentColor" />
+          <Text variant="subtitle1">{message}</Text>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form className="flex flex-col gap-4 text-lg" noValidate action={formAction}>
       <Text variant="subtitle1" component="p">
-        {errors?.fullName && <Text className="!text-error text-base mr-2">{errors.fullName}</Text>}
+        {errors?.fullname && <Text className="!text-error text-base mr-2">{errors.fullname}</Text>}
         <label htmlFor="fullname">I, </label>
         &nbsp;
         <Input
@@ -38,7 +76,7 @@ export function Form(props: Props) {
           id="fullname"
           placeholder={dict.quote.fullname.label}
           className="text-sm !py-1 !px-2 w-56"
-          error={errors?.fullName}
+          error={errors?.fullname}
         />
         &nbsp; give my permission to <b className="text-primary">Arelys Borgia</b> to serve as the
         health insurance agent or broker for myself and my entire household if applicable, for
@@ -135,15 +173,18 @@ export function Form(props: Props) {
             )}
           </div>
         </div>
-        <Button
-          className="col-span-2 justify-center uppercase"
-          color="primary"
-          variant="contained"
-          type="submit"
-          size="lg"
-        >
-          Submit Concent
-        </Button>
+        {status === 'failed' && message && (
+          <div
+            className={clsx(
+              'col-span-2 flex gap-4 px-4 py-2 rounded',
+              'items-center bg-transparentError border-errorLight border-2 text-errorDark',
+            )}
+          >
+            <FontAwesomeIcon icon={faWarning} fontSize="1.6rem" color="currentColor" />
+            <Text variant="subtitle1">{message}</Text>
+          </div>
+        )}
+        <SubmitBtn />
       </div>
     </form>
   );

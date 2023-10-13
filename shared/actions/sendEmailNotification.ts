@@ -1,5 +1,3 @@
-'use server';
-
 import Mailjet from 'node-mailjet';
 
 const mailjet = new Mailjet({
@@ -8,28 +6,33 @@ const mailjet = new Mailjet({
 });
 
 export async function sendNotificationEmail(subject: string, content: string) {
-  await mailjet.post('send', { version: 'v3.1' }).request({
-    Messages: [
-      {
-        From: {
-          Email: 'aborgiainsurance@gmail.com',
-          Name: 'Noreply Website: Arelys Borgia',
-        },
-        To: [
-          {
+  try {
+    await mailjet.post('send', { version: 'v3.1' }).request({
+      Messages: [
+        {
+          From: {
             Email: 'aborgiainsurance@gmail.com',
-            Name: 'Arelys Borgia',
+            Name: 'Noreply Website: Arelys Borgia',
           },
-          ,
-          {
-            Email: 'veracoecheafrancisco@gmail.com',
-            Name: 'Francisco Veracoechea',
-          },
-        ],
-        Subject: subject,
-        TextPart: content,
-        HTMLPart: content,
-      },
-    ],
-  });
+          To: [
+            {
+              Email: 'aborgiainsurance@gmail.com',
+              Name: 'Arelys Borgia',
+            },
+            ,
+            {
+              Email: 'veracoecheafrancisco@gmail.com',
+              Name: 'Francisco Veracoechea',
+            },
+          ],
+          Subject: subject,
+          TextPart: content,
+          HTMLPart: content,
+        },
+      ],
+    });
+  } catch (error) {
+    console.log('EMAIL ERROR');
+    console.log(error instanceof Error && error.message);
+  }
 }

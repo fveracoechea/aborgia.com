@@ -8,7 +8,7 @@ import { Form } from './_Form';
 
 type PageProps = { params: { lang: string } };
 
-export default async function ConcentPage({ params }: PageProps) {
+export default async function ConsentPage({ params }: PageProps) {
   const dict = await getDictionary(params.lang);
   return (
     <div className="flex flex-col gap-8 text-transparentDark8">

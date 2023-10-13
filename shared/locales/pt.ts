@@ -88,11 +88,13 @@ export const pt: Dict = {
       required: 'A verificação reCAPTCHA é necessária.',
     },
     success:
-      'Obrigado! Recebemos suas informações e entraremos em contato o mais breve possível com um orçamento personalizado.',
+      'Obrigado! Recebemos suas informações e entraremos em contato o mais breve possível.',
     error:
       'Lamentamos, mas nosso servidor encontrou um problema ao processar sua solicitação. Por favor, tente novamente mais tarde.',
     uniqueError:
       'Parece que você já enviou uma solicitação de orçamento. Estamos trabalhando nisso e entraremos em contato com você o mais breve possível.',
+    uniqueConcentError:
+      'Parece que você já enviou uma solicitação de consentimento do cliente. Não há necessidade de nenhuma ação adicional de sua parte. Obrigado pela sua cooperação.',
     submit: 'Enviar cotação',
   },
   footer: 'Cuide do seu presente olhando para o futuro.',

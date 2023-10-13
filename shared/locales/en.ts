@@ -87,11 +87,13 @@ export const en = {
       required: 'reCAPTCHA verification is required.',
     },
     success:
-      "Thanks! We've received your information and will get back to you as soon as possible with a personalized quote.",
+      "Thanks! We've received your information and will get back to you as soon as possible.",
     error:
       "We're sorry, our server encountered an issue while processing your request. Please try again later.",
     uniqueError:
       "It appears you've previously submitted a quote request. We're working on it and will get back to you as soon as possible.",
+    uniqueConcentError:
+      "It seems that you've already submitted a client consent request. There's no need for any additional actions on your part. Thank you for your cooperation.",
     submit: 'Submit',
   },
   footer: 'Take care of your present looking towards the future.',

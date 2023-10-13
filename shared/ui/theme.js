@@ -53,6 +53,7 @@ const theme = {
     current: 'currentColor',
     dark,
     white,
+    transparentError: hexToRgbA(error, 0.1),
     transparentLight5: hexToRgbA(white, 0.5),
     transparentLight6: hexToRgbA(white, 0.6),
     transparentLight7: hexToRgbA(white, 0.7),
@@ -64,7 +65,7 @@ const theme = {
     transparentDark6: hexToRgbA(dark, 0.6),
     transparentDark7: hexToRgbA(dark, 0.7),
     transparentDark8: hexToRgbA(dark, 0.8),
-    transparentPrimary: hexToRgbA(primary.main, 0.2),
+    transparentPrimary: hexToRgbA(primary.main, 0.1),
     transparentPrimary05: hexToRgbA(primary.dark, 0.5),
     disabled: 'rgba(0, 0, 0, 0.38)',
 
