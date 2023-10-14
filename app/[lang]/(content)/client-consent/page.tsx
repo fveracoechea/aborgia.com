@@ -1,7 +1,4 @@
 import { getDictionary } from 'shared/dictionaries';
-import { Checkbox } from 'shared/ui/Checkbox';
-import { Input } from 'shared/ui/Input';
-import { PhoneInput } from 'shared/ui/PhoneInput';
 import { Text } from 'shared/ui/Text';
 
 import { Form } from './_Form';
@@ -14,6 +11,51 @@ export default async function ConsentPage({ params }: PageProps) {
     <Form
       dict={dict}
       lang={params.lang}
+      heading={
+        <div>
+          <Text component="h2" variant="h3">
+            Arelys Borgia - Client Consent Form
+          </Text>
+          <Text variant="h5">CMS Marketplace Agents and Brokers</Text>
+        </div>
+      }
+      content={
+        <>
+          <ol className="list-decimal ml-8">
+            <Text variant="subtitle1" component="li">
+              Searching for an existing Marketplace application;
+            </Text>
+            <Text variant="subtitle1" component="li">
+              Completing an application for eligibility and enrollment in a Marketplace Qualified
+              Health Plan or other government insurance affordability programs, such as Medicaid and
+              CHIP or advance tax credits to help pay for Marketplace premiums;
+            </Text>
+            <Text variant="subtitle1" component="li">
+              Providing ongoing account maintenance and enrollment assistance, as necessary;
+            </Text>
+            <Text variant="subtitle1" component="li">
+              Responding to inquiries from the Marketplace regarding my Marketplace application.
+            </Text>
+          </ol>
+
+          <Text variant="subtitle1" component="p">
+            I understand that the Agent will not use or share my personally identifiable information
+            (PII) for any purposes other than those listed above. The Agent will ensure that my PII
+            is kept private and safe when collecting, storing, and using my PII for the stated
+            purposes above.
+          </Text>
+
+          <Text variant="subtitle1" component="p">
+            I confirm that the information I provide for entry on my Marketplace eligibility and
+            enrollment application will be true to the best of my knowledge. I understand that I do
+            not have to share additional personal information about myself or my health with my
+            Agent beyond what is required on the application for eligibility and enrollment
+            purposes. I understand that my consent remains in effect until I revoke it, and I may
+            revoke or modify my consent at any time by sending an email to
+            <b> aborgiainsurance@gmail.com</b> specifying my request.
+          </Text>
+        </>
+      }
       disclosure={
         <div className="pb-12">
           <Text variant="body2">

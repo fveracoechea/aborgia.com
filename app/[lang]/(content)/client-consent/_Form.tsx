@@ -5,15 +5,14 @@ import {
   experimental_useFormState as useFormState,
   experimental_useFormStatus as useFormStatus,
 } from 'react-dom';
-import generatePDF, { usePDF } from 'react-to-pdf';
+import generatePDF from 'react-to-pdf';
 
-import { faCheck, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
 import { ConsentRequestResponse, sendClientConsent } from 'shared/actions/sentClientConsent';
 import { uploadFile } from 'shared/actions/uploadFile';
 import { Dict } from 'shared/dictionaries';
+import { Alert } from 'shared/ui/Alert';
 import { Button } from 'shared/ui/Button';
 import { Checkbox } from 'shared/ui/Checkbox';
 import { Input } from 'shared/ui/Input';
@@ -23,6 +22,8 @@ import { Text } from 'shared/ui/Text';
 type Props = {
   dict: Dict;
   lang: string;
+  heading: ReactNode;
+  content: ReactNode;
   disclosure: ReactNode;
 };
 
@@ -51,7 +52,7 @@ function SubmitBtn() {
 }
 
 export function Form(props: Props) {
-  const { dict, lang, disclosure } = props;
+  const { dict, lang, disclosure, heading, content } = props;
   const consentWithLang = sendClientConsent.bind(null, lang);
   const [{ message, errors, status, values, clientId }, formAction] = useFormState(
     consentWithLang,
@@ -93,15 +94,9 @@ export function Form(props: Props) {
   if (showMessage && status === 'success' && message) {
     return (
       <div className="p-8 max-w-screen-lg my-0 mx-auto">
-        <div
-          className={clsx(
-            'col-span-2 flex gap-4 px-4 py-2 rounded',
-            'items-center bg-transparentPrimary border-primary border-2 text-primaryDark',
-          )}
-        >
-          <FontAwesomeIcon icon={faCheck} fontSize="1.6rem" color="currentColor" />
+        <Alert variant="success">
           <Text variant="subtitle1">{message}</Text>
-        </div>
+        </Alert>
       </div>
     );
   }
@@ -111,12 +106,7 @@ export function Form(props: Props) {
       id="client-consent"
       className={clsx('flex flex-col gap-8 text-transparentDark8', isPrinting && 'p-6')}
     >
-      <div>
-        <Text component="h2" variant="h3">
-          Arelys Borgia - Client Consent Form
-        </Text>
-        <Text variant="h5">CMS Marketplace Agents and Brokers</Text>
-      </div>
+      {heading}
       <form className="flex flex-col gap-4 text-lg" noValidate action={formAction}>
         <Text variant="subtitle1" component="p">
           I, <b>{fullname || values?.fullname}</b> give my permission to&nbsp;
@@ -128,39 +118,7 @@ export function Form(props: Props) {
           purposes of one or more of the following:
         </Text>
 
-        <ol className="list-decimal ml-8">
-          <Text variant="subtitle1" component="li">
-            Searching for an existing Marketplace application;
-          </Text>
-          <Text variant="subtitle1" component="li">
-            Completing an application for eligibility and enrollment in a Marketplace Qualified
-            Health Plan or other government insurance affordability programs, such as Medicaid and
-            CHIP or advance tax credits to help pay for Marketplace premiums;
-          </Text>
-          <Text variant="subtitle1" component="li">
-            Providing ongoing account maintenance and enrollment assistance, as necessary;
-          </Text>
-          <Text variant="subtitle1" component="li">
-            Responding to inquiries from the Marketplace regarding my Marketplace application.
-          </Text>
-        </ol>
-
-        <Text variant="subtitle1" component="p">
-          I understand that the Agent will not use or share my personally identifiable information
-          (PII) for any purposes other than those listed above. The Agent will ensure that my PII is
-          kept private and safe when collecting, storing, and using my PII for the stated purposes
-          above.
-        </Text>
-
-        <Text variant="subtitle1" component="p">
-          I confirm that the information I provide for entry on my Marketplace eligibility and
-          enrollment application will be true to the best of my knowledge. I understand that I do
-          not have to share additional personal information about myself or my health with my Agent
-          beyond what is required on the application for eligibility and enrollment purposes. I
-          understand that my consent remains in effect until I revoke it, and I may revoke or modify
-          my consent at any time by sending an email to
-          <b> aborgiainsurance@gmail.com</b> specifying my request.
-        </Text>
+        {content}
 
         <ul className="flex flex-col gap-0 text-base">
           <li>
@@ -248,15 +206,9 @@ export function Form(props: Props) {
               </div>
             )}
             {status === 'failed' && message && (
-              <div
-                className={clsx(
-                  'col-span-2 flex gap-4 px-4 py-2 rounded',
-                  'items-center bg-transparentError border-errorLight border-2 text-errorDark',
-                )}
-              >
-                <FontAwesomeIcon icon={faWarning} fontSize="1.6rem" color="currentColor" />
+              <Alert variant="error">
                 <Text variant="subtitle1">{message}</Text>
-              </div>
+              </Alert>
             )}
             <SubmitBtn />
           </div>
