@@ -56,6 +56,7 @@ export const es: Dict = {
       min: 'El nombre es muy corto.',
     },
     fullname: {
+      signature: 'Firma de nombre completo',
       label: 'Nombre completo',
       required: 'Se requiere nombre completo.',
       min: 'El nombre completo es demasiado corto.',

@@ -54,6 +54,7 @@ export const en = {
       min: 'Name is too short.',
     },
     fullname: {
+      signature: 'Full name signature',
       label: 'Full name',
       required: 'Full name is required.',
       min: 'Full name is too short.',

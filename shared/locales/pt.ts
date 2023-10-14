@@ -56,6 +56,7 @@ export const pt: Dict = {
       min: 'Nome muito curto.',
     },
     fullname: {
+      signature: 'Assinatura do nome completo',
       label: 'Nome completo',
       required: 'O nome completo é obrigatório.',
       min: 'O nome completo é muito curto.',
@@ -87,8 +88,7 @@ export const pt: Dict = {
     recaptcha: {
       required: 'A verificação reCAPTCHA é necessária.',
     },
-    success:
-      'Obrigado! Recebemos suas informações e entraremos em contato o mais breve possível.',
+    success: 'Obrigado! Recebemos suas informações e entraremos em contato o mais breve possível.',
     error:
       'Lamentamos, mas nosso servidor encontrou um problema ao processar sua solicitação. Por favor, tente novamente mais tarde.',
     uniqueError:

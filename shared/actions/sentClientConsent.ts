@@ -9,9 +9,9 @@ import { FormErrors, validateSchema } from 'shared/formErrors';
 import { sendNotificationEmail } from './sendEmailNotification';
 import { validateReCaptcha } from './validateReCaptcha';
 
-function generateConcentSchema(dict: Dict) {
+function generateConsentSchema(dict: Dict) {
   return z.object({
-    fullname: z.string({ required_error: dict.quote.name.required }).min(2, dict.quote.name.min),
+    fullname: z.string({ required_error: dict.quote.name.required }).min(3, dict.quote.name.min),
     email: z.string().email(dict.quote.email.invalid),
     phone: z.string().regex(/^\(\d{3}\)\s\d{3}-\d{4}/, dict.quote.phone.invalid),
     acknowledgement: z.coerce.boolean().refine(val => val, {
@@ -24,7 +24,9 @@ function generateConcentSchema(dict: Dict) {
 export type ConsentRequestResponse = Promise<{
   status: 'initial' | 'success' | 'failed';
   message: null | string;
-  errors?: FormErrors<ReturnType<typeof generateConcentSchema>>;
+  clientId?: number;
+  errors?: FormErrors<ReturnType<typeof generateConsentSchema>>;
+  values?: z.infer<ReturnType<typeof generateConsentSchema>>;
 }>;
 
 export async function sendClientConsent(
@@ -33,7 +35,7 @@ export async function sendClientConsent(
   form: FormData,
 ): ConsentRequestResponse {
   const dict = await getDictionary(lang);
-  const schema = generateConcentSchema(dict);
+  const schema = generateConsentSchema(dict);
   const validation = validateSchema(form, schema);
 
   if (!validation.success) {
@@ -65,7 +67,7 @@ export async function sendClientConsent(
       .badRequest(async error => {
         console.error('STRAPI BAD REQUEST');
         const json = await error.response.json();
-        console.log(json);
+        console.error(json);
 
         if (
           json.error.name === 'ValidationError' &&
@@ -76,26 +78,32 @@ export async function sendClientConsent(
       })
       .resolve();
 
-    if (response.ok) {
-      // sendNotificationEmail(
-      //   `${validation.values.fullname} - client consent`,
-      //   `
-      //     Client form conset by ${validation.values.fullname}, from aborgia.com.
-      //     Phone: ${validation.values.phone}.
-      //     Email: ${validation.values.email}.
+    const json = await response.json();
+    const clientId = json?.data?.id;
 
-      //     https://strapi-production-8e4b.up.railway.app/admin/content-manager/collectionType/api::client.client?page=1&pageSize=10&sort=id:DESC
-      //   `,
-      // );
+    if (response.ok) {
+      sendNotificationEmail(
+        `${validation.values.fullname} - client consent aborgia.com`,
+        `
+          A client conset form has been submitted by ${validation.values.fullname}.
+          Phone: ${validation.values.phone}.
+          Email: ${validation.values.email}.
+
+          https://strapi-production-8e4b.up.railway.app/admin/content-manager/collectionType/api::client.client?page=1&pageSize=10&sort=id:DESC
+        `,
+      );
+
       return {
         status: 'success',
+        values: validation.values,
+        clientId,
         message: dict.quote.success,
       };
     }
 
     return { status: 'failed', message: message ?? dict.quote.error };
   } catch (error) {
-    console.log('createQuoteRequest error ', error);
+    console.error('createQuoteRequest error ', error);
     return { status: 'failed', message: dict.quote.error };
   }
 }

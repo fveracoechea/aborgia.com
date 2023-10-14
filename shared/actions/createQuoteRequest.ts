@@ -10,7 +10,7 @@ import { validateReCaptcha } from './validateReCaptcha';
 
 function generateQuoteRequestSchema(dict: Dict) {
   return z.object({
-    name: z.string({ required_error: dict.quote.name.required }).min(2, dict.quote.name.min),
+    name: z.string({ required_error: dict.quote.name.required }).min(3, dict.quote.name.min),
     email: z.string().email(dict.quote.email.invalid),
     phone: z.string().regex(/^\(\d{3}\)\s\d{3}-\d{4}/, dict.quote.phone.invalid),
     additionalInfo: z.string().max(500, dict.quote.additionalInfo.max).nullable().default(null),
@@ -68,7 +68,7 @@ export async function createQuoteRequest(
       .badRequest(async error => {
         console.error('BAD REQUEST');
         const json = await error.response.json();
-        console.log(json);
+        console.error(json);
 
         if (
           json.error.name === 'ValidationError' &&
@@ -80,16 +80,16 @@ export async function createQuoteRequest(
       .resolve();
 
     if (response.ok) {
-      // sendNotificationEmail(
-      //   `Quote Request - ${validation.values.name}`,
-      //   `
-      //     Quote Requested by ${validation.values.name}, from aborgia.com.
-      //     Phone: ${validation.values.phone}.
-      //     Email: ${validation.values.email}.
+      sendNotificationEmail(
+        `Quote Request - ${validation.values.name}`,
+        `
+          Quote Requested by ${validation.values.name}, from aborgia.com.
+          Phone: ${validation.values.phone}.
+          Email: ${validation.values.email}.
 
-      //     https://strapi-production-8e4b.up.railway.app/admin/content-manager/collectionType/api::quote-request.quote-request?page=1&pageSize=10&sort=id:DESC
-      //   `,
-      // );
+          https://strapi-production-8e4b.up.railway.app/admin/content-manager/collectionType/api::quote-request.quote-request?page=1&pageSize=10&sort=id:DESC
+        `,
+      );
       return {
         status: 'success',
         message: dict.quote.success,
@@ -98,7 +98,7 @@ export async function createQuoteRequest(
 
     return { status: 'failed', message: message ?? dict.quote.error };
   } catch (error) {
-    console.log('createQuoteRequest error ', error);
+    console.error('createQuoteRequest error ', error);
     return { status: 'failed', message: dict.quote.error };
   }
 }
