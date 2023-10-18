@@ -48,6 +48,7 @@ type Props = {
   dict: Dict;
   nav: NavLink[];
   contact: NavLink[];
+  lang: string;
 };
 
 type NavState = 'idle' | 'open' | 'close';

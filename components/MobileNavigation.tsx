@@ -18,6 +18,7 @@ type NavLink = {
 
 type Props = {
   state: 'idle' | 'open' | 'close';
+  lang: string;
   onClose: () => void;
   dict: Dict;
   nav: NavLink[];
@@ -25,7 +26,7 @@ type Props = {
 };
 
 export default function MobileNavigation(props: Props) {
-  const { state, onClose, dict, nav, contact } = props;
+  const { state, onClose, dict, nav, contact, lang } = props;
   return createPortal(
     <>
       <div
@@ -74,7 +75,12 @@ export default function MobileNavigation(props: Props) {
               </li>
             ))}
             <li className="flex w-full justify-end p-4 mt-8">
-              <ButtonLink variant="outlined" color="light" onClick={onClose} href="/en#about-me">
+              <ButtonLink
+                variant="outlined"
+                color="light"
+                onClick={onClose}
+                href={`/${lang}#quote-request`}
+              >
                 {dict.header.quote}
               </ButtonLink>
             </li>

@@ -51,17 +51,17 @@ export async function Footer({ dict, lang }: Props) {
   const menu = [
     {
       key: 'm-about',
-      href: '/#about-me',
+      href: `/${lang}/#about-me`,
       text: dict.header.aboutMe,
     },
     {
       key: 'm-contact',
-      href: '/#contact',
+      href: `/${lang}/news`,
       text: dict.header.quote,
     },
     {
       key: 'm-service',
-      href: '/#services',
+      href: `/${lang}/insurance`,
       text: dict.header.services,
     },
   ];

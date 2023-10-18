@@ -34,7 +34,7 @@ export async function AboutMe({ lang }: { lang: string }) {
     <Container
       component="section"
       id="about-me"
-      className="flex flex-col justify-center items-center lg:flex-row gap-12"
+      className="flex flex-col justify-center items-center lg:flex-row gap-12 scroll-mt-20 md:scroll-mt-8"
     >
       <Image
         src={aboutMe.data.attributes.avatar.data.attributes.url}

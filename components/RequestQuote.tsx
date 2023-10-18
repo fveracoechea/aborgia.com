@@ -53,7 +53,7 @@ export function RequestQuote(props: Props) {
   const [{ message, errors, status }, formAction] = useFormState(requestQuoteWithLang, intialState);
 
   return (
-    <Container component="section">
+    <Container component="section" id="quote-request" className="scroll-mt-20 md:scroll-mt-8">
       <div className="text-center flex flex-col justify-center items-center pb-4">
         <Text variant="h3" component="h4" className="text-primary capitalize">
           {dict.header.quote}

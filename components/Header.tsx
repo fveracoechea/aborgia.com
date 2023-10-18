@@ -63,7 +63,7 @@ export async function Header(props: Props) {
     },
     {
       key: 'nav-news',
-      href: '/',
+      href: `/${lang}/news`,
       text: dict.header.blog,
     },
   ];
@@ -131,14 +131,14 @@ export async function Header(props: Props) {
           <ButtonLink
             color="primary"
             size="sm"
-            href={`/${lang}`}
+            href={`/${lang}#quote-request`}
             variant="outlined"
             className="hidden uppercase self-end md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
           >
             {dict.header.quote}
           </ButtonLink>
 
-          <MobileNavButton dict={dict} contact={contact} nav={nav} />
+          <MobileNavButton dict={dict} contact={contact} nav={nav} lang={lang} />
         </Container>
       </div>
     </header>
