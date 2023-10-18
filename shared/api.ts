@@ -1,6 +1,7 @@
 import { Fetchtastic } from 'fetchtastic/core';
 
 import {
+  ClientListSchema,
   CoverageListSchema,
   InsuranceSchema,
   PolicySchema,
@@ -38,6 +39,22 @@ export async function fetchLocales(lang: string) {
     locales,
     currentLocale,
   };
+}
+
+export async function fetchQuoteByEmail(email: string) {
+  return strapi
+    .appendSearchParam('filters[email][$eq]', email)
+    .setOptions({ cache: 'no-cache' })
+    .get('/api/quote-requests')
+    .json(ClientListSchema.parse);
+}
+
+export async function fetchClientByEmail(email: string) {
+  return strapi
+    .appendSearchParam('filters[email][$eq]', email)
+    .setOptions({ cache: 'no-cache' })
+    .get('/api/clients')
+    .json(ClientListSchema.parse);
 }
 
 export async function fetchCoverages(lang: string) {

@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { strapi } from '../api';
+import { fetchQuoteByEmail, strapi } from '../api';
 import { Dict, getDictionary } from '../dictionaries';
 import { FormErrors, validateSchema } from '../formErrors';
 import { sendNotificationEmail } from './sendEmailNotification';
@@ -14,7 +14,12 @@ function generateQuoteRequestSchema(dict: Dict) {
     email: z.string().email(dict.quote.email.invalid),
     phone: z.string().regex(/^\(\d{3}\)\s\d{3}-\d{4}/, dict.quote.phone.invalid),
     additionalInfo: z.string().max(500, dict.quote.additionalInfo.max).nullable().default(null),
-    insurance: z.coerce.number({ required_error: dict.quote.insurance.required }).positive(),
+    insurance: z.coerce
+      .number({
+        required_error: dict.quote.insurance.required,
+        invalid_type_error: dict.quote.insurance.required,
+      })
+      .positive(dict.quote.insurance.required),
     acknowledgement: z.coerce.boolean().refine(val => val, {
       message: dict.quote.acknowledgement.required,
     }),
@@ -45,16 +50,24 @@ export async function createQuoteRequest(
     };
   }
 
-  const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
-  if (!reCaptchaValidation) {
-    return {
-      status: 'failed',
-      message: 'ReCAPTCHA Verification Error',
-    };
-  }
-
   try {
-    let message: string | null = null;
+    const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
+    if (!reCaptchaValidation) {
+      return {
+        status: 'failed',
+        message: 'ReCAPTCHA Verification Error',
+      };
+    }
+
+    const clients = await fetchQuoteByEmail(validation.values.email);
+    if (clients.data.length > 0) {
+      console.log('clients = ', clients.data);
+      return {
+        status: 'failed',
+        message: dict.quote.uniqueError,
+      };
+    }
+
     const response = await strapi
       .post('/api/quote-requests', {
         data: {
@@ -64,18 +77,6 @@ export async function createQuoteRequest(
           insurance_coverage: validation.values.insurance,
           additional_info: validation.values.additionalInfo,
         },
-      })
-      .badRequest(async error => {
-        console.error('BAD REQUEST');
-        const json = await error.response.json();
-        console.error(json);
-
-        if (
-          json.error.name === 'ValidationError' &&
-          json.error.message === 'This attribute must be unique'
-        ) {
-          message = dict.quote.uniqueError;
-        }
       })
       .resolve();
 
@@ -96,7 +97,7 @@ export async function createQuoteRequest(
       };
     }
 
-    return { status: 'failed', message: message ?? dict.quote.error };
+    return { status: 'failed', message: dict.quote.error };
   } catch (error) {
     console.error('createQuoteRequest error ', error);
     return { status: 'failed', message: dict.quote.error };

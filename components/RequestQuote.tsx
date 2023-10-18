@@ -8,6 +8,7 @@ import {
 import { QuoteRequestResponse, createQuoteRequest } from 'shared/actions/createQuoteRequest';
 import { Dict } from 'shared/locales/en';
 import { CoverageList } from 'shared/schema';
+import { Alert } from 'shared/ui/Alert';
 import { Button } from 'shared/ui/Button';
 import { Checkbox } from 'shared/ui/Checkbox';
 import { Container } from 'shared/ui/Container';
@@ -53,30 +54,30 @@ export function RequestQuote(props: Props) {
 
   return (
     <Container component="section">
-      <div className="text-center flex flex-col justify-center items-center">
+      <div className="text-center flex flex-col justify-center items-center pb-4">
         <Text variant="h3" component="h4" className="text-primary capitalize">
           {dict.header.quote}
         </Text>
         <Text>{dict.footer}</Text>
-
-        {status === 'failed' && (
-          <Text variant="subtitle1" className="!text-error max-w-3xl">
-            {message}
-          </Text>
-        )}
       </div>
+
+      {status === 'failed' && message && (
+        <Alert variant="error" className="max-w-screen-lg my-0 mx-auto">
+          <Text variant="subtitle1">{message}</Text>
+        </Alert>
+      )}
 
       {status === 'success' ? (
         <div className="flex justify-center p-6 items-center min-h-[60vh]">
-          <Text variant="h4" className="text-success text-center max-w-3xl">
-            {message}
-          </Text>
+          <Alert variant="success" className="max-w-screen-lg my-0 mx-auto">
+            <Text variant="subtitle1">{message}</Text>
+          </Alert>
         </div>
       ) : (
         <form
           noValidate
           action={formAction}
-          className="grid grid-cols-2 gap-x-6 gap-y-4 pt-8 max-w-screen-lg my-0 mx-auto pb-8"
+          className="grid grid-cols-2 gap-x-6 gap-y-4 pt-4 max-w-screen-lg my-0 mx-auto pb-8"
         >
           <Input
             id="name"

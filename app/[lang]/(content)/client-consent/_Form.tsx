@@ -104,7 +104,10 @@ export function Form(props: Props) {
   return (
     <div
       id="client-consent"
-      className={clsx('flex flex-col gap-8 text-transparentDark8', isPrinting && 'p-6')}
+      className={clsx(
+        'flex flex-col gap-8 text-transparentDark8',
+        isPrinting && 'p-6 min-w-[1200px]',
+      )}
     >
       {heading}
       <form className="flex flex-col gap-4 text-lg" noValidate action={formAction}>

@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { strapi } from 'shared/api';
+import { fetchClientByEmail, strapi } from 'shared/api';
 import { Dict, getDictionary } from 'shared/dictionaries';
 import { FormErrors, validateSchema } from 'shared/formErrors';
 
@@ -55,7 +55,23 @@ export async function sendClientConsent(
   }
 
   try {
-    let message: string | null = null;
+    const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
+    if (!reCaptchaValidation) {
+      return {
+        status: 'failed',
+        message: 'ReCAPTCHA Verification Error',
+      };
+    }
+
+    const clients = await fetchClientByEmail(validation.values.email);
+    if (clients.data.length > 0) {
+      console.log('clients = ', clients.data);
+      return {
+        status: 'failed',
+        message: dict.quote.uniqueError,
+      };
+    }
+
     const response = await strapi
       .post('/api/clients', {
         data: {
@@ -63,18 +79,6 @@ export async function sendClientConsent(
           email: validation.values.email,
           phone: validation.values.phone,
         },
-      })
-      .badRequest(async error => {
-        console.error('STRAPI BAD REQUEST');
-        const json = await error.response.json();
-        console.error(json);
-
-        if (
-          json.error.name === 'ValidationError' &&
-          json.error.message === 'This attribute must be unique'
-        ) {
-          message = dict.quote.uniqueError;
-        }
       })
       .resolve();
 
@@ -101,7 +105,7 @@ export async function sendClientConsent(
       };
     }
 
-    return { status: 'failed', message: message ?? dict.quote.error };
+    return { status: 'failed', message: dict.quote.error };
   } catch (error) {
     console.error('createQuoteRequest error ', error);
     return { status: 'failed', message: dict.quote.error };

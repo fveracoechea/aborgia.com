@@ -76,4 +76,17 @@ export const CoverageListSchema = z.object({
   ),
 });
 
+export const ClientListSchema = z.object({
+  data: z.array(
+    z.object({
+      id: z.number().int().nonnegative(),
+      attributes: z.object({
+        email: z.string().email(),
+        phone: z.string(),
+        status: z.string(),
+      }),
+    }),
+  ),
+});
+
 export type CoverageList = z.infer<typeof CoverageListSchema>;
