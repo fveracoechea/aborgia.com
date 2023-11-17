@@ -13,9 +13,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        hostname: 'strapi-production-8e4b.up.railway.app',
         port: '',
-        pathname: '/df6alabjg/image/**',
+        pathname: '/uploads/**',
       },
     ],
   },

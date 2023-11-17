@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { z } from 'zod';
 
-import { strapi } from 'shared/api';
+import { getImageSrc, strapi } from 'shared/api';
 import { LOCALES } from 'shared/constants';
 import { SingleMediaSchema } from 'shared/schema';
 import { Container } from 'shared/ui/Container';
@@ -13,7 +13,7 @@ const AboutMeSchema = z.object({
   data: z.object({
     id: z.number().int().nonnegative(),
     attributes: z.object({
-      content: z.string().nonempty(),
+      content: z.string().min(1),
       avatar: SingleMediaSchema,
       locale: z.enum(LOCALES),
     }),
@@ -30,6 +30,7 @@ function fetchAboutMe(lang: string) {
 
 export async function AboutMe({ lang }: { lang: string }) {
   const aboutMe = await fetchAboutMe(lang);
+  const image = getImageSrc(aboutMe.data.attributes.avatar.data.attributes.url);
   return (
     <Container
       component="section"
@@ -37,7 +38,7 @@ export async function AboutMe({ lang }: { lang: string }) {
       className="flex flex-col justify-center items-center lg:flex-row gap-12 scroll-mt-20 md:scroll-mt-8"
     >
       <Image
-        src={aboutMe.data.attributes.avatar.data.attributes.url}
+        src={image}
         alt="Profile avatar"
         width={320}
         height={338}

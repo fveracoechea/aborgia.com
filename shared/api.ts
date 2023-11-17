@@ -8,6 +8,10 @@ import {
   StrapiLocaleArraySchema,
 } from './schema';
 
+export function getImageSrc(path: string) {
+  return `${process.env.NEXT_PUBLIC_CMS_URL}${path}`;
+}
+
 export const reCAPTCHA = new Fetchtastic('https://www.google.com/recaptcha/api')
   .appendHeader('Content-Type', 'application/json')
   .appendHeader('Accept', 'application/json');

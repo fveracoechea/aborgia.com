@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
-import { fetchCoverageByLinkUrl, fetchCoverages } from 'shared/api';
+import { fetchCoverageByLinkUrl, fetchCoverages, getImageSrc } from 'shared/api';
 import { Text } from 'shared/ui/Text';
 
 type PageProps = { params: { lang: string; coverageUrl: string } };
@@ -29,7 +29,7 @@ export default async function CoveragePage({ params }: PageProps) {
           alt=""
           width={image.attributes.width}
           height={image.attributes.height}
-          src={image.attributes.url}
+          src={getImageSrc(image.attributes.url)}
         />
       </header>
 

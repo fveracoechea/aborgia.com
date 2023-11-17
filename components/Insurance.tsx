@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import clsx from 'clsx';
 
-import { fetchCoverages } from 'shared/api';
+import { fetchCoverages, getImageSrc } from 'shared/api';
 import { Dict } from 'shared/locales/en';
 import { ButtonLink } from 'shared/ui/Button';
 import { Text } from 'shared/ui/Text';
@@ -39,7 +39,7 @@ export async function Insurance(props: Props) {
               className="object-cover"
               aria-hidden="true"
               alt=""
-              src={attributes.image.data.attributes.url}
+              src={getImageSrc(attributes.image.data.attributes.url)}
               fill
               sizes={`100vw, (min-width: ${theme.screens.md}) 50vw, (min-width: ${theme.screens['2xl']}) 25vw`}
             />

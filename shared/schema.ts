@@ -10,7 +10,7 @@ export const MediaDataSchema = z.object({
     caption: z.string().nullable(),
     width: z.number().int().nonnegative(),
     height: z.number().int().nonnegative(),
-    url: z.string().url(),
+    url: z.string().min(1),
   }),
 });
 

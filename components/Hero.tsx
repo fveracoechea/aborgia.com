@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { z } from 'zod';
 
-import { strapi } from 'shared/api';
+import { getImageSrc, strapi } from 'shared/api';
 import { LOCALES } from 'shared/constants';
 import { MultiMediaSchema } from 'shared/schema';
 import { Slider } from 'shared/ui/Slider';
@@ -29,7 +29,7 @@ function fetchHero(lang: string) {
 
 export async function Hero({ lang }: { lang: string }) {
   const hero = await fetchHero(lang);
-  const images = hero.data.attributes.images.data.map(img => img.attributes.url);
+  const images = hero.data.attributes.images.data.map(img => getImageSrc(img.attributes.url));
   return (
     <section
       className={clsx(
