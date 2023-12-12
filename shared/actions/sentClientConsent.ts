@@ -29,11 +29,7 @@ export type ConsentRequestResponse = Promise<{
   values?: z.infer<ReturnType<typeof generateConsentSchema>>;
 }>;
 
-export async function sendClientConsent(
-  lang: string,
-  prevState: unknown,
-  form: FormData,
-): ConsentRequestResponse {
+export async function sendClientConsent(lang: string, form: FormData): ConsentRequestResponse {
   const dict = await getDictionary(lang);
   const schema = generateConsentSchema(dict);
   const validation = validateSchema(form, schema);
@@ -65,7 +61,6 @@ export async function sendClientConsent(
 
     const clients = await fetchClientByEmail(validation.values.email);
     if (clients.data.length > 0) {
-      console.log('clients = ', clients.data);
       return {
         status: 'failed',
         message: dict.quote.uniqueError,

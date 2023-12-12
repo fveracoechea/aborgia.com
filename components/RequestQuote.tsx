@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  experimental_useFormState as useFormState,
-  experimental_useFormStatus as useFormStatus,
-} from 'react-dom';
+import { useState } from 'react';
 
 import { QuoteRequestResponse, createQuoteRequest } from 'shared/actions/createQuoteRequest';
 import { Dict } from 'shared/locales/en';
@@ -29,8 +26,7 @@ type Props = {
   coverages: CoverageList;
 };
 
-function SubmitButton({ dict }: { dict: Dict }) {
-  const { pending } = useFormStatus();
+function SubmitButton({ dict, pending }: { dict: Dict; pending: boolean }) {
   return (
     <Button
       size="lg"
@@ -48,9 +44,8 @@ function SubmitButton({ dict }: { dict: Dict }) {
 
 export function RequestQuote(props: Props) {
   const { dict, coverages, lang } = props;
-
-  const requestQuoteWithLang = createQuoteRequest.bind(null, lang);
-  const [{ message, errors, status }, formAction] = useFormState(requestQuoteWithLang, intialState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formState, setFormState] = useState<Awaited<QuoteRequestResponse>>(intialState);
 
   return (
     <Container component="section" id="quote-request" className="scroll-mt-20 md:scroll-mt-8">
@@ -61,23 +56,32 @@ export function RequestQuote(props: Props) {
         <Text>{dict.footer}</Text>
       </div>
 
-      {status === 'failed' && message && (
+      {formState.status === 'failed' && formState?.message && (
         <Alert variant="error" className="max-w-screen-lg my-0 mx-auto">
-          <Text variant="subtitle1">{message}</Text>
+          <Text variant="subtitle1">{formState?.message}</Text>
         </Alert>
       )}
 
-      {status === 'success' ? (
+      {formState.status === 'success' ? (
         <div className="flex justify-center p-6 items-center min-h-[60vh]">
           <Alert variant="success" className="max-w-screen-lg my-0 mx-auto">
-            <Text variant="subtitle1">{message}</Text>
+            <Text variant="subtitle1">{formState?.message}</Text>
           </Alert>
         </div>
       ) : (
         <form
           noValidate
-          action={formAction}
           className="grid grid-cols-2 gap-x-6 gap-y-4 pt-4 max-w-screen-lg my-0 mx-auto pb-8"
+          onSubmit={e => {
+            e.preventDefault();
+            const target = e.currentTarget;
+            if (target instanceof HTMLFormElement) {
+              setIsLoading(true);
+              createQuoteRequest(lang, new FormData(target))
+                .then(setFormState)
+                .finally(() => setIsLoading(false));
+            }
+          }}
         >
           <Input
             id="name"
@@ -85,7 +89,7 @@ export function RequestQuote(props: Props) {
             required
             label={dict.quote.name.label}
             placeholder="John Doe"
-            error={errors?.name}
+            error={formState?.errors?.name}
             containerClassname="col-span-2 md:col-span-1"
           />
           <Input
@@ -96,7 +100,7 @@ export function RequestQuote(props: Props) {
             required
             placeholder="johndoe@gmail.com"
             containerClassname="col-span-2 md:col-span-1"
-            error={errors?.email}
+            error={formState?.errors?.email}
           />
           <PhoneInput
             id="phone"
@@ -105,7 +109,7 @@ export function RequestQuote(props: Props) {
             required
             label={dict.quote.phone.label}
             placeholder="(xxx) xxx-xxxx"
-            error={errors?.phone}
+            error={formState?.errors?.phone}
           />
           <Select
             name="insurance"
@@ -115,7 +119,7 @@ export function RequestQuote(props: Props) {
             buttonProps={{ size: 'md' }}
             label={dict.quote.insurance.label}
             placeholder={dict.quote.insurance.placeholder}
-            error={errors?.insurance}
+            error={formState?.errors?.insurance}
             options={coverages.data.map(({ id, attributes }) => ({
               key: String(id),
               label: attributes.title,
@@ -127,14 +131,14 @@ export function RequestQuote(props: Props) {
             name="additionalInfo"
             containerClassname="col-span-2"
             label={dict.quote.additionalInfo.label}
-            error={errors?.additionalInfo}
+            error={formState?.errors?.additionalInfo}
           />
           <Checkbox
             name="acknowledgement"
             required
             containerClassname="col-span-2"
             label={dict.quote.acknowledgement.label}
-            error={errors?.acknowledgement}
+            error={formState?.errors?.acknowledgement}
           />
           <div className="col-span-2 flex flex-col md:flex-row justify-between gap-8">
             <div className="flex flex-col gap-1">
@@ -142,12 +146,14 @@ export function RequestQuote(props: Props) {
                 className="g-recaptcha"
                 data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
               />
-              {errors?.['g-recaptcha-response'] && (
-                <Text className="!text-error text-sm">{errors?.['g-recaptcha-response']}</Text>
+              {formState?.errors?.['g-recaptcha-response'] && (
+                <Text className="!text-error text-sm">
+                  {formState?.errors?.['g-recaptcha-response']}
+                </Text>
               )}
             </div>
 
-            <SubmitButton dict={dict} />
+            <SubmitButton dict={dict} pending={isLoading} />
           </div>
         </form>
       )}

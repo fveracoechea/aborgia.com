@@ -33,11 +33,7 @@ export type QuoteRequestResponse = Promise<{
   errors?: FormErrors<ReturnType<typeof generateQuoteRequestSchema>>;
 }>;
 
-export async function createQuoteRequest(
-  lang: string,
-  prevState: Awaited<QuoteRequestResponse>,
-  form: FormData,
-): QuoteRequestResponse {
+export async function createQuoteRequest(lang: string, form: FormData): QuoteRequestResponse {
   const dict = await getDictionary(lang);
   const schema = generateQuoteRequestSchema(dict);
   const validation = validateSchema(form, schema);
@@ -61,7 +57,6 @@ export async function createQuoteRequest(
 
     const clients = await fetchQuoteByEmail(validation.values.email);
     if (clients.data.length > 0) {
-      console.log('clients = ', clients.data);
       return {
         status: 'failed',
         message: dict.quote.uniqueError,

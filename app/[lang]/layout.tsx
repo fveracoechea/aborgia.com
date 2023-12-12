@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { PropsWithChildren } from 'react';
 
 import Script from 'next/script';
@@ -7,7 +8,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import clsx from 'clsx';
 import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 
 import { APP_URL, LOCALES } from 'shared/constants';
 import { getDictionary } from 'shared/dictionaries';
@@ -21,6 +22,12 @@ config.autoAddCss = false;
 type LayoutProps = { params: { lang: string } };
 
 type LangMap = Record<(typeof LOCALES)[number], string>;
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: theme.colors.primary,
+};
 
 export async function generateMetadata({ params: { lang } }: LayoutProps): Promise<Metadata> {
   const dict = await getDictionary(lang);
@@ -56,8 +63,6 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       images: [`${APP_URL}/profile.jpg`],
     },
     robots: 'all',
-    themeColor: theme.colors.primary,
-    viewport: { width: 'device-width', initialScale: 1 },
     alternates: {
       canonical: '/',
       languages,
@@ -69,9 +74,7 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
 }
 
 export async function generateStaticParams() {
-  return LOCALES.map(lang => {
-    lang;
-  });
+  return LOCALES.map(lang => ({ lang }));
 }
 
 export default async function RootLayout(props: PropsWithChildren<LayoutProps>) {
@@ -89,7 +92,7 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
         <Header dict={dict} lang={params.lang} title={pageTitle} />
         <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
         <Footer dict={dict} lang={params.lang} />
-        <Script src="https://www.google.com/recaptcha/api.js" />
+        <Script strategy="beforeInteractive" src="https://www.google.com/recaptcha/api.js" />
       </body>
     </html>
   );

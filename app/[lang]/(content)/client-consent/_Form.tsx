@@ -1,10 +1,6 @@
 'use client';
 
 import { ReactNode, startTransition, useEffect, useRef, useState } from 'react';
-import {
-  experimental_useFormState as useFormState,
-  experimental_useFormStatus as useFormStatus,
-} from 'react-dom';
 import generatePDF from 'react-to-pdf';
 
 import clsx from 'clsx';
@@ -34,8 +30,7 @@ const intialState: Awaited<ConsentRequestResponse> = {
 
 const getConsent = () => document.getElementById('client-consent');
 
-function SubmitBtn() {
-  const { pending } = useFormStatus();
+function SubmitBtn({ pending }: { pending: boolean }) {
   return (
     <Button
       className="col-span-2 justify-center uppercase"
@@ -51,22 +46,23 @@ function SubmitBtn() {
   );
 }
 
+type FormState = Awaited<ConsentRequestResponse>;
+
 export function Form(props: Props) {
   const { dict, lang, disclosure, heading, content } = props;
-  const consentWithLang = sendClientConsent.bind(null, lang);
-  const [{ message, errors, status, values, clientId }, formAction] = useFormState(
-    consentWithLang,
-    intialState,
-  );
+
+  const [formState, setFormState] = useState<FormState>(intialState);
+
   const [fullname, setFullname] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const pdfSent = useRef(false);
 
   const [showMessage, setShowMessage] = useState(false);
-  const isPrinting = !showMessage && status === 'success' && values?.fullname;
+  const isPrinting = !showMessage && formState.status === 'success' && formState.values?.fullname;
 
   useEffect(() => {
     if (!isPrinting || pdfSent.current) return;
-    const normalizedName = values.fullname.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    const normalizedName = formState.values?.fullname.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 
     generatePDF(getConsent, {
       method: 'save',
@@ -75,7 +71,7 @@ export function Form(props: Props) {
       const formData = new FormData();
       formData.set('ref', 'api::client.client');
       formData.set('field', 'documents');
-      formData.set('refId', String(clientId));
+      formData.set('refId', String(formState?.clientId));
       formData.append('files', pdf.output('blob'));
 
       startTransition(() => {
@@ -89,13 +85,13 @@ export function Form(props: Props) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 250);
     });
-  }, [isPrinting, clientId, values?.fullname]);
+  }, [isPrinting, formState]);
 
-  if (showMessage && status === 'success' && message) {
+  if (showMessage && formState.status === 'success' && formState?.message) {
     return (
       <div className="p-8 max-w-screen-lg my-0 mx-auto">
         <Alert variant="success">
-          <Text variant="subtitle1">{message}</Text>
+          <Text variant="subtitle1">{formState.message}</Text>
         </Alert>
       </div>
     );
@@ -110,9 +106,25 @@ export function Form(props: Props) {
       )}
     >
       {heading}
-      <form className="flex flex-col gap-4 text-lg" noValidate action={formAction}>
+      <form
+        className="flex flex-col gap-4 text-lg"
+        noValidate
+        onSubmit={e => {
+          e.preventDefault();
+          const target = e.currentTarget;
+          if (target instanceof HTMLFormElement) {
+            setIsLoading(true);
+            const data = new FormData(target);
+            sendClientConsent(lang, data)
+              .then(setFormState)
+              .finally(() => {
+                setIsLoading(false);
+              });
+          }
+        }}
+      >
         <Text variant="subtitle1" component="p">
-          I, <b>{fullname || values?.fullname}</b> give my permission to&nbsp;
+          I, <b>{fullname || formState?.values?.fullname}</b> give my permission to&nbsp;
           <b className="text-primary">Arelys Borgia</b> to serve as the health insurance agent or
           broker for myself and my entire household if applicable, for purposes of enrollment in a
           Qualified Health Plan offered on the Federally Facilitated Marketplace. By consenting to
@@ -143,13 +155,13 @@ export function Form(props: Props) {
         {isPrinting ? (
           <div>
             <Text variant="h5" component="p">
-              {dict.quote.email.label}: <b>{values.email}</b>
+              {dict.quote.email.label}: <b>{formState?.values?.email}</b>
             </Text>
             <Text variant="h5" component="p">
-              {dict.quote.phone.label}: <b>{values.phone}</b>
+              {dict.quote.phone.label}: <b>{formState?.values?.phone}</b>
             </Text>
             <Text variant="h5" component="p">
-              {dict.quote.fullname.signature}: <b>{values.fullname}</b>
+              {dict.quote.fullname.signature}: <b>{formState?.values?.fullname}</b>
             </Text>
             <Text variant="h5" component="p">
               {new Date().toLocaleDateString()}
@@ -165,7 +177,7 @@ export function Form(props: Props) {
               required
               placeholder="johndoe@gmail.com"
               containerClassname="col-span-2 md:col-span-1"
-              error={errors?.email}
+              error={formState?.errors?.email}
             />
             <PhoneInput
               id="phone"
@@ -174,7 +186,7 @@ export function Form(props: Props) {
               required
               label={dict.quote.phone.label}
               placeholder="(xxx) xxx-xxxx"
-              error={errors?.phone}
+              error={formState?.errors?.phone}
             />
             <Input
               id="fullname"
@@ -186,14 +198,14 @@ export function Form(props: Props) {
               onChange={e => setFullname(e.target.value)}
               placeholder={dict.quote.fullname.label}
               containerClassname="col-span-2"
-              error={errors?.fullname}
+              error={formState?.errors?.fullname}
             />
             <Checkbox
               name="acknowledgement"
               required
               containerClassname="col-span-2"
               label={dict.quote.acknowledgement.label}
-              error={errors?.acknowledgement}
+              error={formState?.errors?.acknowledgement}
             />
             {!isPrinting && (
               <div className="col-span-2 flex flex-col md:flex-row justify-between gap-8">
@@ -202,18 +214,20 @@ export function Form(props: Props) {
                     className="g-recaptcha"
                     data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                   />
-                  {errors?.['g-recaptcha-response'] && (
-                    <Text className="!text-error text-sm">{errors?.['g-recaptcha-response']}</Text>
+                  {formState?.errors?.['g-recaptcha-response'] && (
+                    <Text className="!text-error text-sm">
+                      {formState?.errors?.['g-recaptcha-response']}
+                    </Text>
                   )}
                 </div>
               </div>
             )}
-            {status === 'failed' && message && (
+            {formState.status === 'failed' && formState.message && (
               <Alert variant="error">
-                <Text variant="subtitle1">{message}</Text>
+                <Text variant="subtitle1">{formState.message}</Text>
               </Alert>
             )}
-            <SubmitBtn />
+            <SubmitBtn pending={isLoading} />
           </div>
         )}
       </form>
