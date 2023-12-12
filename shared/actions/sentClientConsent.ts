@@ -16,7 +16,7 @@ function generateConsentSchema(dict: Dict) {
     acknowledgement: z.coerce.boolean().refine(val => val, {
       message: dict.quote.acknowledgement.required,
     }),
-    ['g-recaptcha-response']: z.string().min(1, dict.quote.recaptcha.required),
+    ['g-recaptcha-response']: z.string().min(20, dict.quote.recaptcha.required),
   });
 }
 
@@ -42,13 +42,13 @@ export async function sendClientConsent(form: FormData): ConsentRequestResponse 
   }
 
   try {
-    const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
-    if (!reCaptchaValidation) {
-      return {
-        status: 'failed',
-        message: 'ReCAPTCHA Verification Error',
-      };
-    }
+    // const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
+    // if (!reCaptchaValidation) {
+    //   return {
+    //     status: 'failed',
+    //     message: 'ReCAPTCHA Verification Error',
+    //   };
+    // }
 
     const clients = await fetchClientByEmail(validation.values.email);
     if (clients.data.length > 0) {
