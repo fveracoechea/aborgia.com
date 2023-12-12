@@ -1,7 +1,9 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 import { uploadFile } from 'shared/actions/uploadFile';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const formData = await request.formData();
   await uploadFile(formData);
-  return Response.json({ success: true });
+  return NextResponse.json({ success: true });
 }
