@@ -34,5 +34,12 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/'],
+  matcher: [
+    '/',
+    '/client-consent/(.*)',
+    '/insurance/(.*)',
+    '/news/(.*)',
+    '/privacy-policy/(.*)',
+    '/terms-and-conditions/(.*)',
+  ],
 };
