@@ -1,5 +1,3 @@
-'use server';
-
 import { z } from 'zod';
 
 import { fetchQuoteByEmail, strapi } from '../api';
@@ -33,8 +31,8 @@ export type QuoteRequestResponse = Promise<{
   errors?: FormErrors<ReturnType<typeof generateQuoteRequestSchema>>;
 }>;
 
-export async function createQuoteRequest(lang: string, form: FormData): QuoteRequestResponse {
-  const dict = await getDictionary(lang);
+export async function createQuoteRequest(form: FormData): QuoteRequestResponse {
+  const dict = await getDictionary(String(form.get('lang') ?? 'en'));
   const schema = generateQuoteRequestSchema(dict);
   const validation = validateSchema(form, schema);
 

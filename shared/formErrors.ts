@@ -18,6 +18,7 @@ export function validateSchema<Schema extends z.AnyZodObject>(
   data: FormData | URLSearchParams,
   schema: Schema,
 ): FormValidation<Schema> {
+  console.log('form data = ', Object.fromEntries(data));
   const result = schema.safeParse(Object.fromEntries(data));
 
   if (result.success) {

@@ -77,12 +77,25 @@ export function RequestQuote(props: Props) {
             const target = e.currentTarget;
             if (target instanceof HTMLFormElement) {
               setIsLoading(true);
-              createQuoteRequest(lang, new FormData(target))
+              fetch('/api/quote', {
+                method: 'post',
+                headers: { ContentType: 'multipart/form-data' },
+                body: new FormData(target),
+              })
+                .then(r => r.json())
                 .then(setFormState)
+                .catch(e => {
+                  console.error(e);
+                  setFormState({
+                    status: 'failed',
+                    message: dict.quote.error,
+                  });
+                })
                 .finally(() => setIsLoading(false));
             }
           }}
         >
+          <input type="hidden" name="lang" value={lang} />
           <Input
             id="name"
             name="name"
@@ -152,7 +165,6 @@ export function RequestQuote(props: Props) {
                 </Text>
               )}
             </div>
-
             <SubmitButton dict={dict} pending={isLoading} />
           </div>
         </form>

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { PropsWithChildren } from 'react';
 
 import Script from 'next/script';
@@ -92,7 +91,7 @@ export default async function RootLayout(props: PropsWithChildren<LayoutProps>) 
         <Header dict={dict} lang={params.lang} title={pageTitle} />
         <main className="w-full bg-white text-dark flex flex-col gap-12">{children}</main>
         <Footer dict={dict} lang={params.lang} />
-        <Script strategy="beforeInteractive" src="https://www.google.com/recaptcha/api.js" />
+        <Script strategy="afterInteractive" src="https://www.google.com/recaptcha/api.js" />
       </body>
     </html>
   );

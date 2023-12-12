@@ -68,16 +68,21 @@ export function Form(props: Props) {
       method: 'save',
       filename: `${normalizedName}__aborgia__Client-Consent.pdf`,
     }).then(pdf => {
-      const formData = new FormData();
-      formData.set('ref', 'api::client.client');
-      formData.set('field', 'documents');
-      formData.set('refId', String(formState?.clientId));
-      formData.append('files', pdf.output('blob'));
+      const body = new FormData();
+      body.set('ref', 'api::client.client');
+      body.set('field', 'documents');
+      body.set('refId', String(formState?.clientId));
+      body.append('files', pdf.output('blob'));
 
-      startTransition(() => {
-        void uploadFile(formData);
-        pdfSent.current = true;
-      });
+      fetch('/api/strapi-upload', {
+        method: 'post',
+        headers: { ContentType: 'multipart/form-data' },
+        body,
+      })
+        .then(() => {
+          pdfSent.current = true;
+        })
+        .catch(console.error);
 
       setShowMessage(true);
 
@@ -114,12 +119,22 @@ export function Form(props: Props) {
           const target = e.currentTarget;
           if (target instanceof HTMLFormElement) {
             setIsLoading(true);
-            const data = new FormData(target);
-            sendClientConsent(lang, data)
+
+            fetch('/api/client-consent', {
+              method: 'post',
+              headers: { ContentType: 'multipart/form-data' },
+              body: new FormData(target),
+            })
+              .then(r => r.json())
               .then(setFormState)
-              .finally(() => {
-                setIsLoading(false);
-              });
+              .catch(e => {
+                console.error(e);
+                setFormState({
+                  status: 'failed',
+                  message: dict.quote.error,
+                });
+              })
+              .finally(() => setIsLoading(false));
           }
         }}
       >
@@ -169,6 +184,7 @@ export function Form(props: Props) {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-x-6 gap-y-6">
+            <input type="hidden" name="lang" value={lang} />
             <Input
               id="email"
               type="email"

@@ -1,8 +1,7 @@
-'use server';
-
 import { z } from 'zod';
 
 import { fetchClientByEmail, strapi } from 'shared/api';
+import { LOCALES } from 'shared/constants';
 import { Dict, getDictionary } from 'shared/dictionaries';
 import { FormErrors, validateSchema } from 'shared/formErrors';
 
@@ -29,8 +28,8 @@ export type ConsentRequestResponse = Promise<{
   values?: z.infer<ReturnType<typeof generateConsentSchema>>;
 }>;
 
-export async function sendClientConsent(lang: string, form: FormData): ConsentRequestResponse {
-  const dict = await getDictionary(lang);
+export async function sendClientConsent(form: FormData): ConsentRequestResponse {
+  const dict = await getDictionary(String(form.get('lang') ?? 'en'));
   const schema = generateConsentSchema(dict);
   const validation = validateSchema(form, schema);
 
@@ -39,14 +38,6 @@ export async function sendClientConsent(lang: string, form: FormData): ConsentRe
       status: 'failed',
       message: null,
       errors: validation.errors,
-    };
-  }
-
-  const reCaptchaValidation = await validateReCaptcha(validation.values['g-recaptcha-response']);
-  if (!reCaptchaValidation) {
-    return {
-      status: 'failed',
-      message: 'ReCAPTCHA Verification Error',
     };
   }
 
@@ -102,7 +93,7 @@ export async function sendClientConsent(lang: string, form: FormData): ConsentRe
 
     return { status: 'failed', message: dict.quote.error };
   } catch (error) {
-    console.error('createQuoteRequest error ', error);
+    console.error('sendClientConsent error ', error);
     return { status: 'failed', message: dict.quote.error };
   }
 }
