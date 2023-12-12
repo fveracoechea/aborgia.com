@@ -34,10 +34,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Matcher ignoring `/_next/` and `/api/`
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    // Optional: only run on root (/) URL
-    // '/'
-  ],
+  matcher: ['/'],
 };
