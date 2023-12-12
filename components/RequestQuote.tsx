@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { QuoteRequestResponse, createQuoteRequest } from 'shared/actions/createQuoteRequest';
+import type { QuoteRequestResponse } from 'shared/actions/createQuoteRequest';
 import { Dict } from 'shared/locales/en';
 import { CoverageList } from 'shared/schema';
 import { Alert } from 'shared/ui/Alert';

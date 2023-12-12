@@ -1,12 +1,13 @@
 'use client';
 
-import { ReactNode, startTransition, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import generatePDF from 'react-to-pdf';
 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 
-import { ConsentRequestResponse, sendClientConsent } from 'shared/actions/sentClientConsent';
-import { uploadFile } from 'shared/actions/uploadFile';
+import type { ConsentRequestResponse } from 'shared/actions/sentClientConsent';
 import { Dict } from 'shared/dictionaries';
 import { Alert } from 'shared/ui/Alert';
 import { Button } from 'shared/ui/Button';
@@ -48,51 +49,64 @@ function SubmitBtn({ pending }: { pending: boolean }) {
 
 type FormState = Awaited<ConsentRequestResponse>;
 
+type Status = 'form' | 'uploading' | 'printing';
+
 export function Form(props: Props) {
   const { dict, lang, disclosure, heading, content } = props;
 
   const [formState, setFormState] = useState<FormState>(intialState);
 
+  const [status, setStatus] = useState<Status>('form');
+
   const [fullname, setFullname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
   const pdfSent = useRef(false);
 
-  const [showMessage, setShowMessage] = useState(false);
-  const isPrinting = !showMessage && formState.status === 'success' && formState.values?.fullname;
+  const isPrinting = status === 'printing' && formState.status === 'success';
 
   useEffect(() => {
-    if (!isPrinting || pdfSent.current) return;
-    const normalizedName = formState.values?.fullname.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    if (!isPrinting || !formState.values?.fullname) return;
+
+    const normalizedName = formState.values.fullname.replace(/[^a-z0-9]/gi, '-').toLowerCase();
 
     generatePDF(getConsent, {
       method: 'save',
       filename: `${normalizedName}__aborgia__Client-Consent.pdf`,
-    }).then(pdf => {
-      const body = new FormData();
-      body.set('ref', 'api::client.client');
-      body.set('field', 'documents');
-      body.set('refId', String(formState?.clientId));
-      body.append('files', pdf.output('blob'));
+    })
+      .then(pdf => {
+        setStatus('uploading');
+        const body = new FormData();
+        body.set('ref', 'api::client.client');
+        body.set('field', 'documents');
+        body.set('refId', String(formState?.clientId));
+        body.append('files', pdf.output('blob'));
 
-      fetch('/api/strapi-upload', {
-        method: 'post',
-        headers: { ContentType: 'multipart/form-data' },
-        body,
+        requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        return fetch('/api/strapi-upload', {
+          method: 'post',
+          headers: { ContentType: 'multipart/form-data' },
+          body,
+        });
       })
-        .then(() => {
-          pdfSent.current = true;
-        })
-        .catch(console.error);
-
-      setShowMessage(true);
-
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 250);
-    });
+      .then(() => {
+        pdfSent.current = true;
+      })
+      .catch(console.error)
+      .finally(() => setStatus('form'));
   }, [isPrinting, formState]);
 
-  if (showMessage && formState.status === 'success' && formState?.message) {
+  if (status === 'uploading') {
+    return (
+      <div className="p-8 max-w-screen-lg my-0 mx-auto text-center mh-[4000px]">
+        <FontAwesomeIcon className="animate-spin text-primary" fontSize="3rem" icon={faSpinner} />
+        <Text className="text-primary">Loading...</Text>
+      </div>
+    );
+  }
+
+  if (status === 'form' && formState.status === 'success' && formState?.message) {
     return (
       <div className="p-8 max-w-screen-lg my-0 mx-auto">
         <Alert variant="success">
@@ -126,13 +140,17 @@ export function Form(props: Props) {
               body: new FormData(target),
             })
               .then(r => r.json())
-              .then(setFormState)
+              .then((result: FormState) => {
+                setFormState(result);
+                if (result.status === 'success') setStatus('printing');
+              })
               .catch(e => {
                 console.error(e);
                 setFormState({
                   status: 'failed',
                   message: dict.quote.error,
                 });
+                setIsLoading(false);
               })
               .finally(() => setIsLoading(false));
           }
