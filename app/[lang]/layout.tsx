@@ -41,6 +41,8 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       ? new URL('https://www.aborgia.com/')
       : new URL('http://localhost:3000');
 
+  const locale = lang || 'en';
+
   return {
     metadataBase,
     title: dict.siteName,
@@ -53,8 +55,8 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       description: dict.coverages.title,
       url: APP_URL,
       images: ['/open-graph.jpg'],
-      locale: lang || 'en',
-      alternateLocale: LOCALES.filter(l => l !== 'en'),
+      locale,
+      alternateLocale: LOCALES.filter(l => l !== locale),
     },
     twitter: {
       card: 'summary_large_image',
