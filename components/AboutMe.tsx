@@ -2,6 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
+import clsx from 'clsx';
 import { z } from 'zod';
 
 import { getImageSrc, strapi } from 'shared/api';
@@ -31,22 +32,22 @@ function fetchAboutMe(lang: string) {
 export async function AboutMe({ lang }: { lang: string }) {
   const aboutMe = await fetchAboutMe(lang);
   const image = getImageSrc(aboutMe.data.attributes.avatar.data.attributes.url);
-  return (
-    <Container
-      component="section"
-      id="about-me"
-      className="flex flex-col justify-center items-center lg:flex-row gap-12 scroll-mt-20 md:scroll-mt-8"
-    >
-      <Image
-        src={image}
-        alt="Profile avatar"
-        width={320}
-        height={338}
-        className="block rounded ring-grey ring-offset-4 ring-offset-white ring-2 w-[320px] h-auto"
-      />
 
+  const containerClasses = clsx(
+    'flex flex-col justify-center items-center !py-20',
+    'lg:flex-row gap-16 scroll-mt-20 md:scroll-mt-8',
+  );
+
+  const imageClasses = clsx(
+    'block rounded ring-grey ring-offset-4',
+    'ring-offset-white ring-2 w-[280px] h-auto',
+  );
+
+  return (
+    <Container component="section" id="about-me" className={containerClasses}>
+      <Image src={image} alt="Profile avatar" width={280} height={420} className={imageClasses} />
       <article
-        className="prose text-center lg:text-justify max-w-none"
+        className="prose !text-center lg:!text-left max-w-none"
         dangerouslySetInnerHTML={{ __html: aboutMe.data.attributes.content }}
       />
     </Container>
