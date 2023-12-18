@@ -53,7 +53,7 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       description: dict.coverages.title,
       url: APP_URL,
       images: ['/open-graph.jpg'],
-      locale: 'en',
+      locale: lang || 'en',
       alternateLocale: LOCALES.filter(l => l !== 'en'),
     },
     twitter: {
