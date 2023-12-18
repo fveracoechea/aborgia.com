@@ -51,7 +51,8 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       type: 'website',
       title: `${dict.siteName}: ${dict.hero.title}.`,
       description: dict.coverages.title,
-      url: `${APP_URL}/open-graph.jpg`,
+      url: APP_URL,
+      images: ['/open-graph.jpg'],
       locale: 'en',
       alternateLocale: LOCALES.filter(l => l !== 'en'),
     },
@@ -59,7 +60,7 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       card: 'summary_large_image',
       title: `${dict.siteName}: ${dict.hero.title}.`,
       description: dict.coverages.title,
-      images: [`${APP_URL}/open-graph.jpg`],
+      images: ['/open-graph.jpg'],
     },
     robots: 'all',
     alternates: {
