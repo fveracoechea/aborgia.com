@@ -9,7 +9,6 @@ import { Footer } from 'components/Footer';
 import { Header } from 'components/Header';
 import { Metadata, Viewport } from 'next';
 
-import { strapi } from 'shared/api';
 import { APP_URL, LOCALES } from 'shared/constants';
 import { getDictionary } from 'shared/dictionaries';
 import { lora } from 'shared/fonts';
@@ -28,9 +27,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: theme.colors.primary,
 };
-
-const aboutMeImage =
-  'https://www.aborgia.com/_ipx/w_640,q_75/https%3A%2F%2Fstrapi-production-8e4b.up.railway.app%2Fuploads%2FDSC_5319_b451a926ae.jpg?url=https%3A%2F%2Fstrapi-production-8e4b.up.railway.app%2Fuploads%2FDSC_5319_b451a926ae.jpg&w=640&q=75';
 
 export async function generateMetadata({ params: { lang } }: LayoutProps): Promise<Metadata> {
   const dict = await getDictionary(lang);
@@ -55,7 +51,7 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       type: 'website',
       title: `${dict.siteName}: ${dict.hero.title}.`,
       description: dict.coverages.title,
-      url: aboutMeImage,
+      url: `${APP_URL}/open-graph.jpg`,
       locale: 'en',
       alternateLocale: LOCALES.filter(l => l !== 'en'),
     },
@@ -63,7 +59,7 @@ export async function generateMetadata({ params: { lang } }: LayoutProps): Promi
       card: 'summary_large_image',
       title: `${dict.siteName}: ${dict.hero.title}.`,
       description: dict.coverages.title,
-      images: [aboutMeImage],
+      images: [`${APP_URL}/open-graph.jpg`],
     },
     robots: 'all',
     alternates: {
