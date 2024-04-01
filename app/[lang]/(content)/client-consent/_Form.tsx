@@ -31,6 +31,14 @@ const intialState: Awaited<ConsentRequestResponse> = {
 
 const getConsent = () => document.getElementById('client-consent');
 
+const scrollUp = () =>
+  new Promise<void>(resolve =>
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      resolve();
+    }),
+  );
+
 function SubmitBtn({ pending }: { pending: boolean }) {
   return (
     <Button
@@ -61,38 +69,37 @@ export function Form(props: Props) {
   const [fullname, setFullname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const pdfSent = useRef(false);
-
   const isPrinting = status === 'printing' && formState.status === 'success';
 
   useEffect(() => {
     if (!isPrinting || !formState.values?.fullname) return;
 
     const normalizedName = formState.values.fullname.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    const filename = `${normalizedName}__aborgia__Client-Consent.pdf`;
 
-    generatePDF(getConsent, {
-      method: 'save',
-      filename: `${normalizedName}__aborgia__Client-Consent.pdf`,
-    })
+    generatePDF(getConsent, { method: 'build' })
       .then(pdf => {
         setStatus('uploading');
+        return Promise.all([Promise.resolve(pdf), scrollUp()]);
+      })
+      .then(([pdf]) => {
         const body = new FormData();
         body.set('ref', 'api::client.client');
         body.set('field', 'documents');
         body.set('refId', String(formState?.clientId));
         body.append('files', pdf.output('blob'));
 
-        requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        return fetch('/api/strapi-upload', {
-          method: 'post',
-          headers: { ContentType: 'multipart/form-data' },
-          body,
-        });
+        return Promise.all([
+          Promise.resolve(pdf),
+          scrollUp(),
+          fetch('/api/strapi-upload', {
+            method: 'post',
+            headers: { ContentType: 'multipart/form-data' },
+            body,
+          }),
+        ]);
       })
-      .then(() => {
-        pdfSent.current = true;
-      })
+      .then(([pdf]) => pdf.save())
       .catch(console.error)
       .finally(() => setStatus('form'));
   }, [isPrinting, formState]);
