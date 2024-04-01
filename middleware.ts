@@ -36,10 +36,10 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
-    '/client-consent/(.*)',
+    '/client-consent(.*)',
     '/insurance/(.*)',
     '/news/(.*)',
-    '/privacy-policy/(.*)',
-    '/terms-and-conditions/(.*)',
+    '/privacy-policy(.*)',
+    '/terms-and-conditions(.*)',
   ],
 };
