@@ -1,124 +1,61 @@
-import { Grid, Typography, Box, styled } from "@mui/material";
-import { useTranslation } from "next-export-i18n";
-import Image from "next/image";
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
-const InnerWrapper = styled(Box)(({ theme }) => ({
-  position: "relative",
-  [theme.breakpoints.up("md")]: {
-    height: 350,
-  },
-  [theme.breakpoints.down("md")]: {
-    height: 280,
-  },
-  "& img": {
-    zIndex: 1,
-    display: "block",
-    position: "absolute",
-    width: "100%",
-    left: 0,
-    top: 0,
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center",
-  },
-}));
+import clsx from 'clsx';
 
-const Content = styled(Box)(({ theme }) => ({
-  zIndex: 2,
-  position: "absolute",
-  transition: "all .4s ease",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  display: "flex",
-  justifyContent: "center",
-  padding: theme.spacing(2),
-  alignItems: "center",
-  "&.overlay": {
-    backgroundColor: "rgba(0,0,0,.6)",
-  },
-  "&.active": {
-    backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
-    flexDirection: "column",
-    opacity: "0",
-    "&:hover": {
-      opacity: "1",
-    },
-  },
-}));
+import { fetchCoverages } from 'shared/api';
+import { Dict } from 'shared/locales/en';
+import { ButtonLink } from 'shared/ui/Button';
+import { Text } from 'shared/ui/Text';
+import theme from 'shared/ui/theme';
 
-export const Insurance = () => {
-  const { t } = useTranslation();
+type Props = {
+  dict: Dict;
+  lang: string;
+};
 
-  const coverages = [
-    {
-      id: "c-1",
-      image: "/coverages/1.jpeg",
-      name: t("coverages.1.name"),
-      description: t("coverages.1.description"),
-    },
-    {
-      id: "c-2",
-      image: "/coverages/2.jpeg",
-      name: t("coverages.2.name"),
-      description: t("coverages.2.description"),
-    },
-    {
-      id: "c-3",
-      image: "/coverages/3.jpeg",
-      name: t("coverages.3.name"),
-      description: t("coverages.3.description"),
-    },
-    {
-      id: "c-4",
-      image: "/coverages/4.jpeg",
-      name: t("coverages.4.name"),
-      description: t("coverages.4.description"),
-    },
-  ];
+export async function Insurance(props: Props) {
+  const { dict, lang } = props;
+  const coverages = await fetchCoverages(lang);
+
+  const gridCss = clsx('grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4');
 
   return (
-    <Box paddingBottom={12}>
-      <Grid container id="services" sx={{ scrollMarginTop: 20 }} spacing={8}>
-        <Grid item xs={12}>
-          <Typography textAlign="center" variant="h4">
-            {t("coverages.title")}
-          </Typography>
-        </Grid>
-        {coverages.map(({ id, name, image, description }) => (
-          <Grid key={id} item xs={12} sm={12} md={6}>
-            <InnerWrapper>
-              <Image alt={name as string} src={image} fill />
-              <Content className="overlay">
-                <Typography
-                  aria-hidden="true"
-                  color="textSecondary"
-                  variant="h5"
-                >
-                  {name}
-                </Typography>
-              </Content>
-              <Content className="active">
-                <Typography
-                  color="textSecondary"
-                  variant="h6"
-                  sx={{ textAlign: "center" }}
-                >
-                  {name}
-                </Typography>
-                <Typography
-                  sx={{ textAlign: "center" }}
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  {description}
-                </Typography>
-              </Content>
-            </InnerWrapper>
-          </Grid>
+    <section
+      id="insurance"
+      className="p-5 md:p-0 w-full text-center text-white flex flex-col gap-12"
+    >
+      <Text variant="h3" component="h4" className="text-primary capitalize">
+        {dict.coverages.title}
+      </Text>
+
+      <div className={gridCss}>
+        {coverages.data.map(({ id, attributes }) => (
+          <figure
+            key={id}
+            className="aspect-video 2xl:aspect-[3/2] relative flex justify-center items-center"
+          >
+            <Image
+              className="object-cover"
+              aria-hidden="true"
+              alt=""
+              src={attributes.image.data.attributes.url}
+              fill
+              sizes={`100vw, (min-width: ${theme.screens.md}) 50vw, (min-width: ${theme.screens['2xl']}) 25vw`}
+            />
+            <figcaption className="absolute inset-0 flex items-center justify-center p-8 bg-transparentDark6">
+              <ButtonLink
+                href={attributes.link.url}
+                variant="outlined"
+                color="light"
+                className="font-semibold uppercase text-lg"
+              >
+                {attributes.title}
+              </ButtonLink>
+            </figcaption>
+          </figure>
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </section>
   );
-};
+}

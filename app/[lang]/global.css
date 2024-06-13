@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+}
+
+.prose {
+  --tw-prose-body: theme(colors.transparentDark8);
+  --tw-prose-headings: theme(colors.dark);
+  --tw-prose-bold: theme(colors.primaryDark);
+  --tw-prose-bullets: theme(colors.primaryDark);
+
+  @apply max-w-none text-justify;
+}
+
+.prose a {
+  @apply border-b border-b-current font-medium leading-normal text-primary no-underline hover:border-b-2;
+}
+
+input::placeholder,
+.placeholder,
+.btn-placeholder span:first-child {
+  @apply font-normal text-greyDark;
+}

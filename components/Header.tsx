@@ -1,158 +1,146 @@
-import React, { MouseEventHandler, useRef, useState } from "react";
-import Image from "next/image";
-import { useTranslation, useLanguageQuery } from "next-export-i18n";
+import { redirect } from 'next/navigation';
 
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  Container,
-  Link,
-  styled,
-  Stack,
-  IconButton,
-  Box,
-} from "@mui/material";
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 
-import Tooltip from "@mui/material/Tooltip";
-import Instagram from "@mui/icons-material/Instagram";
-import Phone from "@mui/icons-material/Phone";
+import { fetchLocales } from 'shared/api';
+import SvgLogo from 'shared/assets/Logo.svg';
+import { Dict } from 'shared/locales/en';
+import { ButtonLink } from 'shared/ui/Button';
+import { Container } from 'shared/ui/Container';
+import { Link } from 'shared/ui/Link';
+import { Stack } from 'shared/ui/Stack';
 
-import { LanguageSelector } from "components/LanguageSwitcher";
-import { MobileNav } from "components/MobileNav";
+import { LanguageSelector } from './LanguageSelector';
+import { MobileNavButton } from './MobileNavButton';
 
-const PhoneIcon = styled(Phone)`
-  display: flex;
-  margin-right: ${({ theme }) => theme.spacing(1)};
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-right: 0;
-  }
-`;
+type Props = {
+  dict: Dict;
+  title: string;
+  lang: string;
+};
 
-const NavLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontWeight: theme.typography.fontWeightMedium,
-  padding: theme.spacing(1),
-  display: "block",
-}));
+// TODO fix "
+export async function Header(props: Props) {
+  const { dict, lang, title } = props;
+  const { locales, currentLocale } = await fetchLocales(lang);
 
-const Navbar = styled(Toolbar)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  color: theme.palette.text.secondary,
+  if (!currentLocale) redirect('/');
 
-  ".responsive-wrapper": {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    gap: theme.spacing(2),
-    [theme.breakpoints.down("md")]: {
-      gap: theme.spacing(0),
-    },
-  },
-
-  ".desktop": {
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-  ".mobile": {
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-}));
-
-const StyledAppbar = styled(AppBar)(({ theme }) => ({
-  backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.dark})`,
-}));
-
-const ResponsiveAppBar = () => {
-  const { t } = useTranslation();
-
-  const links = [
+  const contact = [
     {
-      id: "link-about",
-      href: "/#about-me",
-      text: t("header.aboutMe"),
+      key: 'c-phone',
+      icon: <FontAwesomeIcon fontSize="1rem" icon={faPhone} />,
+      href: 'tel:+1 (404) 513-1683',
+      text: '+1 (404) 513-1683',
     },
     {
-      id: "link-contact",
-      href: "/#contact",
-      text: t("header.contact"),
+      key: 'c-email',
+      icon: <FontAwesomeIcon fontSize="1rem" icon={faEnvelope} />,
+      href: 'mailto:aborgiainsurance@gmail.com',
+      text: 'aborgiainsurance@gmail.com',
     },
     {
-      id: "link-service",
-      href: "/#services",
-      text: t("header.services"),
+      key: 'c-insta',
+      icon: <FontAwesomeIcon fontSize="1.2rem" icon={faInstagram} />,
+      href: 'https://www.instagram.com/aborgia_insurance/',
+      text: '@aborgia_insurance',
+    },
+  ];
+
+  const nav = [
+    {
+      key: 'nav-about',
+      href: `/${lang}/#about-me`,
+      text: dict.header.aboutMe,
+    },
+    {
+      key: 'nav-insurance',
+      href: `/${lang}/insurance`,
+      text: dict.header.services,
+    },
+    {
+      key: 'nav-news',
+      href: '/',
+      text: dict.header.blog,
     },
   ];
 
   return (
-    <StyledAppbar position="sticky">
-      <Container maxWidth="xl">
-        <Navbar disableGutters>
-          <Typography
-            component="h1"
-            noWrap
-            color="textSecondary"
-            visibility="hidden"
-            position="absolute"
-          >
-            {t("siteName")}
-          </Typography>
+    <header className="relative shadow-md w-[100vw] overflow-x-hidden z-40">
+      <div className="bg-dark hidden md:block">
+        <Container
+          className="flex flex-row items-center justify-between gap-4 !py-1.5"
+          component="nav"
+          aria-label={dict.header.nav2}
+        >
+          <LanguageSelector locales={locales} currentLocale={currentLocale} />
 
-          <Box className="responsive-wrapper">
-            <MobileNav links={links} />
-
-            <Link href="/" display="block" width={145} height={26}>
-              <Image
-                alt={t("siteName")}
-                src="/logov2.png"
-                width={145}
-                height={26}
-              />
-            </Link>
-
-            {links.map((link) => (
-              <NavLink
-                className="desktop"
-                key={link.id}
-                href={link.href}
-                underline="hover"
-              >
-                {link.text}
-              </NavLink>
+          <ul className="flex flex-row md:gap-2 lg:gap-4">
+            {contact.map(link => (
+              <li key={link.key}>
+                <ButtonLink size="sm" color="light" variant="text" href={link.href}>
+                  {link.icon}
+                  {link.text}
+                </ButtonLink>
+              </li>
             ))}
-          </Box>
+          </ul>
+        </Container>
+      </div>
 
-          <Box className="responsive-wrapper">
-            <Button
-              className="desktop"
-              color="inherit"
-              href="tel:(404) 513-1683"
-              startIcon={<PhoneIcon />}
+      <div className="fixed top-0 left-0 w-full shadow-md md:shadow-none md:relative bg-white z-40 text-primary">
+        <Container
+          component="nav"
+          aria-label={dict.header.nav1}
+          className="py-3 flex flex-row items-center justify-stretch gap-4"
+        >
+          <h1>
+            <Link
+              underline="none"
+              href="/"
+              className={clsx(
+                'block w-44 xl:w-60 transition-colors rounded-sm',
+                'focus:text-primaryDark hover:text-primaryLight',
+              )}
             >
-              (404) 513-1683
-            </Button>
-            <Tooltip arrow title={t("header.follow")}>
-              <IconButton
-                href="https://www.instagram.com/aborgia_insurance/"
-                target="_blank"
-                color="inherit"
-              >
-                <Instagram aria-label={t("header.follow")} />
-              </IconButton>
-            </Tooltip>
+              <SvgLogo aria-hidden="true" className="fill-current" />
+              <span className="sr-only">{title}</span>
+            </Link>
+          </h1>
+          <Stack component="ul" direction="row" align="center" className="gap-4">
+            {nav.map(link => (
+              <li key={link.key} className="hidden md:flex">
+                <ButtonLink
+                  className={clsx('xl:text-base xl:py-2 xl:px-3 xl:gap-2.5')}
+                  size="sm"
+                  color="primary"
+                  variant="text"
+                  href={link.href}
+                >
+                  {link.text}
+                </ButtonLink>
+              </li>
+            ))}
+          </Stack>
 
-            <LanguageSelector />
-          </Box>
-        </Navbar>
-      </Container>
-    </StyledAppbar>
+          <div className="flex-grow" />
+
+          <ButtonLink
+            color="primary"
+            size="sm"
+            href={`/${lang}`}
+            variant="outlined"
+            className="hidden uppercase self-end md:flex xl:text-base xl:py-2 xl:px-3 xl:gap-2.5"
+          >
+            {dict.header.quote}
+          </ButtonLink>
+
+          <MobileNavButton dict={dict} contact={contact} nav={nav} />
+        </Container>
+      </div>
+    </header>
   );
-};
-
-export default ResponsiveAppBar;
+}

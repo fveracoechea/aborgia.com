@@ -1,42 +1,55 @@
-import React from "react";
-import { Typography, Icon, Stack } from "@mui/material";
-import { useTranslation } from "next-export-i18n";
+import React from 'react';
 
-export function Values() {
-  const { t } = useTranslation();
+import {
+  faFaceLaugh,
+  faHandshakeSimple,
+  faPeopleArrows,
+  faPeopleGroup,
+  faScaleBalanced,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Dict } from 'shared/locales/en';
+import { Container } from 'shared/ui/Container';
+import { Text } from 'shared/ui/Text';
+
+type Props = {
+  dict: Dict;
+};
+
+export function Values(props: Props) {
+  const { dict } = props;
   const values = [
-    { id: "v-1", text: t("values.1"), icon: "balance" },
-    { id: "v-2", text: t("values.2"), icon: "emoji_events" },
-    { id: "v-3", text: t("values.3"), icon: "assured_workload" },
-    { id: "v-4", text: t("values.4"), icon: "groups" },
-    { id: "v-5", text: t("values.5"), icon: "sentiment_very_satisfied" },
-    { id: "v-6", text: t("values.6"), icon: "screen_share" },
+    { id: 'v-1', text: dict.values[1], icon: faScaleBalanced },
+    { id: 'v-2', text: dict.values[2], icon: faTrophy },
+    { id: 'v-3', text: dict.values[3], icon: faHandshakeSimple },
+    { id: 'v-4', text: dict.values[4], icon: faPeopleGroup },
+    { id: 'v-5', text: dict.values[5], icon: faFaceLaugh },
+    { id: 'v-6', text: dict.values[6], icon: faPeopleArrows },
   ];
 
   return (
-    <Stack direction="row" flexWrap="wrap" justifyContent="space-between">
-      {values.map((item) => (
-        <Stack
-          direction="column"
-          spacing={1}
-          alignItems="center"
+    <Container
+      component="section"
+      className="grid grid-cols-2 md:grid-cols-3 lg:flex lg:justify-between gap-8"
+    >
+      {values.map(item => (
+        <div
+          className="flex flex-col gap-2 text-center justify-center items-center w-full lg:w-auto"
           key={item.id}
-          padding={2}
-          sx={{
-            width: {
-              xs: `${100 / 2}%`,
-              sm: `${100 / 3}%`,
-              md: "auto",
-            },
-          }}
         >
-          <Icon sx={{ fontSize: "2.8rem" }}>{item.icon}</Icon>
-          <Typography textAlign="center" color="textPrimary">
+          <FontAwesomeIcon
+            fontSize="2.4rem"
+            color="currentColor"
+            className="text-greyDark"
+            icon={item.icon}
+          />
+          <Text variant="subtitle1" className="text-dark">
             {item.text}
-          </Typography>
-        </Stack>
+          </Text>
+        </div>
       ))}
-    </Stack>
+    </Container>
   );
 }

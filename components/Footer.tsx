@@ -1,92 +1,155 @@
-import React from "react";
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
-import { Box, Container, Grid, Link, Stack, Typography } from "@mui/material";
-import Instagram from "@mui/icons-material/Instagram";
-import Phone from "@mui/icons-material/Phone";
-import Email from "@mui/icons-material/Email";
-import Copyright from "@mui/icons-material/Copyright";
-import { useTranslation } from "next-export-i18n";
-import Image from "next/image";
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faCopyright, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const year = new Date().getFullYear();
+import { fetchLocales, fetchPolicies } from 'shared/api';
+import SvgLogo from 'shared/assets/Logo.svg';
+import { Dict } from 'shared/locales/en';
+import { Container } from 'shared/ui/Container';
+import { Link } from 'shared/ui/Link';
+import { Stack } from 'shared/ui/Stack';
+import { Text } from 'shared/ui/Text';
 
-export function Footer() {
-  const { t } = useTranslation();
+import { LanguageSelector } from './LanguageSelector';
+
+type Props = {
+  dict: Dict;
+  lang: string;
+};
+
+export async function Footer({ dict, lang }: Props) {
+  const year = new Date().getFullYear();
+  const { privacy, terms } = await fetchPolicies(lang);
+  const { locales, currentLocale } = await fetchLocales(lang);
+
+  if (!currentLocale) redirect('/');
+
+  const contact = [
+    {
+      key: 'c-phone',
+      icon: <FontAwesomeIcon fontSize="1.2rem" icon={faPhone} />,
+      href: 'tel:+1 (404) 513-1683',
+      text: '+1 (404) 513-1683',
+    },
+    {
+      key: 'c-email',
+      icon: <FontAwesomeIcon fontSize="1.2rem" icon={faEnvelope} />,
+      href: 'mailto:aborgiainsurance@gmail.com',
+      text: 'aborgiainsurance@gmail.com',
+    },
+    {
+      key: 'c-insta',
+      icon: <FontAwesomeIcon fontSize="1.3rem" icon={faInstagram} />,
+      href: 'https://www.instagram.com/aborgia_insurance/',
+      text: '@aborgia_insurance',
+    },
+  ];
+
+  const menu = [
+    {
+      key: 'm-about',
+      href: '/#about-me',
+      text: dict.header.aboutMe,
+    },
+    {
+      key: 'm-contact',
+      href: '/#contact',
+      text: dict.header.quote,
+    },
+    {
+      key: 'm-service',
+      href: '/#services',
+      text: dict.header.services,
+    },
+  ];
+
   return (
-    <Container
-      component="footer"
-      maxWidth={false}
-      sx={{ backgroundColor: "#f2f2f2", paddingBottom: 6 }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={8}>
-          <Grid container item md={12} spacing={2}>
-            {/* Phone */}
-            <Grid item md={4} sm={12} xs={12}>
-              <Stack spacing={2} alignItems="center">
-                <Phone sx={{ fontSize: "2.8rem" }} />
+    <footer className="text-grey pt-12 pb-12 bg-dark">
+      <Container className="flex flex-col lg:flex-row gap-10">
+        <div className="flex flex-col md:flex-row flex-wrap gap-10 flex-[2] xl:flex-[3] lg:flex-row justify-center md:justify-start">
+          <Stack className="gap-4 text-center lg:text-left">
+            <Text variant="h6" className="font-bold">
+              CONTACT
+            </Text>
+            {contact.map(link => (
+              <div
+                key={link.key}
+                className="flex flex-row justify-center text-center lg:text-left lg:justify-start gap-2"
+              >
+                {link.icon}
                 <Link
-                  href="tel:+1 (404) 513-1683"
-                  fontSize="1.2rem"
-                  fontWeight="bold"
+                  underline="none"
+                  className="hover:text-greyLight focus:underline underline-offset-4"
+                  href={link.href}
                 >
-                  +1 (404) 513-1683
+                  {link.text}
                 </Link>
-              </Stack>
-            </Grid>
+              </div>
+            ))}
+          </Stack>
+          <Stack className="gap-4 text-center lg:text-left">
+            <Text variant="h6" className="font-bold">
+              MENU
+            </Text>
+            {menu.map(link => (
+              <Link
+                underline="none"
+                className="hover:text-greyLight focus:underline underline-offset-4"
+                key={link.key}
+                href={link.href}
+              >
+                {link.text}
+              </Link>
+            ))}
+          </Stack>
+          <Stack className="gap-4 text-center lg:text-left">
+            <Text variant="h6" className="font-bold">
+              INFORMATION
+            </Text>
 
-            {/* Instagram */}
-            <Grid item md={4} sm={12} xs={12}>
-              <Stack flex="1" spacing={1} alignItems="center">
-                <Instagram sx={{ fontSize: "2.8rem" }} />
-                <Link
-                  href="https://www.instagram.com/aborgia_insurance/"
-                  fontSize="1.2rem"
-                  fontWeight="bold"
-                >
-                  @aborgia_insurance
-                </Link>
-              </Stack>
-            </Grid>
+            <Link
+              underline="none"
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${privacy.data.attributes.link.url}`}
+            >
+              {privacy.data.attributes.link.text}
+            </Link>
+            <Link
+              underline="none"
+              className="hover:text-greyLight focus:underline underline-offset-4"
+              href={`/${lang}${terms.data.attributes.link.url}`}
+            >
+              {terms.data.attributes.link.text}
+            </Link>
+            <LanguageSelector
+              locales={locales}
+              currentLocale={currentLocale}
+              buttonProps={{
+                color: 'grey',
+                className:
+                  'justify-center lg:justify-start focus:underline underline-offset-4 !p-0 !ring-0 !text-base',
+              }}
+            />
+          </Stack>
+        </div>
 
-            {/* Email */}
-            <Grid item md={4} sm={12} xs={12}>
-              <Stack spacing={1} alignItems="center">
-                <Email sx={{ fontSize: "2.8rem" }} />
-                <Link
-                  href="https://www.instagram.com/aborgia_insurance/"
-                  fontSize="1.2rem"
-                  fontWeight="bold"
-                >
-                  aborgiainsurance@gmail.com
-                </Link>
-              </Stack>
-            </Grid>
-          </Grid>
+        <div className="flex flex-col items-center gap-6 flex-[2] lg:items-end">
+          <div className="flex flex-col items-center gap-2 md:items-end">
+            <SvgLogo className="fill-current max-w-sm" />
+            <Text className="text-center md:text-right font-medium">{dict.footer}</Text>
+          </div>
 
-          <Grid container item md={12} spacing={2}>
-            <Grid item md={8}>
-              <Stack textAlign="left" spacing={2}>
-                <Typography fontWeight="medium">{t("footer.p1")}</Typography>
-                <Typography fontWeight="medium">{t("footer.p2")}</Typography>
-              </Stack>
-            </Grid>
-            <Grid item md={4}>
-              <Image
-                style={{ width: "100%", height: "auto" }}
-                alt={t("siteName")}
-                width={290}
-                height={112}
-                src="/dark-logo-v2.png"
-              />
-              <Box display="flex" alignItems="center">
-                <Copyright color="primary" fontSize="medium" sx={{ mr: 1 }} />
-                <Typography>{year} Copyright. All Rights Reserved.</Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
+          <div className="flex w-full border-solid border-b-[1px] border-grey" />
+
+          <div className="flex flex-row gap-2 items-center">
+            <FontAwesomeIcon fontSize="1.2rem" icon={faCopyright} />
+            <Text>{year} Copyright. All Rights Reserved.</Text>
+          </div>
+        </div>
       </Container>
-    </Container>
+    </footer>
   );
 }
