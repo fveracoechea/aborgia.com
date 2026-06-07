@@ -1,6 +1,5 @@
 import {
 	createServerValidate,
-	getFormData,
 	ServerValidateError,
 } from "@tanstack/react-form-start";
 import { createServerFn } from "@tanstack/react-start";
@@ -12,6 +11,7 @@ import {
 	ClientConsentFormSchema,
 	clientConsentOptions,
 } from "./client-consent.schemas";
+import { createAssessment } from "./recaptcha";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -20,18 +20,49 @@ const serverValidate = createServerValidate({
 	onServerValidate: ClientConsentFormSchema,
 });
 
-export const getFormDataFromServer = createServerFn({ method: "GET" }).handler(
-	async () => getFormData(),
-);
-
 export const $submitConsent = createServerFn({ method: "POST" })
-	.validator(z.instanceof(FormData, { error: "Invalid form data" }))
-	.handler(async ({ data }) => {
-		console.log("server data", data.get("file"));
+	.validator(
+		z
+			.instanceof(FormData, { error: "Invalid form data" })
+			.transform((values) => {
+				const file = values.get("file");
+				const recaptchaToken = values.get("recaptchaToken");
+				values.delete("file");
+				values.delete("recaptchaToken");
+				return { values, file, recaptchaToken };
+			}),
+	)
+	.handler(async ({ data: { values, file, recaptchaToken } }) => {
 		try {
-			const input = (await serverValidate(data)) as ClientConsentFormFields;
-			console.log(input);
-			const { email, phone, fullName, file } = input;
+			const input = (await serverValidate(values)) as ClientConsentFormFields;
+			const { email, phone, fullName } = input;
+
+			if (
+				recaptchaToken &&
+				typeof recaptchaToken === "string" &&
+				process.env.RECAPTCHA_ENABLED === "true"
+			) {
+				const score = await createAssessment({
+					projectID: process.env.RECAPTCHA_PROJECT_ID ?? "",
+					recaptchaKey: process.env.VITE_RECAPTCHA_SITE_KEY ?? "",
+					token: recaptchaToken,
+					recaptchaAction: "CLIENT_CONSENT",
+				});
+
+				if (score === null) {
+					return {
+						status: "error",
+						result: "reCAPTCHA verification failed. Please try again.",
+					} as const;
+				}
+			}
+
+			if (!(file instanceof File) || file.size === 0) {
+				return {
+					status: "error",
+					result: "A signed PDF file is required",
+				} as const;
+			}
 
 			const arrayBuffer = await file.arrayBuffer();
 			const buffer = Buffer.from(arrayBuffer);
@@ -43,32 +74,9 @@ export const $submitConsent = createServerFn({ method: "POST" })
 
 			const date = new Date().toLocaleDateString();
 
-			// Email to the client
-			await resend.emails.send({
-				from: "Arelys Borgia Insurance <aborgiainsurance@gmail.com>",
-				to: [email],
-				subject: "Client Consent Form - Digital Signature",
-				html: `
-      <p>Hello ${fullName},</p>
-      <p>Thank you for submitting your Client Consent Form. Your digital signature has been recorded.</p>
-      <p>Please find your signed consent form attached to this email.</p>
-      <br/>
-      <p><strong>Submitted Information:</strong></p>
-      <ul>
-        <li>Email: ${email}</li>
-        <li>Phone: ${phone}</li>
-        <li>Signature: ${fullName}</li>
-        <li>Date: ${date}</li>
-      </ul>
-      <br/>
-      <p>Best regards,<br/>Arelys Borgia Insurance</p>
-    `,
-				attachments: [attachment],
-			});
-
 			// Email to the agent
 			await resend.emails.send({
-				from: "Arelys Borgia Insurance <aborgiainsurance@gmail.com>",
+				from: "Arelys Borgia Insurance <onboarding@resend.dev>",
 				to: ["aborgiainsurance@gmail.com"],
 				subject: `New Client Consent Form - ${fullName}`,
 				html: `
@@ -87,13 +95,14 @@ export const $submitConsent = createServerFn({ method: "POST" })
 				attachments: [attachment],
 			});
 
-			return { success: true };
+			return { status: "success" } as const;
 		} catch (e) {
 			if (e instanceof ServerValidateError) {
-				return e.response;
+				return { status: "validation-error", result: e.formState } as const;
 			}
 
 			setResponseStatus(500);
-			return "There was an internal error";
+			console.log("form error", e);
+			return { status: "error", result: "There was an internal error" };
 		}
 	});

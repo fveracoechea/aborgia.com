@@ -6,24 +6,23 @@ export const ClientConsentFormSchema = z.object({
 	phone: z.string().min(7, "Please enter a valid phone number"),
 	fullName: z.string().min(1, "Full name is required"),
 	acknowledgment: z
-		.boolean()
+		.union([z.boolean(), z.stringbool()])
 		.refine(
 			(v) => v === true,
 			"You must acknowledge the terms and privacy notice",
 		),
-	file: z
-		.instanceof(File)
-		.refine((pdf) => pdf.size > 0, "A signed PDF file is required"),
 });
 
 export type ClientConsentFormFields = z.infer<typeof ClientConsentFormSchema>;
 
 export const clientConsentOptions = formOptions({
+	validators: {
+		onSubmit: ClientConsentFormSchema,
+	},
 	defaultValues: {
 		email: "",
 		phone: "",
 		fullName: "",
-		acknowledgment: false,
-		file: undefined as undefined | File,
+		acknowledgment: false as string | boolean,
 	},
 });

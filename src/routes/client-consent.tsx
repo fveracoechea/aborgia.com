@@ -1,5 +1,6 @@
 import {
 	mergeForm,
+	type ServerFormState,
 	useForm,
 	useStore,
 	useTransform,
@@ -7,7 +8,7 @@ import {
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Logo from "#/assets/logo.svg?react";
 import { Footer } from "#/components/Footer";
@@ -21,35 +22,52 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { Checkbox } from "#/components/ui/checkbox";
+import { FieldError } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { insuranceData } from "#/data/insurance";
-import {
-	$submitConsent,
-	getFormDataFromServer,
-} from "#/utils/client-consent.functions";
+import { $submitConsent } from "#/utils/client-consent.functions";
 import { clientConsentOptions } from "#/utils/client-consent.schemas";
 
 export const Route = createFileRoute("/client-consent")({
 	component: ClientConsent,
-	loader: async () => ({
-		formState: await getFormDataFromServer(),
-	}),
 });
 
 function ClientConsent() {
-	const { formState } = Route.useLoaderData();
 	const [submitSuccess, setSubmitSuccess] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
+	const [serverState, setServerState] = useState(
+		{} as ServerFormState<unknown, undefined>,
+	);
 
 	const formRef = useRef<HTMLFormElement>(null);
+	const recaptchaTokenRef = useRef("");
 	const submitConsent = useServerFn($submitConsent);
+
+	useEffect(() => {
+		if (import.meta.env.VITE_RECAPTCHA_ENABLED !== "true") return;
+
+		(window as unknown as Record<string, unknown>).onRecaptchaSuccess = (
+			token: string,
+		) => {
+			recaptchaTokenRef.current = token;
+		};
+
+		const scriptSrc = "https://www.google.com/recaptcha/enterprise.js";
+		if (!document.querySelector(`script[src="${scriptSrc}"]`)) {
+			const script = document.createElement("script");
+			script.src = scriptSrc;
+			script.async = true;
+			script.defer = true;
+			document.head.appendChild(script);
+		}
+	}, []);
 
 	const form = useForm({
 		...clientConsentOptions,
 		transform: useTransform(
-			(baseForm) => mergeForm(baseForm, formState),
-			[formState],
+			(baseForm) => mergeForm(baseForm, serverState),
+			[serverState],
 		),
 		async onSubmit() {
 			if (!formRef.current) return;
@@ -62,15 +80,49 @@ function ClientConsent() {
 			);
 
 			const formData = new FormData(formRef.current);
-			formData.set("file", pdf.output("blob"));
+
+			formData.set(
+				"file",
+				new File([pdf.output("blob")], "client-consent.pdf", {
+					type: "application/pdf",
+					lastModified: Date.now(),
+				}),
+			);
+
+			if (import.meta.env.VITE_RECAPTCHA_ENABLED === "true") {
+				formData.set("recaptchaToken", recaptchaTokenRef.current);
+			}
 
 			try {
-				await submitConsent({ data: formData });
-				setSubmitSuccess(true);
+				const result = await submitConsent({ data: formData });
+
+				if (result.status === "error") {
+					setSubmitError(result.result);
+					if (import.meta.env.VITE_RECAPTCHA_ENABLED === "true") {
+						recaptchaTokenRef.current = "";
+						const grecaptcha = (window as unknown as Record<string, unknown>)
+							.grecaptcha as Record<string, unknown> | undefined;
+						if (grecaptcha?.enterprise) {
+							(grecaptcha.enterprise as Record<string, () => void>).reset();
+						}
+					}
+				} else if (result.status === "validation-error") {
+					setServerState(result.result);
+				} else {
+					setSubmitSuccess(true);
+				}
 			} catch (e: unknown) {
 				setSubmitError(
 					e instanceof Error ? e.message : "Failed to submit consent form.",
 				);
+				if (import.meta.env.VITE_RECAPTCHA_ENABLED === "true") {
+					recaptchaTokenRef.current = "";
+					const grecaptcha = (window as unknown as Record<string, unknown>)
+						.grecaptcha as Record<string, unknown> | undefined;
+					if (grecaptcha?.enterprise) {
+						(grecaptcha.enterprise as Record<string, () => void>).reset();
+					}
+				}
 			}
 		},
 	});
@@ -289,12 +341,9 @@ function ClientConsent() {
 																field.handleChange(e.target.value)
 															}
 														/>
-														{field.state.meta.isTouched &&
-															field.state.meta.errors.length > 0 && (
-																<p className="text-sm text-destructive">
-																	{field.state.meta.errors.join(", ")}
-																</p>
-															)}
+														{field.state.meta.isTouched && (
+															<FieldError errors={field.state.meta.errors} />
+														)}
 													</FormField>
 												)}
 											</form.Field>
@@ -316,12 +365,9 @@ function ClientConsent() {
 																field.handleChange(e.target.value)
 															}
 														/>
-														{field.state.meta.isTouched &&
-															field.state.meta.errors.length > 0 && (
-																<p className="text-sm text-destructive">
-																	{field.state.meta.errors.join(", ")}
-																</p>
-															)}
+														{field.state.meta.isTouched && (
+															<FieldError errors={field.state.meta.errors} />
+														)}
 													</FormField>
 												)}
 											</form.Field>
@@ -343,12 +389,9 @@ function ClientConsent() {
 																field.handleChange(e.target.value)
 															}
 														/>
-														{field.state.meta.isTouched &&
-															field.state.meta.errors.length > 0 && (
-																<p className="text-sm text-destructive">
-																	{field.state.meta.errors.join(", ")}
-																</p>
-															)}
+														{field.state.meta.isTouched && (
+															<FieldError errors={field.state.meta.errors} />
+														)}
 													</FormField>
 												)}
 											</form.Field>
@@ -388,15 +431,20 @@ function ClientConsent() {
 																</span>
 															</Label>
 														</div>
-														{field.state.meta.isTouched &&
-															field.state.meta.errors.length > 0 && (
-																<p className="text-sm text-destructive">
-																	{field.state.meta.errors.join(", ")}
-																</p>
-															)}
+														{field.state.meta.isTouched && (
+															<FieldError errors={field.state.meta.errors} />
+														)}
 													</div>
 												)}
 											</form.Field>
+											{import.meta.env.VITE_RECAPTCHA_ENABLED === "true" && (
+												<div
+													className="g-recaptcha"
+													data-sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+													data-callback="onRecaptchaSuccess"
+													data-action="CLIENT_CONSENT"
+												/>
+											)}
 										</div>
 									</CardContent>
 									<CardFooter>
@@ -471,13 +519,13 @@ function ClientConsent() {
 			{/* Hidden PDF source */}
 			<div
 				id="client-consent"
-				// style={{
-				// 	position: "absolute",
-				// 	left: "-999999px",
-				// 	top: 0,
-				// 	width: "1000px",
-				// 	backgroundColor: "#fff",
-				// }}
+				style={{
+					position: "absolute",
+					left: "-999999px",
+					top: 0,
+					width: "1000px",
+					backgroundColor: "#fff",
+				}}
 				className="p-6 text-base space-y-8 text-foreground"
 			>
 				{/* Header */}
