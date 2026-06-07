@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowRight,
 	ArrowUpRight,
@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import Logo from "#/assets/logo.svg?react";
-import { Button } from "#/components/ui/button";
 import { Footer } from "#/components/Footer";
+import { Button } from "#/components/ui/button";
 import { insuranceData, navLinks } from "#/data/insurance";
 
 const iconMap = {
@@ -36,19 +36,19 @@ export const Route = createFileRoute("/")({
 function TrustBadges() {
 	return (
 		<div className="flex flex-wrap gap-3 pt-2">
-			<div className="flex items-center gap-2 px-3 py-2 rounded-full bg-foreground/5">
+			<div className="flex items-center gap-2 px-3 py-2 bg-muted border">
 				<Award className="size-5 text-primary" />
 				<span className="text-xs font-medium text-foreground">
 					Licensed & Certified
 				</span>
 			</div>
-			<div className="flex items-center gap-2 px-3 py-2 rounded-full bg-foreground/5">
+			<div className="flex items-center gap-2 px-3 py-2 bg-muted border">
 				<Users className="size-5 text-primary" />
 				<span className="text-xs font-medium text-foreground">
 					Family Focused
 				</span>
 			</div>
-			<div className="flex items-center gap-2 px-3 py-2 rounded-full bg-foreground/5">
+			<div className="flex items-center gap-2 px-3 py-2 bg-muted border">
 				<Clock className="size-5 text-primary" />
 				<span className="text-xs font-medium text-foreground">
 					24/7 Available
@@ -119,7 +119,7 @@ function HomePage() {
 									<button
 										key={link.href}
 										onClick={() => scrollToSection(link.href)}
-										className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+										className={`px-4 py-2 text-sm font-medium transition-all ${
 											isActive
 												? "text-foreground bg-foreground/10"
 												: "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
@@ -211,7 +211,7 @@ function HomePage() {
 						<div className="lg:col-span-5 relative">
 							<div className="relative">
 								<div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-								<div className="aspect-[4/5] rounded-lg overflow-hidden shadow-2xl">
+								<div className="aspect-[4/5] overflow-hidden shadow-2xl border">
 									<video
 										autoPlay
 										muted
@@ -316,7 +316,7 @@ function HomePage() {
 									<div
 										className={`lg:col-span-5 ${isEven ? "lg:order-1" : "lg:order-2"}`}
 									>
-										<div className="aspect-[4/3] rounded-xl overflow-hidden shadow-lg group">
+										<div className="aspect-[4/3] overflow-hidden shadow-lg group">
 											<img
 												src={offering.image}
 												alt={offering.title}
@@ -328,11 +328,11 @@ function HomePage() {
 										className={`lg:col-span-7 ${isEven ? "lg:order-2" : "lg:order-1"}`}
 									>
 										<div className="flex items-center gap-4 mb-4">
-											<span className="text-7xl font-bold text-primary/15">
+											<span className="text-7xl font-bold text-primary/25">
 												0{index + 1}
 											</span>
-											<div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center">
-												<Icon className="w-6 h-6 text-primary" />
+											<div className="size-12 bg-primary/15 flex items-center justify-center">
+												<Icon className="size-6 text-primary" />
 											</div>
 										</div>
 										<h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
@@ -382,7 +382,7 @@ function HomePage() {
 							<div className="space-y-4">
 								<a
 									href={insuranceData.contact.phoneHref}
-									className="flex items-center gap-6 p-6 bg-card rounded-xl border border-border hover:border-foreground transition-all group hover:shadow-lg"
+									className="flex items-center gap-6 p-6 bg-card border border-border hover:border-foreground transition-all group hover:shadow-lg"
 								>
 									<div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center shrink-0">
 										<Phone className="w-6 h-6 text-foreground" />
@@ -398,7 +398,7 @@ function HomePage() {
 
 								<a
 									href={insuranceData.contact.emailHref}
-									className="flex items-center gap-6 p-6 bg-card rounded-xl border border-border hover:border-foreground transition-all group hover:shadow-lg"
+									className="flex items-center gap-6 p-6 bg-card border border-border hover:border-foreground transition-all group hover:shadow-lg"
 								>
 									<div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center shrink-0">
 										<Mail className="w-6 h-6 text-foreground" />
@@ -416,7 +416,7 @@ function HomePage() {
 									href={insuranceData.contact.instagramHref}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex items-center gap-6 p-6 bg-card rounded-xl border border-border hover:border-foreground transition-all group hover:shadow-lg"
+									className="flex items-center gap-6 p-6 bg-card border border-border hover:border-foreground transition-all group hover:shadow-lg"
 								>
 									<div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center shrink-0">
 										<ExternalLink className="w-6 h-6 text-foreground" />
