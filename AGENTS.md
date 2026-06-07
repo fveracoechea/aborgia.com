@@ -7,3 +7,17 @@ Before substantial work:
 - Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
 - Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
 <!-- intent-skills:end -->
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs for this repo live as GitHub issues. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default label vocabulary — no overrides. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo: read `CONTEXT.md` at the root and `docs/adr/` for architectural decisions. See `docs/agents/domain.md`.
