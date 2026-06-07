@@ -39,12 +39,16 @@ export const insuranceData = {
   },
   hero: {
     headline: "Medical coverage at your fingertips",
-    tagline: "Take care of your present looking towards the future",
+    tagline: "Get the best health coverage at the best price, personalized to you",
   },
   about: {
     title: "About Me",
     description: "I'm dedicated to helping families and individuals find the right insurance coverage to protect what matters most. With years of experience in the insurance industry, I provide personalized guidance to ensure you get the best coverage at the best price.",
     image: "/src/assets/about-me.jpg",
+  },
+  footer: {
+    tagline: "Take care of your present looking towards the future.",
+    about: "Insurance agent with national and international experience, helping individuals find the best medical coverage tailored to their needs.",
   },
 };
 

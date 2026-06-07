@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-conditions'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ClientConsentRouteImport } from './routes/client-consent'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as Prototype5RouteImport } from './routes/prototype/5'
 import { Route as Prototype4RouteImport } from './routes/prototype/4'
@@ -17,9 +19,19 @@ import { Route as Prototype3RouteImport } from './routes/prototype/3'
 import { Route as Prototype2RouteImport } from './routes/prototype/2'
 import { Route as Prototype1RouteImport } from './routes/prototype/1'
 
+const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
+  id: '/terms-and-conditions',
+  path: '/terms-and-conditions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientConsentRoute = ClientConsentRouteImport.update({
+  id: '/client-consent',
+  path: '/client-consent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,7 +67,9 @@ const Prototype1Route = Prototype1RouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/prototype/1': typeof Prototype1Route
   '/prototype/2': typeof Prototype2Route
   '/prototype/3': typeof Prototype3Route
@@ -64,7 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/prototype/1': typeof Prototype1Route
   '/prototype/2': typeof Prototype2Route
   '/prototype/3': typeof Prototype3Route
@@ -74,7 +90,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/terms-and-conditions': typeof TermsAndConditionsRoute
   '/prototype/1': typeof Prototype1Route
   '/prototype/2': typeof Prototype2Route
   '/prototype/3': typeof Prototype3Route
@@ -85,7 +103,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/client-consent'
     | '/privacy-policy'
+    | '/terms-and-conditions'
     | '/prototype/1'
     | '/prototype/2'
     | '/prototype/3'
@@ -94,7 +114,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/client-consent'
     | '/privacy-policy'
+    | '/terms-and-conditions'
     | '/prototype/1'
     | '/prototype/2'
     | '/prototype/3'
@@ -103,7 +125,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/client-consent'
     | '/privacy-policy'
+    | '/terms-and-conditions'
     | '/prototype/1'
     | '/prototype/2'
     | '/prototype/3'
@@ -113,7 +137,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClientConsentRoute: typeof ClientConsentRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  TermsAndConditionsRoute: typeof TermsAndConditionsRoute
   Prototype1Route: typeof Prototype1Route
   Prototype2Route: typeof Prototype2Route
   Prototype3Route: typeof Prototype3Route
@@ -123,11 +149,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms-and-conditions': {
+      id: '/terms-and-conditions'
+      path: '/terms-and-conditions'
+      fullPath: '/terms-and-conditions'
+      preLoaderRoute: typeof TermsAndConditionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy-policy': {
       id: '/privacy-policy'
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client-consent': {
+      id: '/client-consent'
+      path: '/client-consent'
+      fullPath: '/client-consent'
+      preLoaderRoute: typeof ClientConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,7 +217,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClientConsentRoute: ClientConsentRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  TermsAndConditionsRoute: TermsAndConditionsRoute,
   Prototype1Route: Prototype1Route,
   Prototype2Route: Prototype2Route,
   Prototype3Route: Prototype3Route,
