@@ -13,11 +13,6 @@ import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-condi
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ClientConsentRouteImport } from './routes/client-consent'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as Prototype5RouteImport } from './routes/prototype/5'
-import { Route as Prototype4RouteImport } from './routes/prototype/4'
-import { Route as Prototype3RouteImport } from './routes/prototype/3'
-import { Route as Prototype2RouteImport } from './routes/prototype/2'
-import { Route as Prototype1RouteImport } from './routes/prototype/1'
 
 const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
   id: '/terms-and-conditions',
@@ -39,53 +34,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const Prototype5Route = Prototype5RouteImport.update({
-  id: '/prototype/5',
-  path: '/prototype/5',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Prototype4Route = Prototype4RouteImport.update({
-  id: '/prototype/4',
-  path: '/prototype/4',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Prototype3Route = Prototype3RouteImport.update({
-  id: '/prototype/3',
-  path: '/prototype/3',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Prototype2Route = Prototype2RouteImport.update({
-  id: '/prototype/2',
-  path: '/prototype/2',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Prototype1Route = Prototype1RouteImport.update({
-  id: '/prototype/1',
-  path: '/prototype/1',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
-  '/prototype/1': typeof Prototype1Route
-  '/prototype/2': typeof Prototype2Route
-  '/prototype/3': typeof Prototype3Route
-  '/prototype/4': typeof Prototype4Route
-  '/prototype/5': typeof Prototype5Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
-  '/prototype/1': typeof Prototype1Route
-  '/prototype/2': typeof Prototype2Route
-  '/prototype/3': typeof Prototype3Route
-  '/prototype/4': typeof Prototype4Route
-  '/prototype/5': typeof Prototype5Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,11 +53,6 @@ export interface FileRoutesById {
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
-  '/prototype/1': typeof Prototype1Route
-  '/prototype/2': typeof Prototype2Route
-  '/prototype/3': typeof Prototype3Route
-  '/prototype/4': typeof Prototype4Route
-  '/prototype/5': typeof Prototype5Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,33 +61,14 @@ export interface FileRouteTypes {
     | '/client-consent'
     | '/privacy-policy'
     | '/terms-and-conditions'
-    | '/prototype/1'
-    | '/prototype/2'
-    | '/prototype/3'
-    | '/prototype/4'
-    | '/prototype/5'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/client-consent'
-    | '/privacy-policy'
-    | '/terms-and-conditions'
-    | '/prototype/1'
-    | '/prototype/2'
-    | '/prototype/3'
-    | '/prototype/4'
-    | '/prototype/5'
+  to: '/' | '/client-consent' | '/privacy-policy' | '/terms-and-conditions'
   id:
     | '__root__'
     | '/'
     | '/client-consent'
     | '/privacy-policy'
     | '/terms-and-conditions'
-    | '/prototype/1'
-    | '/prototype/2'
-    | '/prototype/3'
-    | '/prototype/4'
-    | '/prototype/5'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,11 +76,6 @@ export interface RootRouteChildren {
   ClientConsentRoute: typeof ClientConsentRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
-  Prototype1Route: typeof Prototype1Route
-  Prototype2Route: typeof Prototype2Route
-  Prototype3Route: typeof Prototype3Route
-  Prototype4Route: typeof Prototype4Route
-  Prototype5Route: typeof Prototype5Route
 }
 
 declare module '@tanstack/react-router' {
@@ -177,41 +108,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/prototype/5': {
-      id: '/prototype/5'
-      path: '/prototype/5'
-      fullPath: '/prototype/5'
-      preLoaderRoute: typeof Prototype5RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prototype/4': {
-      id: '/prototype/4'
-      path: '/prototype/4'
-      fullPath: '/prototype/4'
-      preLoaderRoute: typeof Prototype4RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prototype/3': {
-      id: '/prototype/3'
-      path: '/prototype/3'
-      fullPath: '/prototype/3'
-      preLoaderRoute: typeof Prototype3RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prototype/2': {
-      id: '/prototype/2'
-      path: '/prototype/2'
-      fullPath: '/prototype/2'
-      preLoaderRoute: typeof Prototype2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/prototype/1': {
-      id: '/prototype/1'
-      path: '/prototype/1'
-      fullPath: '/prototype/1'
-      preLoaderRoute: typeof Prototype1RouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -220,11 +116,6 @@ const rootRouteChildren: RootRouteChildren = {
   ClientConsentRoute: ClientConsentRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
-  Prototype1Route: Prototype1Route,
-  Prototype2Route: Prototype2Route,
-  Prototype3Route: Prototype3Route,
-  Prototype4Route: Prototype4Route,
-  Prototype5Route: Prototype5Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

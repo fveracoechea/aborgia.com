@@ -252,7 +252,7 @@ function HomePage() {
 							<img
 								src={insuranceData.about.image}
 								alt="About me"
-								className="w-full rounded-lg shadow-2xl"
+								className="w-full border shadow-2xl"
 							/>
 						</div>
 						<div className="order-1 lg:order-2 space-y-6">
@@ -320,7 +320,7 @@ function HomePage() {
 											<img
 												src={offering.image}
 												alt={offering.title}
-												className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+												className="w-full h-full object-cover transition-transform duration-700 border group-hover:scale-105"
 											/>
 										</div>
 									</div>

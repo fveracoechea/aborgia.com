@@ -1,3 +1,8 @@
+## Workflow
+
+- Make sure to run `bun lint` and `bun typecheck` and fix issues after code changes
+- Functions and Components must me modular, easy to read, and easy to change.
+
 <!-- intent-skills:start -->
 ## Skill Loading
 
