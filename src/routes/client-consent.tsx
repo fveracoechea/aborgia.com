@@ -60,9 +60,6 @@ function ClientConsent() {
 			setSubmitSuccess(false);
 			setSubmitError(null);
 
-			await new Promise(requestAnimationFrame);
-			await new Promise(requestAnimationFrame);
-
 			const pdf = await generatePDF(
 				() => document.getElementById("client-consent"),
 				{ method: "build" },
@@ -537,30 +534,35 @@ function ClientConsent() {
 			{/* Hidden PDF source */}
 			<div
 				id="client-consent"
-				style={{
-					position: "absolute",
-					left: "-9999px",
-					top: 0,
-					width: "800px",
-					background: "#fff",
-					color: "#000",
-					fontFamily: "sans-serif",
-				}}
-				className="p-8 text-sm"
+				// style={{
+				// 	position: "absolute",
+				// 	left: "-9999px",
+				// 	top: 0,
+				// 	width: "1200px",
+				// }}
+				className="p-6 text-sm space-y-6 text-foreground"
 			>
 				{/* Header */}
-				<div className="mb-4">
-					<h1 className="text-xl font-bold text-foreground mb-1">
-						Client Consent Form
-					</h1>
-					<p className="text-xs text-muted-foreground">
-						CMS Marketplace Agents and Brokers
-					</p>
+				<div className="flex items-end justify-between border-b border-primary/60 pb-1 mb-6">
+					<div className="flex items-center gap-3">
+						<div>
+							<h2 className="text-sm font-bold text-foreground leading-tight">
+								Arelys Borgia
+							</h2>
+							<h1 className="text-xl font-bold text-foreground leading-tight">
+								Client Consent Form
+							</h1>
+							<p className="text-sm text-foreground">
+								CMS Marketplace Agents and Brokers
+							</p>
+						</div>
+					</div>
+					<Logo className="h-10 w-auto text-foreground fill-primary" />
 				</div>
 
 				{/* Consent text */}
-				<div className="mb-3 space-y-2">
-					<p className="text-sm text-foreground leading-relaxed">
+				<div className="space-y-2">
+					<p className="text-sm text-foreground leading-relaxed text-balance">
 						I,{" "}
 						<strong className="font-semibold text-foreground">
 							{form.getFieldValue("fullName") || "____________________"}
@@ -577,7 +579,7 @@ function ClientConsent() {
 						provided by me in writing, electronically, or by telephone only for
 						the purposes of one or more of the following:
 					</p>
-					<ul className="space-y-1 text-sm text-muted-foreground pl-4">
+					<ul className="space-y-1 text-sm text-foreground pl-4">
 						{[
 							"Searching for an existing Marketplace application;",
 							"Completing an application for eligibility and enrollment in a Marketplace Qualified Health Plan or other government insurance affordability programs, such as Medicaid and CHIP or advance tax credits to help pay for Marketplace premiums;",
@@ -590,17 +592,17 @@ function ClientConsent() {
 							</li>
 						))}
 					</ul>
-					<p className="text-sm text-muted-foreground leading-relaxed">
+					<p className="text-sm textforeground leading-relaxed text-balance">
 						I understand that the Agent will not use or share my personally
 						identifiable information (PII) for any purposes other than those
 						listed above. The Agent will ensure that my PII is kept private and
 						safe when collecting, storing, and using my PII for the stated
 						purposes above.
 					</p>
-					<p className="text-sm text-muted-foreground leading-relaxed">
+					<p className="text-sm text-foreground leading-relaxed text-balance">
 						I confirm that the information I provide for entry on my Marketplace
-						eligibility and enrollment application will be true to the best of my
-						knowledge. I understand that I do not have to share additional
+						eligibility and enrollment application will be true to the best of
+						my knowledge. I understand that I do not have to share additional
 						personal information about myself or my health with my Agent beyond
 						what is required on the application for eligibility and enrollment
 						purposes. I understand that my consent remains in effect until I
@@ -608,7 +610,7 @@ function ClientConsent() {
 						sending an email to{" "}
 						<a
 							href={insuranceData.contact.emailHref}
-							className="text-primary hover:underline"
+							className="text-foreground! font-medium underline"
 						>
 							aborgiainsurance@gmail.com
 						</a>{" "}
@@ -617,9 +619,9 @@ function ClientConsent() {
 				</div>
 
 				{/* Agent Info Card */}
-				<div className="mb-3 border border-gray-200 rounded-lg bg-slate-50">
-					<div className="px-4 py-2 border-b border-gray-200">
-						<h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+				<div className="border">
+					<div className="p-2 border-b">
+						<h2 className="text-xs font-semibold text-muted-foreground uppercase">
 							Agent Information
 						</h2>
 					</div>
@@ -636,9 +638,7 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Agent National Producer Number
 							</p>
-							<p className="font-medium text-foreground text-sm">
-								19802325
-							</p>
+							<p className="font-medium text-foreground text-sm">19802325</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
@@ -660,8 +660,13 @@ function ClientConsent() {
 				</div>
 
 				{/* Signature block */}
-				<div className="mb-3 border border-gray-200 rounded-lg p-4 space-y-2">
-					<div className="grid grid-cols-2 gap-4">
+				<div className="border  ">
+					<div className="p-2 border-b">
+						<h2 className="text-xs font-semibold text-muted-foreground uppercase">
+							Client Information
+						</h2>
+					</div>
+					<div className="grid grid-cols-2 gap-4 p-2">
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Email
@@ -679,7 +684,7 @@ function ClientConsent() {
 							</p>
 						</div>
 					</div>
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-2 gap-4 p-2">
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Full Name Signature
@@ -700,21 +705,21 @@ function ClientConsent() {
 				</div>
 
 				{/* PRA Disclosure */}
-				<div className="border border-gray-200 rounded-lg bg-slate-50">
-					<div className="px-4 py-2 border-b border-gray-200">
+				<div className="border">
+					<div className="p-2 border-b">
 						<h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
 							PRA Disclosure
 						</h2>
 					</div>
-					<div className="p-4 space-y-2 text-xs text-muted-foreground leading-relaxed">
-						<p>
+					<div className="p-2 space-y-2 text-xs text-muted-foreground leading-relaxed">
+						<p className="text-balance">
 							According to the Paperwork Reduction Act of 1995, no persons are
 							required to respond to a collection of information unless it
 							displays a valid OMB control number. The valid OMB control number
 							for this information collection is 0938-XXXX, expiration date is
 							XX/XX/20XX. The time required to complete this information
-							collection is estimated to take up to 0.08 hours per applicant
-							per year, including the time to review instructions, gather the
+							collection is estimated to take up to 0.08 hours per applicant per
+							year, including the time to review instructions, gather the
 							information needed, and complete and review the information
 							collection. If you have comments concerning the accuracy of the
 							time estimate(s) or suggestions for improving this form, please
@@ -722,19 +727,19 @@ function ClientConsent() {
 							Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland
 							21244-1850.
 						</p>
-						<p>
-							<strong className="text-foreground">CMS Disclosure</strong>{" "}
-							Please do not send applications, claims, payments, medical records
-							or any documents containing sensitive information to the PRA
-							Reports Clearance Office. Please note that any correspondence not
+						<p className="text-balance">
+							<strong className="text-foreground">CMS Disclosure</strong> Please
+							do not send applications, claims, payments, medical records or any
+							documents containing sensitive information to the PRA Reports
+							Clearance Office. Please note that any correspondence not
 							pertaining to the information collection burden approved under the
 							associated OMB control number listed on this form will not be
-							reviewed, forwarded, or retained. If you have questions or concerns
-							regarding where to submit your documents, please contact Brian Gubin
-							at{" "}
+							reviewed, forwarded, or retained. If you have questions or
+							concerns regarding where to submit your documents, please contact
+							Brian Gubin at{" "}
 							<a
 								href="mailto:Brian.Gubin@cms.hhs.gov"
-								className="text-primary hover:underline"
+								className="text-foreground! font-medium underline"
 							>
 								Brian.Gubin@cms.hhs.gov
 							</a>
