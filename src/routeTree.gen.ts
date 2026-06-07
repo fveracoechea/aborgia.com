@@ -13,6 +13,7 @@ import { Route as TermsAndConditionsRouteImport } from './routes/terms-and-condi
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ClientConsentRouteImport } from './routes/client-consent'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiOgRouteImport } from './routes/api/og'
 
 const TermsAndConditionsRoute = TermsAndConditionsRouteImport.update({
   id: '/terms-and-conditions',
@@ -34,18 +35,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,6 +61,7 @@ export interface FileRoutesById {
   '/client-consent': typeof ClientConsentRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/api/og': typeof ApiOgRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -61,14 +70,21 @@ export interface FileRouteTypes {
     | '/client-consent'
     | '/privacy-policy'
     | '/terms-and-conditions'
+    | '/api/og'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/client-consent' | '/privacy-policy' | '/terms-and-conditions'
+  to:
+    | '/'
+    | '/client-consent'
+    | '/privacy-policy'
+    | '/terms-and-conditions'
+    | '/api/og'
   id:
     | '__root__'
     | '/'
     | '/client-consent'
     | '/privacy-policy'
     | '/terms-and-conditions'
+    | '/api/og'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +92,7 @@ export interface RootRouteChildren {
   ClientConsentRoute: typeof ClientConsentRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   TermsAndConditionsRoute: typeof TermsAndConditionsRoute
+  ApiOgRoute: typeof ApiOgRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -108,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/og': {
+      id: '/api/og'
+      path: '/api/og'
+      fullPath: '/api/og'
+      preLoaderRoute: typeof ApiOgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -116,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClientConsentRoute: ClientConsentRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   TermsAndConditionsRoute: TermsAndConditionsRoute,
+  ApiOgRoute: ApiOgRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,6 +6,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { setResponseStatus } from "@tanstack/react-start/server";
 import { Resend } from "resend";
 import z from "zod";
+import { getLocale } from "#/paraglide/runtime";
+import { m } from "#/paraglide/messages";
 import {
 	type ClientConsentFormFields,
 	ClientConsentFormSchema,
@@ -50,48 +52,38 @@ export const $submitConsent = createServerFn({ method: "POST" })
 				});
 
 				if (score === null) {
-					return {
-						status: "error",
-						result: "reCAPTCHA verification failed. Please try again.",
-					} as const;
-				}
-			}
-
-			if (!(file instanceof File) || file.size === 0) {
 				return {
 					status: "error",
-					result: "A signed PDF file is required",
+					result: m.error_recaptcha_failed(),
 				} as const;
 			}
+		}
+
+		if (!(file instanceof File) || file.size === 0) {
+			return {
+				status: "error",
+				result: m.error_pdf_required(),
+			} as const;
+		}
 
 			const arrayBuffer = await file.arrayBuffer();
 			const buffer = Buffer.from(arrayBuffer);
 
 			const attachment = {
-				filename: `${fullName.replace(/[^a-z0-9]/gi, "-").toLowerCase()} - Client Consent.pdf`,
+				filename: m.email_consent_attachment_name({
+					fullName: fullName.replace(/[^a-z0-9]/gi, "-").toLowerCase(),
+				}),
 				content: buffer.toString("base64"),
 			};
 
-			const date = new Date().toLocaleDateString();
+			const date = new Date().toLocaleDateString(getLocale());
 
 			// Email to the agent
 			await resend.emails.send({
 				from: "Arelys Borgia Insurance <onboarding@resend.dev>",
 				to: ["aborgiainsurance@gmail.com"],
-				subject: `New Client Consent Form - ${fullName}`,
-				html: `
-      <p>A new client consent form has been submitted.</p>
-      <br/>
-      <p><strong>Submitted Information:</strong></p>
-      <ul>
-        <li>Full Name: ${fullName}</li>
-        <li>Email: ${email}</li>
-        <li>Phone: ${phone}</li>
-        <li>Date: ${date}</li>
-      </ul>
-      <br/>
-      <p>The signed PDF is attached.</p>
-    `,
+				subject: m.email_consent_subject({ fullName }),
+				html: m.email_consent_body({ fullName, email, phone, date }),
 				attachments: [attachment],
 			});
 
@@ -103,6 +95,7 @@ export const $submitConsent = createServerFn({ method: "POST" })
 
 			setResponseStatus(500);
 			console.log("form error", e);
-			return { status: "error", result: "There was an internal error" };
+
+			return { status: "error", result: m.email_consent_error() };
 		}
 	});

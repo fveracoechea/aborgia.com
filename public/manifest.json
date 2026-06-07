@@ -1,6 +1,6 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "Aborgia Insurance",
+  "name": "Aborgia Insurance - Health Coverage at Your Fingertips",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +21,8 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Licensed insurance agent helping families find the best health coverage, life insurance, final expenses, mortgage protection, and Obamacare plans.",
+  "lang": "en",
+  "categories": ["insurance", "health", "finance", "business"]
 }

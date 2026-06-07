@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ExternalLink, Mail, Phone } from "lucide-react";
 import Logo from "#/assets/logo.svg?react";
 import { insuranceData } from "#/data/insurance";
+import { m } from "#/paraglide/messages";
 
 export function Footer() {
 	return (
@@ -14,17 +15,17 @@ export function Footer() {
 							<Logo className="h-14 w-auto text-background fill-current" />
 						</Link>
 						<p className="text-lg font-medium text-background/90 leading-snug">
-							{insuranceData.footer.tagline}
+							{m.footer_tagline()}
 						</p>
 						<p className="text-sm text-background/60 leading-relaxed">
-							{insuranceData.footer.about}
+							{m.footer_about()}
 						</p>
 					</div>
 
 					{/* Quick Links */}
 					<div>
 						<h3 className="text-sm font-semibold uppercase tracking-wider text-background/60 mb-4">
-							Quick Links
+							{m.footer_quick_links()}
 						</h3>
 						<ul className="space-y-3">
 							<li>
@@ -32,94 +33,94 @@ export function Footer() {
 									href="/#hero"
 									className="text-background/70 hover:text-background transition-colors text-sm"
 								>
-									Home
+									{m.nav_home()}
 								</a>
-							</li>
-							<li>
+								</li>
+								<li>
+									<a
+										href="/#about"
+										className="text-background/70 hover:text-background transition-colors text-sm"
+									>
+										{m.nav_about()}
+									</a>
+								</li>
+								<li>
+									<a
+										href="/#offerings"
+										className="text-background/70 hover:text-background transition-colors text-sm"
+									>
+										{m.nav_services()}
+									</a>
+								</li>
+								<li>
+									<a
+										href="/#contact"
+										className="text-background/70 hover:text-background transition-colors text-sm"
+									>
+										{m.nav_contact()}
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						{/* Contact */}
+						<div>
+							<h3 className="text-sm font-semibold uppercase tracking-wider text-background/60 mb-4">
+								{m.footer_contact()}
+							</h3>
+							<div className="space-y-3">
 								<a
-									href="/#about"
-									className="text-background/70 hover:text-background transition-colors text-sm"
+									href={insuranceData.contact.phoneHref}
+									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 								>
-									About
+									<Phone className="w-4 h-4" />
+									{insuranceData.contact.phone}
 								</a>
-							</li>
-							<li>
 								<a
-									href="/#offerings"
-									className="text-background/70 hover:text-background transition-colors text-sm"
+									href={insuranceData.contact.emailHref}
+									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 								>
-									Services
+									<Mail className="w-4 h-4" />
+									{insuranceData.contact.email}
 								</a>
-							</li>
-							<li>
 								<a
-									href="/#contact"
-									className="text-background/70 hover:text-background transition-colors text-sm"
+									href={insuranceData.contact.instagramHref}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 								>
-									Contact
+									<ExternalLink className="w-4 h-4" />
+									{insuranceData.contact.instagram}
 								</a>
-							</li>
-						</ul>
+							</div>
+						</div>
 					</div>
 
-					{/* Contact */}
-					<div>
-						<h3 className="text-sm font-semibold uppercase tracking-wider text-background/60 mb-4">
-							Contact
-						</h3>
-						<div className="space-y-3">
-							<a
-								href={insuranceData.contact.phoneHref}
-								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+					{/* Bottom bar */}
+					<div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/60">
+						<p>{m.footer_copyright({ year: new Date().getFullYear() })}</p>
+						<div className="flex items-center gap-6">
+							<Link
+								to="/privacy-policy"
+								className="hover:text-background transition-colors"
 							>
-								<Phone className="w-4 h-4" />
-								{insuranceData.contact.phone}
-							</a>
-							<a
-								href={insuranceData.contact.emailHref}
-								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+								{m.footer_privacy()}
+							</Link>
+							<Link
+								to="/client-consent"
+								className="hover:text-background transition-colors"
 							>
-								<Mail className="w-4 h-4" />
-								{insuranceData.contact.email}
-							</a>
-							<a
-								href={insuranceData.contact.instagramHref}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+								{m.footer_client_consent()}
+							</Link>
+							<Link
+								to="/terms-and-conditions"
+								className="hover:text-background transition-colors"
 							>
-								<ExternalLink className="w-4 h-4" />
-								{insuranceData.contact.instagram}
-							</a>
+								{m.footer_terms()}
+							</Link>
 						</div>
 					</div>
 				</div>
-
-				{/* Bottom bar */}
-				<div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/60">
-					<p>© {new Date().getFullYear()} Aborgia Insurance</p>
-					<div className="flex items-center gap-6">
-					<Link
-						to="/privacy-policy"
-						className="hover:text-background transition-colors"
-					>
-						Privacy Policy
-					</Link>
-					<Link
-						to="/client-consent"
-						className="hover:text-background transition-colors"
-					>
-						Client Consent
-					</Link>
-					<Link
-						to="/terms-and-conditions"
-						className="hover:text-background transition-colors"
-					>
-						Terms & Conditions
-					</Link>
-					</div>
-				</div>
-			</div>
-		</footer>
-	);
-}
+			</footer>
+		);
+	}

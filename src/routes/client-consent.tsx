@@ -26,11 +26,22 @@ import { FieldError } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { insuranceData } from "#/data/insurance";
+import { getLocale } from "#/paraglide/runtime";
+import { m } from "#/paraglide/messages";
 import { $submitConsent } from "#/utils/client-consent.functions";
 import { clientConsentOptions } from "#/utils/client-consent.schemas";
+import { getSeoMeta } from "#/utils/seo";
 
 export const Route = createFileRoute("/client-consent")({
 	component: ClientConsent,
+	head: () => {
+		const seo = getSeoMeta({
+			title: m.consent_meta_title(),
+			description: m.consent_meta_description(),
+			path: "/client-consent",
+		});
+		return seo;
+	},
 });
 
 function ClientConsent() {
@@ -113,7 +124,7 @@ function ClientConsent() {
 				}
 			} catch (e: unknown) {
 				setSubmitError(
-					e instanceof Error ? e.message : "Failed to submit consent form.",
+					e instanceof Error ? e.message : m.consent_error_message(),
 				);
 				if (import.meta.env.VITE_RECAPTCHA_ENABLED === "true") {
 					recaptchaTokenRef.current = "";
@@ -131,6 +142,13 @@ function ClientConsent() {
 	const email = useStore(form.store, (state) => state.values.email);
 	const phone = useStore(form.store, (state) => state.values.phone);
 
+	const consentPurposes = [
+		m.consent_purpose_1,
+		m.consent_purpose_2,
+		m.consent_purpose_3,
+		m.consent_purpose_4,
+	];
+
 	return (
 		<div className="min-h-screen bg-background">
 			{/* Header */}
@@ -145,7 +163,7 @@ function ClientConsent() {
 								to="/"
 								className="px-4 py-2 text-sm font-medium rounded-lg text-background hover:bg-background/10 transition-all"
 							>
-								Home
+								{m.nav_home()}
 							</Link>
 						</nav>
 					</div>
@@ -159,15 +177,13 @@ function ClientConsent() {
 						to="/"
 						className="inline-flex items-center gap-2 text-sm !text-background/90 hover:!text-background underline underline-offset-4 !decoration-background/40 hover:!decoration-background transition-colors mb-6"
 					>
-						<ArrowLeft className="w-4 h-4" /> Back to Home
+						<ArrowLeft className="w-4 h-4" /> {m.nav_back_to_home()}
 					</Link>
-					<p className="text-lg text-background/80">Arelys Borgia</p>
+					<p className="text-lg text-background/80">{m.consent_agent_name()}</p>
 					<h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-						Client Consent Form
+						{m.consent_title()}
 					</h1>
-					<p className="text-lg text-background/80">
-						CMS Marketplace Agents and Brokers
-					</p>
+					<p className="text-lg text-background/80">{m.consent_subtitle()}</p>
 				</div>
 			</div>
 
@@ -176,76 +192,51 @@ function ClientConsent() {
 				<div className="space-y-12 max-w-none text-foreground">
 					<section className="space-y-6">
 						<p className="text-muted-foreground leading-relaxed mb-4">
-							I,{" "}
-							<span className="inline-block border-b border-muted-foreground min-w-[8rem] px-1 text-foreground font-medium">
-								{fullName}
-							</span>{" "}
-							give my permission to <strong>Arelys Borgia</strong> to serve as
-							the health insurance agent or broker for myself and my entire
-							household if applicable, for purposes of enrollment in a Qualified
-							Health Plan offered on the Federally Facilitated Marketplace. By
-							consenting to this agreement, I authorize the above-mentioned
-							Agent to view and use the confidential information provided by me
-							in writing, electronically, or by telephone only for the purposes
-							of one or more of the following:
+							{m.consent_intro_1({ name: fullName })}
 						</p>
 						<ul className="space-y-2 text-muted-foreground">
-							{[
-								"Searching for an existing Marketplace application;",
-								"Completing an application for eligibility and enrollment in a Marketplace Qualified Health Plan or other government insurance affordability programs, such as Medicaid and CHIP or advance tax credits to help pay for Marketplace premiums;",
-								"Providing ongoing account maintenance and enrollment assistance, as necessary;",
-								"Responding to inquiries from the Marketplace regarding my Marketplace application.",
-							].map((item) => (
-								<li key={item} className="flex items-start gap-3">
+							{consentPurposes.map((item) => (
+								<li key={item()} className="flex items-start gap-3">
 									<div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
-									{item}
+									{item()}
 								</li>
 							))}
 						</ul>
 						<p className="text-muted-foreground leading-relaxed">
-							I understand that the Agent will not use or share my personally
-							identifiable information (PII) for any purposes other than those
-							listed above. The Agent will ensure that my PII is kept private
-							and safe when collecting, storing, and using my PII for the stated
-							purposes above.
+							{m.consent_privacy_text()}
 						</p>
-						<p className="text-muted-foreground leading-relaxed ">
-							I confirm that the information I provide for entry on my
-							Marketplace eligibility and enrollment application will be true to
-							the best of my knowledge. I understand that I do not have to share
-							additional personal information about myself or my health with my
-							Agent beyond what is required on the application for eligibility
-							and enrollment purposes. I understand that my consent remains in
-							effect until I revoke it, and I may revoke or modify my consent at
-							any time by sending an email to{" "}
+						<p className="text-muted-foreground leading-relaxed">
+							{m.consent_revoke_part1()}{" "}
 							<a
 								href={insuranceData.contact.emailHref}
 								className="text-primary hover:underline"
 							>
-								aborgiainsurance@gmail.com
+								{insuranceData.contact.email}
 							</a>{" "}
-							specifying my request.
+							{m.consent_revoke_part2()}
 						</p>
 					</section>
 
 					<section>
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-sm">Agent Information</CardTitle>
+								<CardTitle className="text-sm">
+									{m.consent_agent_info_title()}
+								</CardTitle>
 							</CardHeader>
 							<CardContent>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 									<div>
 										<p className="text-xs text-muted-foreground uppercase font-medium">
-											Name
+											{m.consent_label_full_name()}
 										</p>
 										<p className="font-medium text-foreground text-base">
-											Arelys Borgia de Perez
+											{m.consent_agent_full_name()}
 										</p>
 									</div>
 									<div>
 										<p className="text-xs text-muted-foreground uppercase font-medium">
-											Agent National Producer Number
+											{m.consent_agent_npn()}
 										</p>
 										<p className="font-medium text-foreground text-base">
 											19802325
@@ -253,7 +244,7 @@ function ClientConsent() {
 									</div>
 									<div>
 										<p className="text-xs text-muted-foreground uppercase font-medium">
-											Phone Number
+											{m.consent_agent_phone_label()}
 										</p>
 										<p className="font-medium text-foreground text-base">
 											{insuranceData.contact.phone}
@@ -261,7 +252,7 @@ function ClientConsent() {
 									</div>
 									<div>
 										<p className="text-xs text-muted-foreground uppercase font-medium">
-											Email
+											{m.consent_agent_email_label()}
 										</p>
 										<p className="font-medium text-foreground text-base">
 											{insuranceData.contact.email}
@@ -278,11 +269,10 @@ function ClientConsent() {
 								<CardContent className="pt-6">
 									<div className="text-center space-y-2">
 										<p className="text-lg font-medium text-green-600">
-											Consent Form Submitted Successfully
+											{m.consent_success_title()}
 										</p>
 										<p className="text-muted-foreground">
-											A copy of your signed consent form has been sent to your
-											email.
+											{m.consent_success_message()}
 										</p>
 									</div>
 								</CardContent>
@@ -294,17 +284,17 @@ function ClientConsent() {
 								<CardContent className="pt-6">
 									<div className="text-center space-y-2">
 										<p className="text-lg font-medium text-destructive">
-											Submission Failed
+											{m.consent_error_title()}
 										</p>
 										<p className="text-muted-foreground">
-											{submitError || "Something went wrong. Please try again."}
+											{submitError || m.consent_error_message()}
 										</p>
 										<Button
 											variant="outline"
 											onClick={() => setSubmitError(null)}
 											className="mt-2"
 										>
-											Try Again
+											{m.cta_try_again()}
 										</Button>
 									</div>
 								</CardContent>
@@ -323,13 +313,17 @@ function ClientConsent() {
 							>
 								<Card>
 									<CardHeader>
-										<CardTitle>Consent Form</CardTitle>
+										<CardTitle>{m.consent_form_title()}</CardTitle>
 									</CardHeader>
 									<CardContent>
 										<div className="space-y-6">
 											<form.Field name="email">
 												{(field) => (
-													<FormField label="Email" htmlFor="email" required>
+													<FormField
+														label={m.consent_label_email()}
+														htmlFor="email"
+														required
+													>
 														<Input
 															type="email"
 															id="email"
@@ -342,7 +336,9 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError errors={field.state.meta.errors} />
+															<FieldError
+																errors={field.state.meta.errors}
+															/>
 														)}
 													</FormField>
 												)}
@@ -350,7 +346,7 @@ function ClientConsent() {
 											<form.Field name="phone">
 												{(field) => (
 													<FormField
-														label="Phone Number"
+														label={m.consent_label_phone()}
 														htmlFor="phone"
 														required
 													>
@@ -366,7 +362,9 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError errors={field.state.meta.errors} />
+															<FieldError
+																errors={field.state.meta.errors}
+															/>
 														)}
 													</FormField>
 												)}
@@ -374,7 +372,7 @@ function ClientConsent() {
 											<form.Field name="fullName">
 												{(field) => (
 													<FormField
-														label="Full name signature"
+														label={m.consent_label_full_name()}
 														htmlFor="fullName"
 														required
 													>
@@ -390,7 +388,9 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError errors={field.state.meta.errors} />
+															<FieldError
+																errors={field.state.meta.errors}
+															/>
 														)}
 													</FormField>
 												)}
@@ -402,10 +402,10 @@ function ClientConsent() {
 															<Checkbox
 																id="acknowledgment"
 																name="acknowledgment"
-																checked={field.state.value}
-																onCheckedChange={(checked) =>
-																	field.handleChange(checked === true)
-																}
+															checked={!!field.state.value}
+															onCheckedChange={(checked) =>
+																field.handleChange(checked === true)
+															}
 																className="mt-0.5"
 															/>
 															<Label
@@ -413,26 +413,27 @@ function ClientConsent() {
 																className="text-foreground"
 															>
 																<span>
-																	I acknowledge that by clicking submit, I am
-																	agreeing with the{" "}
+																	{m.consent_ack_text_1()}{" "}
 																	<Link
 																		to="/terms-and-conditions"
 																		className="text-primary hover:underline"
 																	>
-																		Terms
+																		{m.consent_link_terms()}
 																	</Link>{" "}
-																	and{" "}
+																	{m.consent_ack_text_2()}{" "}
 																	<Link
 																		to="/privacy-policy"
 																		className="text-primary hover:underline"
 																	>
-																		Privacy Notice
+																		{m.consent_link_privacy_notice()}
 																	</Link>
 																</span>
 															</Label>
 														</div>
 														{field.state.meta.isTouched && (
-															<FieldError errors={field.state.meta.errors} />
+															<FieldError
+																errors={field.state.meta.errors}
+															/>
 														)}
 													</div>
 												)}
@@ -461,7 +462,9 @@ function ClientConsent() {
 													className="w-full text-sm"
 													disabled={!canSubmit || isSubmitting}
 												>
-													{isSubmitting ? "Processing..." : "Submit Consent"}
+													{isSubmitting
+														? m.cta_processing()
+														: m.consent_submit()}
 												</Button>
 											)}
 										</form.Subscribe>
@@ -474,41 +477,24 @@ function ClientConsent() {
 					<section>
 						<Card>
 							<CardHeader>
-								<CardTitle className="text-sm">PRA Disclosure</CardTitle>
+								<CardTitle className="text-sm">
+									{m.consent_pra_title()}
+								</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-4">
 								<p className="text-muted-foreground leading-relaxed text-sm">
-									According to the Paperwork Reduction Act of 1995, no persons
-									are required to respond to a collection of information unless
-									it displays a valid OMB control number. The valid OMB control
-									number for this information collection is 0938-XXXX,
-									expiration date is XX/XX/20XX. The time required to complete
-									this information collection is estimated to take up to 0.08
-									hours per applicant per year, including the time to review
-									instructions, gather the information needed, and complete and
-									review the information collection. If you have comments
-									concerning the accuracy of the time estimate(s) or suggestions
-									for improving this form, please write to: CMS, 7500 Security
-									Boulevard, Attn: PRA Reports Clearance Officer, Mail Stop
-									C4-26-05, Baltimore, Maryland 21244-1850.
+									{m.consent_pra_text()}
 								</p>
 								<p className="text-muted-foreground leading-relaxed text-sm">
-									<strong>CMS Disclosure</strong> Please do not send
-									applications, claims, payments, medical records or any
-									documents containing sensitive information to the PRA Reports
-									Clearance Office. Please note that any correspondence not
-									pertaining to the information collection burden approved under
-									the associated OMB control number listed on this form will not
-									be reviewed, forwarded, or retained. If you have questions or
-									concerns regarding where to submit your documents, please
-									contact Brian Gubin at{" "}
+									<strong>{m.consent_cms_disclosure_label()}</strong>{" "}
+									{m.consent_cms_text_1()}{" "}
 									<a
 										href="mailto:Brian.Gubin@cms.hhs.gov"
 										className="text-primary hover:underline"
 									>
 										Brian.Gubin@cms.hhs.gov
 									</a>
-									.
+									{m.consent_cms_text_2()}
 								</p>
 							</CardContent>
 						</Card>
@@ -533,13 +519,13 @@ function ClientConsent() {
 					<div className="flex items-center gap-3">
 						<div>
 							<h2 className="text-base font-bold text-foreground leading-tight">
-								Arelys Borgia
+								{m.consent_agent_name()}
 							</h2>
 							<h1 className="text-2xl font-bold text-foreground leading-tight">
-								Client Consent Form
+								{m.consent_pdf_title()}
 							</h1>
 							<p className="text-base text-foreground">
-								CMS Marketplace Agents and Brokers
+								{m.consent_pdf_subtitle()}
 							</p>
 						</div>
 					</div>
@@ -549,58 +535,28 @@ function ClientConsent() {
 				{/* Consent text */}
 				<div className="space-y-4">
 					<p className="text-base text-foreground leading-relaxed text-pretty">
-						I,{" "}
-						<strong className="font-semibold text-foreground">
-							{fullName || "____________________"}
-						</strong>
-						, give my permission to{" "}
-						<strong className="font-semibold text-foreground">
-							Arelys Borgia
-						</strong>{" "}
-						to serve as the health insurance agent or broker for myself and my
-						entire household if applicable, for purposes of enrollment in a
-						Qualified Health Plan offered on the Federally Facilitated
-						Marketplace. By consenting to this agreement, I authorize the
-						above-mentioned Agent to view and use the confidential information
-						provided by me in writing, electronically, or by telephone only for
-						the purposes of one or more of the following:
+						{m.consent_intro_1({ name: fullName || "____________________" })}
 					</p>
 					<ul className="space-y-1 text-base text-foreground pl-4">
-						{[
-							"Searching for an existing Marketplace application;",
-							"Completing an application for eligibility and enrollment in a Marketplace Qualified Health Plan or other government insurance affordability programs, such as Medicaid and CHIP or advance tax credits to help pay for Marketplace premiums;",
-							"Providing ongoing account maintenance and enrollment assistance, as necessary;",
-							"Responding to inquiries from the Marketplace regarding my Marketplace application.",
-						].map((item) => (
-							<li key={item} className="flex items-start gap-2">
+						{consentPurposes.map((item) => (
+							<li key={item()} className="flex items-start gap-2">
 								<span className="w-1 h-1 rounded-full bg-primary mt-2 shrink-0" />
-								<span className="text-pretty">{item}</span>
+								<span className="text-pretty">{item()}</span>
 							</li>
 						))}
 					</ul>
-					<p className="text-base textforeground leading-relaxed text-pretty">
-						I understand that the Agent will not use or share my personally
-						identifiable information (PII) for any purposes other than those
-						listed above. The Agent will ensure that my PII is kept private and
-						safe when collecting, storing, and using my PII for the stated
-						purposes above.
+					<p className="text-base text-foreground leading-relaxed text-pretty">
+						{m.consent_privacy_text()}
 					</p>
 					<p className="text-base text-foreground leading-relaxed text-pretty">
-						I confirm that the information I provide for entry on my Marketplace
-						eligibility and enrollment application will be true to the best of
-						my knowledge. I understand that I do not have to share additional
-						personal information about myself or my health with my Agent beyond
-						what is required on the application for eligibility and enrollment
-						purposes. I understand that my consent remains in effect until I
-						revoke it, and I may revoke or modify my consent at any time by
-						sending an email to{" "}
+						{m.consent_revoke_part1()}{" "}
 						<a
 							href={insuranceData.contact.emailHref}
-							className="text-foreground! font-medium underline"
+							className="text-foreground font-medium underline"
 						>
-							aborgiainsurance@gmail.com
+							{insuranceData.contact.email}
 						</a>{" "}
-						specifying my request.
+						{m.consent_revoke_part2()}
 					</p>
 				</div>
 
@@ -608,27 +564,29 @@ function ClientConsent() {
 				<div className="border">
 					<div className="p-2 border-b">
 						<h2 className="text-xs font-semibold text-muted-foreground uppercase">
-							Agent Information
+							{m.consent_pdf_agent_info()}
 						</h2>
 					</div>
 					<div className="p-4 grid grid-cols-2 gap-3">
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Name
+								{m.consent_label_full_name()}
 							</p>
 							<p className="font-medium text-foreground text-base">
-								Arelys Borgia de Perez
+								{m.consent_agent_full_name()}
 							</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Agent National Producer Number
+								{m.consent_agent_npn()}
 							</p>
-							<p className="font-medium text-foreground text-base">19802325</p>
+							<p className="font-medium text-foreground text-base">
+								19802325
+							</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Phone Number
+								{m.consent_agent_phone_label()}
 							</p>
 							<p className="font-medium text-foreground text-base">
 								{insuranceData.contact.phone}
@@ -636,7 +594,7 @@ function ClientConsent() {
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Email
+								{m.consent_agent_email_label()}
 							</p>
 							<p className="font-medium text-foreground text-base">
 								{insuranceData.contact.email}
@@ -646,16 +604,16 @@ function ClientConsent() {
 				</div>
 
 				{/* Signature block */}
-				<div className="border  ">
+				<div className="border">
 					<div className="p-2 border-b">
 						<h2 className="text-xs font-semibold text-muted-foreground uppercase">
-							Client Information
+							{m.consent_pdf_client_info()}
 						</h2>
 					</div>
 					<div className="grid grid-cols-2 gap-4 p-2">
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Email
+								{m.consent_label_email()}
 							</p>
 							<p className="font-medium text-foreground text-base">
 								{email || "____________________"}
@@ -663,7 +621,7 @@ function ClientConsent() {
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Phone Number
+								{m.consent_label_phone()}
 							</p>
 							<p className="font-medium text-foreground text-base">
 								{phone || "____________________"}
@@ -673,7 +631,7 @@ function ClientConsent() {
 					<div className="grid grid-cols-2 gap-4 p-2">
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Full Name Signature
+								{m.consent_pdf_signature_label()}
 							</p>
 							<p className="font-medium text-foreground text-base">
 								{fullName || "____________________"}
@@ -681,10 +639,10 @@ function ClientConsent() {
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
-								Date
+								{m.consent_pdf_date()}
 							</p>
 							<p className="font-medium text-foreground text-base">
-								{new Date().toLocaleDateString()}
+								{new Date().toLocaleDateString(getLocale())}
 							</p>
 						</div>
 					</div>
@@ -694,42 +652,23 @@ function ClientConsent() {
 				<div className="border">
 					<div className="p-2 border-b">
 						<h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-							PRA Disclosure
+							{m.consent_pra_title()}
 						</h2>
 					</div>
 					<div className="p-2 space-y-2 text-sm text-muted-foreground leading-relaxed">
+						<p className="text-pretty">{m.consent_pra_text()}</p>
 						<p className="text-pretty">
-							According to the Paperwork Reduction Act of 1995, no persons are
-							required to respond to a collection of information unless it
-							displays a valid OMB control number. The valid OMB control number
-							for this information collection is 0938-XXXX, expiration date is
-							XX/XX/20XX. The time required to complete this information
-							collection is estimated to take up to 0.08 hours per applicant per
-							year, including the time to review instructions, gather the
-							information needed, and complete and review the information
-							collection. If you have comments concerning the accuracy of the
-							time estimate(s) or suggestions for improving this form, please
-							write to: CMS, 7500 Security Boulevard, Attn: PRA Reports
-							Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland
-							21244-1850.
-						</p>
-						<p className="text-pretty">
-							<strong className="text-foreground">CMS Disclosure</strong> Please
-							do not send applications, claims, payments, medical records or any
-							documents containing sensitive information to the PRA Reports
-							Clearance Office. Please note that any correspondence not
-							pertaining to the information collection burden approved under the
-							associated OMB control number listed on this form will not be
-							reviewed, forwarded, or retained. If you have questions or
-							concerns regarding where to submit your documents, please contact
-							Brian Gubin at{" "}
+							<strong className="text-foreground">
+								{m.consent_cms_disclosure_label()}
+							</strong>{" "}
+							{m.consent_cms_text_1()}{" "}
 							<a
 								href="mailto:Brian.Gubin@cms.hhs.gov"
-								className="text-foreground! font-medium underline"
+								className="text-foreground font-medium underline"
 							>
 								Brian.Gubin@cms.hhs.gov
 							</a>
-							.
+							{m.consent_cms_text_2()}
 						</p>
 					</div>
 				</div>

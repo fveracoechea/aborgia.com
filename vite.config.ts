@@ -7,6 +7,7 @@ import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
+import { prerenderRoutes } from "./prerender-routes";
 
 const config = defineConfig({
 	resolve: {
@@ -17,17 +18,34 @@ const config = defineConfig({
 	},
 	optimizeDeps: {
 		include: ["html2canvas-pro"],
+		exclude: ["satori", "@resvg/resvg-js"],
 	},
 	plugins: [
 		devtools(),
 		paraglideVitePlugin({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
-			strategy: ["url", "baseLocale"],
+			outputStructure: "message-modules",
+			cookieName: "PARAGLIDE_LOCALE",
+			strategy: ["url", "cookie", "preferredLanguage", "baseLocale"],
+			urlPatterns: [
+				{
+					pattern: "/:path(.*)?",
+					localized: [
+						["en", "/:path(.*)?"],
+						["es", "/es/:path(.*)?"],
+					],
+				},
+			],
 		}),
-		nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+		nitro({ preset: "bun", rollupConfig: { external: [/^@sentry\//] } }),
 		tailwindcss(),
-		tanstackStart(),
+		tanstackStart({
+			server: {
+				entry: "./server.ts",
+			},
+			pages: prerenderRoutes,
+		}),
 		viteReact(),
 		svgr(),
 	],

@@ -1,16 +1,14 @@
 import { formOptions } from "@tanstack/react-form-start";
 import z from "zod";
+import { m } from "#/paraglide/messages";
 
 export const ClientConsentFormSchema = z.object({
-	email: z.email("Please enter a valid email address"),
-	phone: z.string().min(7, "Please enter a valid phone number"),
-	fullName: z.string().min(1, "Full name is required"),
+	email: z.email(m.form_error_email()),
+	phone: z.string().min(7, m.form_error_phone()),
+	fullName: z.string().min(1, m.form_error_full_name()),
 	acknowledgment: z
 		.union([z.boolean(), z.stringbool()])
-		.refine(
-			(v) => v === true,
-			"You must acknowledge the terms and privacy notice",
-		),
+		.refine((v) => v === true, m.form_error_acknowledgment()),
 });
 
 export type ClientConsentFormFields = z.infer<typeof ClientConsentFormSchema>;

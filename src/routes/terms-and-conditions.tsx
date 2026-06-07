@@ -3,12 +3,29 @@ import { ArrowLeft, Mail, Phone } from "lucide-react";
 import Logo from "#/assets/logo.svg?react";
 import { Footer } from "#/components/Footer";
 import { insuranceData } from "#/data/insurance";
+import { m } from "#/paraglide/messages";
+import { getSeoMeta } from "#/utils/seo";
 
 export const Route = createFileRoute("/terms-and-conditions")({
 	component: TermsAndConditions,
+	head: () => {
+		const seo = getSeoMeta({
+			title: m.terms_meta_title(),
+			description: m.terms_meta_description(),
+			path: "/terms-and-conditions",
+		});
+		return seo;
+	},
 });
 
 function TermsAndConditions() {
+	const responsibilities = [
+		m.terms_responsibilities_1,
+		m.terms_responsibilities_2,
+		m.terms_responsibilities_3,
+		m.terms_responsibilities_4,
+	];
+
 	return (
 		<div className="min-h-screen bg-background">
 			{/* Header */}
@@ -23,7 +40,7 @@ function TermsAndConditions() {
 								to="/"
 								className="px-4 py-2 text-sm font-medium rounded-lg !text-background hover:bg-background/10 transition-all"
 							>
-								Home
+								{m.nav_home()}
 							</Link>
 						</nav>
 					</div>
@@ -37,14 +54,12 @@ function TermsAndConditions() {
 						to="/"
 						className="inline-flex items-center gap-2 text-sm !text-background/90 hover:!text-background underline underline-offset-4 !decoration-background/40 hover:!decoration-background transition-colors mb-6"
 					>
-						<ArrowLeft className="w-4 h-4" /> Back to Home
+						<ArrowLeft className="w-4 h-4" /> {m.nav_back_to_home()}
 					</Link>
 					<h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-						Terms & Conditions
+						{m.terms_title()}
 					</h1>
-					<p className="text-background/60 mt-4">
-						Last updated: June 6, 2026 · Smyrna, GA
-					</p>
+					<p className="text-background/60 mt-4">{m.terms_last_updated()}</p>
 				</div>
 			</div>
 
@@ -53,57 +68,40 @@ function TermsAndConditions() {
 				<div className="prose prose-lg max-w-none text-foreground">
 					<section className="mb-12">
 						<p className="text-muted-foreground leading-relaxed">
-							Welcome to{" "}
-							<strong className="text-foreground">aborgia.com</strong> ("us,"
-							"we," or "our"). By accessing or using our website and the forms
-							provided, you agree to comply with and be bound by the following
-							terms and conditions. Please read these Terms &amp; Conditions
-							carefully before using the website.
+							{m.terms_welcome()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							1. Acceptance of Terms
+							{m.terms_acceptance_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							By accessing or using our website and forms, you agree to these
-							Terms &amp; Conditions. If you do not agree to these terms in
-							full, please do not use our website.
+							{m.terms_acceptance_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							2. Use of Website Forms
+							{m.terms_forms_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							Our website provides quote forms, contact forms, and feedback
-							forms for your convenience. By submitting information through
-							these forms, you agree to provide accurate, current, and complete
-							information to the best of your knowledge.
+							{m.terms_forms_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							3. User Responsibilities
+							{m.terms_responsibilities_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed mb-4">
-							You agree to use our website and forms for lawful purposes only
-							and in a manner consistent with these Terms &amp; Conditions. You
-							shall not:
+							{m.terms_responsibilities_intro()}
 						</p>
 						<ul className="space-y-2 text-muted-foreground">
-							{[
-								"Use the website for any unauthorized or unlawful purpose",
-								"Submit false, misleading, or malicious information through the forms",
-								"Attempt to disrupt, interfere with, or compromise the operation of the website or forms",
-								"Violate any applicable laws, regulations, or third-party rights",
-							].map((item) => (
-								<li key={item} className="flex items-start gap-3">
+							{responsibilities.map((item) => (
+								<li key={item()} className="flex items-start gap-3">
 									<div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 shrink-0" />
-									{item}
+									{item()}
 								</li>
 							))}
 						</ul>
@@ -111,87 +109,64 @@ function TermsAndConditions() {
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							4. Intellectual Property
+							{m.terms_ip_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							All content on{" "}
-							<strong className="text-foreground">aborgia.com</strong>,
-							including text, logos, graphics, and forms, is protected by
-							copyright and other intellectual property laws. You agree not to
-							reproduce, distribute, modify, or create derivative works based on
-							our content without our prior written consent.
+							{m.terms_ip_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							5. Limitation of Liability
+							{m.terms_liability_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							We strive to provide accurate and up-to-date information on our
-							website and forms. However, we do not guarantee the accuracy,
-							completeness, or reliability of any content. You use our website
-							and forms at your own risk. We are not liable for any direct,
-							indirect, incidental, or consequential damages arising from your
-							use of the site.
+							{m.terms_liability_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							6. Indemnification
+							{m.terms_indemnification_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							You agree to indemnify and hold us harmless from any claims,
-							damages, liabilities, and expenses (including reasonable legal
-							fees) arising from your use of our website and forms, or your
-							violation of these Terms &amp; Conditions.
+							{m.terms_indemnification_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							7. Changes to These Terms
+							{m.terms_changes_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							We reserve the right to modify or update these Terms &amp;
-							Conditions at any time. The updated terms will be posted on this
-							page, and your continued use of the website after any changes
-							signifies your acceptance of the modified terms. We encourage you
-							to review this page periodically.
+							{m.terms_changes_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							8. Termination
+							{m.terms_termination_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							We reserve the right to terminate or suspend your access to our
-							website and forms, with or without notice, for any reason,
-							including violation of these terms or conduct that we determine to
-							be harmful to us or other users.
+							{m.terms_termination_text()}
 						</p>
 					</section>
 
 					<section className="mb-12">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							9. Governing Law
+							{m.terms_governing_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed">
-							These Terms &amp; Conditions are governed by and construed in
-							accordance with the laws of the State of Georgia, without regard
-							to its conflict of laws principles.
+							{m.terms_governing_text()}
 						</p>
 					</section>
 
 					<section className="mb-8">
 						<h2 className="text-2xl font-bold text-foreground mb-4">
-							10. Contact Us
+							{m.terms_contact_title()}
 						</h2>
 						<p className="text-muted-foreground leading-relaxed mb-6">
-							If you have any questions or concerns about these Terms &amp;
-							Conditions, please reach out to us:
+							{m.terms_contact_intro()}
 						</p>
 						<div className="bg-muted rounded-xl p-6 space-y-4">
 							<a
@@ -202,7 +177,9 @@ function TermsAndConditions() {
 									<Mail className="w-5 h-5 text-foreground" />
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Email</p>
+									<p className="text-sm text-muted-foreground">
+										{m.contact_email_label()}
+									</p>
 									<p className="font-medium text-foreground group-hover:text-primary transition-colors">
 										{insuranceData.contact.email}
 									</p>
@@ -216,7 +193,9 @@ function TermsAndConditions() {
 									<Phone className="w-5 h-5 text-foreground" />
 								</div>
 								<div>
-									<p className="text-sm text-muted-foreground">Phone</p>
+									<p className="text-sm text-muted-foreground">
+										{m.contact_phone_label()}
+									</p>
 									<p className="font-medium text-foreground group-hover:text-primary transition-colors">
 										{insuranceData.contact.phone}
 									</p>

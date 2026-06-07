@@ -5,43 +5,34 @@
 import { m } from "#/paraglide/messages";
 import { getLocale, locales, setLocale } from "#/paraglide/runtime";
 
+const localeLabels: Record<string, () => string> = {
+	en: m.locale_label_en,
+	es: m.locale_label_es,
+};
+
 export default function ParaglideLocaleSwitcher() {
 	const currentLocale = getLocale();
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				gap: "0.5rem",
-				alignItems: "center",
-				color: "inherit",
-			}}
+		<nav
+			className="flex items-center gap-2 text-sm"
 			aria-label={m.language_label()}
 		>
-			<span style={{ opacity: 0.85 }}>
-				{m.current_locale({ locale: currentLocale })}
-			</span>
-			<div style={{ display: "flex", gap: "0.25rem" }}>
-				{locales.map((locale) => (
-					<button
-						key={locale}
-						onClick={() => setLocale(locale)}
-						aria-pressed={locale === currentLocale}
-						style={{
-							cursor: "pointer",
-							padding: "0.35rem 0.75rem",
-							borderRadius: "999px",
-							border: "1px solid #d1d5db",
-							background: locale === currentLocale ? "#0f172a" : "transparent",
-							color: locale === currentLocale ? "#f8fafc" : "inherit",
-							fontWeight: locale === currentLocale ? 700 : 500,
-							letterSpacing: "0.01em",
-						}}
-					>
-						{locale.toUpperCase()}
-					</button>
-				))}
-			</div>
-		</div>
+			{locales.map((locale) => (
+				<button
+					type="button"
+					key={locale}
+					onClick={() => setLocale(locale)}
+					aria-pressed={locale === currentLocale}
+					className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-colors ${
+						locale === currentLocale
+							? "bg-primary text-primary-foreground border-primary"
+							: "bg-transparent text-foreground border-border hover:border-primary/60"
+					}`}
+				>
+					{localeLabels[locale]?.() ?? locale.toUpperCase()}
+				</button>
+			))}
+		</nav>
 	);
 }
