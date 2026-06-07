@@ -1,8 +1,13 @@
-import { mergeForm, useForm, useTransform } from "@tanstack/react-form-start";
+import {
+	mergeForm,
+	useForm,
+	useStore,
+	useTransform,
+} from "@tanstack/react-form-start";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Logo from "#/assets/logo.svg?react";
 import { Footer } from "#/components/Footer";
@@ -28,35 +33,26 @@ import { clientConsentOptions } from "#/utils/client-consent.schemas";
 export const Route = createFileRoute("/client-consent")({
 	component: ClientConsent,
 	loader: async () => ({
-		state: await getFormDataFromServer(),
+		formState: await getFormDataFromServer(),
 	}),
 });
 
-function downloadPDF(pdf: File) {
-	const blobUrl = URL.createObjectURL(pdf);
-
-	const link = document.createElement("a");
-	link.href = blobUrl;
-	link.download = "client-consent.pdf";
-
-	document.body.appendChild(link);
-	link.click();
-
-	document.body.removeChild(link);
-	URL.revokeObjectURL(blobUrl);
-}
-
 function ClientConsent() {
-	const { state } = Route.useLoaderData();
+	const { formState } = Route.useLoaderData();
 	const [submitSuccess, setSubmitSuccess] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 
+	const formRef = useRef<HTMLFormElement>(null);
 	const submitConsent = useServerFn($submitConsent);
 
 	const form = useForm({
 		...clientConsentOptions,
-		transform: useTransform((baseForm) => mergeForm(baseForm, state), [state]),
-		async onSubmit({ value }) {
+		transform: useTransform(
+			(baseForm) => mergeForm(baseForm, formState),
+			[formState],
+		),
+		async onSubmit() {
+			if (!formRef.current) return;
 			setSubmitSuccess(false);
 			setSubmitError(null);
 
@@ -65,16 +61,11 @@ function ClientConsent() {
 				{ method: "build" },
 			);
 
-			const file = new File([pdf.output("blob")], "client-consent.pdf", {
-				type: "application/pdf",
-				lastModified: Date.now(),
-			});
+			const formData = new FormData(formRef.current);
+			formData.set("file", pdf.output("blob"));
 
 			try {
-				// await submitConsent({ data: { ...value, file } });
-
-				downloadPDF(file);
-
+				await submitConsent({ data: formData });
 				setSubmitSuccess(true);
 			} catch (e: unknown) {
 				setSubmitError(
@@ -83,6 +74,10 @@ function ClientConsent() {
 			}
 		},
 	});
+
+	const fullName = useStore(form.store, (state) => state.values.fullName);
+	const email = useStore(form.store, (state) => state.values.email);
+	const phone = useStore(form.store, (state) => state.values.phone);
 
 	return (
 		<div className="min-h-screen bg-background">
@@ -131,7 +126,7 @@ function ClientConsent() {
 						<p className="text-muted-foreground leading-relaxed mb-4">
 							I,{" "}
 							<span className="inline-block border-b border-muted-foreground min-w-[8rem] px-1 text-foreground font-medium">
-								{form.getFieldValue("fullName")}
+								{fullName}
 							</span>{" "}
 							give my permission to <strong>Arelys Borgia</strong> to serve as
 							the health insurance agent or broker for myself and my entire
@@ -267,9 +262,11 @@ function ClientConsent() {
 						{!submitSuccess && (
 							<form
 								noValidate
-								onSubmit={(e) => {
+								ref={formRef}
+								method="post"
+								onSubmit={async (e) => {
 									e.preventDefault();
-									form.handleSubmit();
+									await form.handleSubmit();
 								}}
 							>
 								<Card>
@@ -278,15 +275,7 @@ function ClientConsent() {
 									</CardHeader>
 									<CardContent>
 										<div className="space-y-6">
-											<form.Field
-												name="email"
-												validators={{
-													onChange: ({ value }) =>
-														value.length > 0 && !value.includes("@")
-															? "Please enter a valid email address"
-															: undefined,
-												}}
-											>
+											<form.Field name="email">
 												{(field) => (
 													<FormField label="Email" htmlFor="email" required>
 														<Input
@@ -303,28 +292,13 @@ function ClientConsent() {
 														{field.state.meta.isTouched &&
 															field.state.meta.errors.length > 0 && (
 																<p className="text-sm text-destructive">
-																	{field.state.meta.errors
-																		.map((err) =>
-																			typeof err === "string"
-																				? err
-																				: ((err as { message?: string })
-																						.message ?? String(err)),
-																		)
-																		.join(", ")}
+																	{field.state.meta.errors.join(", ")}
 																</p>
 															)}
 													</FormField>
 												)}
 											</form.Field>
-											<form.Field
-												name="phone"
-												validators={{
-													onChange: ({ value }) =>
-														value.length > 0 && value.length < 7
-															? "Please enter a valid phone number"
-															: undefined,
-												}}
-											>
+											<form.Field name="phone">
 												{(field) => (
 													<FormField
 														label="Phone Number"
@@ -345,28 +319,13 @@ function ClientConsent() {
 														{field.state.meta.isTouched &&
 															field.state.meta.errors.length > 0 && (
 																<p className="text-sm text-destructive">
-																	{field.state.meta.errors
-																		.map((err) =>
-																			typeof err === "string"
-																				? err
-																				: ((err as { message?: string })
-																						.message ?? String(err)),
-																		)
-																		.join(", ")}
+																	{field.state.meta.errors.join(", ")}
 																</p>
 															)}
 													</FormField>
 												)}
 											</form.Field>
-											<form.Field
-												name="fullName"
-												validators={{
-													onChange: ({ value }) =>
-														value.length > 0 && value.length < 2
-															? "Full name is required"
-															: undefined,
-												}}
-											>
+											<form.Field name="fullName">
 												{(field) => (
 													<FormField
 														label="Full name signature"
@@ -387,28 +346,13 @@ function ClientConsent() {
 														{field.state.meta.isTouched &&
 															field.state.meta.errors.length > 0 && (
 																<p className="text-sm text-destructive">
-																	{field.state.meta.errors
-																		.map((err) =>
-																			typeof err === "string"
-																				? err
-																				: ((err as { message?: string })
-																						.message ?? String(err)),
-																		)
-																		.join(", ")}
+																	{field.state.meta.errors.join(", ")}
 																</p>
 															)}
 													</FormField>
 												)}
 											</form.Field>
-											<form.Field
-												name="acknowledgment"
-												validators={{
-													onChange: ({ value }) =>
-														!value
-															? "You must acknowledge the terms and privacy notice"
-															: undefined,
-												}}
-											>
+											<form.Field name="acknowledgment">
 												{(field) => (
 													<div className="flex flex-col gap-1">
 														<div className="flex items-start gap-3">
@@ -447,14 +391,7 @@ function ClientConsent() {
 														{field.state.meta.isTouched &&
 															field.state.meta.errors.length > 0 && (
 																<p className="text-sm text-destructive">
-																	{field.state.meta.errors
-																		.map((err) =>
-																			typeof err === "string"
-																				? err
-																				: ((err as { message?: string })
-																						.message ?? String(err)),
-																		)
-																		.join(", ")}
+																	{field.state.meta.errors.join(", ")}
 																</p>
 															)}
 													</div>
@@ -536,23 +473,24 @@ function ClientConsent() {
 				id="client-consent"
 				// style={{
 				// 	position: "absolute",
-				// 	left: "-9999px",
+				// 	left: "-999999px",
 				// 	top: 0,
-				// 	width: "1200px",
+				// 	width: "1000px",
+				// 	backgroundColor: "#fff",
 				// }}
-				className="p-6 text-sm space-y-6 text-foreground"
+				className="p-6 text-base space-y-8 text-foreground"
 			>
 				{/* Header */}
 				<div className="flex items-end justify-between border-b border-primary/60 pb-1 mb-6">
 					<div className="flex items-center gap-3">
 						<div>
-							<h2 className="text-sm font-bold text-foreground leading-tight">
+							<h2 className="text-base font-bold text-foreground leading-tight">
 								Arelys Borgia
 							</h2>
-							<h1 className="text-xl font-bold text-foreground leading-tight">
+							<h1 className="text-2xl font-bold text-foreground leading-tight">
 								Client Consent Form
 							</h1>
-							<p className="text-sm text-foreground">
+							<p className="text-base text-foreground">
 								CMS Marketplace Agents and Brokers
 							</p>
 						</div>
@@ -561,11 +499,11 @@ function ClientConsent() {
 				</div>
 
 				{/* Consent text */}
-				<div className="space-y-2">
-					<p className="text-sm text-foreground leading-relaxed text-balance">
+				<div className="space-y-4">
+					<p className="text-base text-foreground leading-relaxed text-pretty">
 						I,{" "}
 						<strong className="font-semibold text-foreground">
-							{form.getFieldValue("fullName") || "____________________"}
+							{fullName || "____________________"}
 						</strong>
 						, give my permission to{" "}
 						<strong className="font-semibold text-foreground">
@@ -579,7 +517,7 @@ function ClientConsent() {
 						provided by me in writing, electronically, or by telephone only for
 						the purposes of one or more of the following:
 					</p>
-					<ul className="space-y-1 text-sm text-foreground pl-4">
+					<ul className="space-y-1 text-base text-foreground pl-4">
 						{[
 							"Searching for an existing Marketplace application;",
 							"Completing an application for eligibility and enrollment in a Marketplace Qualified Health Plan or other government insurance affordability programs, such as Medicaid and CHIP or advance tax credits to help pay for Marketplace premiums;",
@@ -588,18 +526,18 @@ function ClientConsent() {
 						].map((item) => (
 							<li key={item} className="flex items-start gap-2">
 								<span className="w-1 h-1 rounded-full bg-primary mt-2 shrink-0" />
-								<span>{item}</span>
+								<span className="text-pretty">{item}</span>
 							</li>
 						))}
 					</ul>
-					<p className="text-sm textforeground leading-relaxed text-balance">
+					<p className="text-base textforeground leading-relaxed text-pretty">
 						I understand that the Agent will not use or share my personally
 						identifiable information (PII) for any purposes other than those
 						listed above. The Agent will ensure that my PII is kept private and
 						safe when collecting, storing, and using my PII for the stated
 						purposes above.
 					</p>
-					<p className="text-sm text-foreground leading-relaxed text-balance">
+					<p className="text-base text-foreground leading-relaxed text-pretty">
 						I confirm that the information I provide for entry on my Marketplace
 						eligibility and enrollment application will be true to the best of
 						my knowledge. I understand that I do not have to share additional
@@ -630,7 +568,7 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Name
 							</p>
-							<p className="font-medium text-foreground text-sm">
+							<p className="font-medium text-foreground text-base">
 								Arelys Borgia de Perez
 							</p>
 						</div>
@@ -638,13 +576,13 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Agent National Producer Number
 							</p>
-							<p className="font-medium text-foreground text-sm">19802325</p>
+							<p className="font-medium text-foreground text-base">19802325</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Phone Number
 							</p>
-							<p className="font-medium text-foreground text-sm">
+							<p className="font-medium text-foreground text-base">
 								{insuranceData.contact.phone}
 							</p>
 						</div>
@@ -652,7 +590,7 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Email
 							</p>
-							<p className="font-medium text-foreground text-sm">
+							<p className="font-medium text-foreground text-base">
 								{insuranceData.contact.email}
 							</p>
 						</div>
@@ -671,16 +609,16 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Email
 							</p>
-							<p className="font-medium text-foreground text-sm">
-								{form.getFieldValue("email") || "____________________"}
+							<p className="font-medium text-foreground text-base">
+								{email || "____________________"}
 							</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Phone Number
 							</p>
-							<p className="font-medium text-foreground text-sm">
-								{form.getFieldValue("phone") || "____________________"}
+							<p className="font-medium text-foreground text-base">
+								{phone || "____________________"}
 							</p>
 						</div>
 					</div>
@@ -689,15 +627,15 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Full Name Signature
 							</p>
-							<p className="font-medium text-foreground text-sm">
-								{form.getFieldValue("fullName") || "____________________"}
+							<p className="font-medium text-foreground text-base">
+								{fullName || "____________________"}
 							</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								Date
 							</p>
-							<p className="font-medium text-foreground text-sm">
+							<p className="font-medium text-foreground text-base">
 								{new Date().toLocaleDateString()}
 							</p>
 						</div>
@@ -711,8 +649,8 @@ function ClientConsent() {
 							PRA Disclosure
 						</h2>
 					</div>
-					<div className="p-2 space-y-2 text-xs text-muted-foreground leading-relaxed">
-						<p className="text-balance">
+					<div className="p-2 space-y-2 text-sm text-muted-foreground leading-relaxed">
+						<p className="text-pretty">
 							According to the Paperwork Reduction Act of 1995, no persons are
 							required to respond to a collection of information unless it
 							displays a valid OMB control number. The valid OMB control number
@@ -727,7 +665,7 @@ function ClientConsent() {
 							Clearance Officer, Mail Stop C4-26-05, Baltimore, Maryland
 							21244-1850.
 						</p>
-						<p className="text-balance">
+						<p className="text-pretty">
 							<strong className="text-foreground">CMS Disclosure</strong> Please
 							do not send applications, claims, payments, medical records or any
 							documents containing sensitive information to the PRA Reports
