@@ -14,17 +14,17 @@ export function Footer() {
 						<Link to="/" className="inline-block">
 							<Logo className="h-14 w-auto text-background fill-current" />
 						</Link>
-						<p className="text-lg font-medium text-background/90 leading-snug">
+						<p className="text-lg font-medium text-background/90 leading-snug text-pretty">
 							{m.footer_tagline()}
 						</p>
-						<p className="text-sm text-background/60 leading-relaxed">
+						<p className="text-base text-background/70 leading-relaxed text-pretty">
 							{m.footer_about()}
 						</p>
 					</div>
 
 					{/* Quick Links */}
 					<div>
-						<h3 className="text-sm font-semibold uppercase tracking-wider text-background/60 mb-4">
+						<h3 className="text-sm font-semibold uppercase tracking-wider text-background/70 mb-4">
 							{m.footer_quick_links()}
 						</h3>
 						<ul className="space-y-3">
@@ -35,92 +35,92 @@ export function Footer() {
 								>
 									{m.nav_home()}
 								</a>
-								</li>
-								<li>
-									<a
-										href="/#about"
-										className="text-background/70 hover:text-background transition-colors text-sm"
-									>
-										{m.nav_about()}
-									</a>
-								</li>
-								<li>
-									<a
-										href="/#offerings"
-										className="text-background/70 hover:text-background transition-colors text-sm"
-									>
-										{m.nav_services()}
-									</a>
-								</li>
-								<li>
-									<a
-										href="/#contact"
-										className="text-background/70 hover:text-background transition-colors text-sm"
-									>
-										{m.nav_contact()}
-									</a>
-								</li>
-							</ul>
-						</div>
-
-						{/* Contact */}
-						<div>
-							<h3 className="text-sm font-semibold uppercase tracking-wider text-background/60 mb-4">
-								{m.footer_contact()}
-							</h3>
-							<div className="space-y-3">
+							</li>
+							<li>
 								<a
-									href={insuranceData.contact.phoneHref}
-									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+									href="/#about"
+									className="text-background/70 hover:text-background transition-colors text-sm"
 								>
-									<Phone className="w-4 h-4" />
-									{insuranceData.contact.phone}
+									{m.nav_about()}
 								</a>
+							</li>
+							<li>
 								<a
-									href={insuranceData.contact.emailHref}
-									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+									href="/#offerings"
+									className="text-background/70 hover:text-background transition-colors text-sm"
 								>
-									<Mail className="w-4 h-4" />
-									{insuranceData.contact.email}
+									{m.nav_services()}
 								</a>
+							</li>
+							<li>
 								<a
-									href={insuranceData.contact.instagramHref}
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
+									href="/#contact"
+									className="text-background/70 hover:text-background transition-colors text-sm"
 								>
-									<ExternalLink className="w-4 h-4" />
-									{insuranceData.contact.instagram}
+									{m.nav_contact()}
 								</a>
-							</div>
-						</div>
+							</li>
+						</ul>
 					</div>
 
-					{/* Bottom bar */}
-					<div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/60">
-						<p>{m.footer_copyright({ year: new Date().getFullYear() })}</p>
-						<div className="flex items-center gap-6">
-							<Link
-								to="/privacy-policy"
-								className="hover:text-background transition-colors"
+					{/* Contact */}
+					<div>
+						<h3 className="text-sm font-semibold uppercase tracking-wider text-background/70 mb-4">
+							{m.footer_contact()}
+						</h3>
+						<div className="space-y-3">
+							<a
+								href={insuranceData.contact.phoneHref}
+								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 							>
-								{m.footer_privacy()}
-							</Link>
-							<Link
-								to="/client-consent"
-								className="hover:text-background transition-colors"
+								<Phone className="w-4 h-4" />
+								{insuranceData.contact.phone}
+							</a>
+							<a
+								href={insuranceData.contact.emailHref}
+								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 							>
-								{m.footer_client_consent()}
-							</Link>
-							<Link
-								to="/terms-and-conditions"
-								className="hover:text-background transition-colors"
+								<Mail className="w-4 h-4" />
+								{insuranceData.contact.email}
+							</a>
+							<a
+								href={insuranceData.contact.instagramHref}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 text-background/70 hover:text-background transition-colors text-sm"
 							>
-								{m.footer_terms()}
-							</Link>
+								<ExternalLink className="w-4 h-4" />
+								{insuranceData.contact.instagram}
+							</a>
 						</div>
 					</div>
 				</div>
-			</footer>
-		);
-	}
+
+				{/* Bottom bar */}
+				<div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/60">
+					<p>{m.footer_copyright({ year: new Date().getFullYear() })}</p>
+					<div className="flex items-center gap-6">
+						<Link
+							to="/privacy-policy"
+							className="hover:text-background transition-colors"
+						>
+							{m.footer_privacy()}
+						</Link>
+						<Link
+							to="/client-consent"
+							className="hover:text-background transition-colors"
+						>
+							{m.footer_client_consent()}
+						</Link>
+						<Link
+							to="/terms-and-conditions"
+							className="hover:text-background transition-colors"
+						>
+							{m.footer_terms()}
+						</Link>
+					</div>
+				</div>
+			</div>
+		</footer>
+	);
+}

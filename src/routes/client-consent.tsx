@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-form-start";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Logo from "#/assets/logo.svg?react";
@@ -26,8 +26,8 @@ import { FieldError } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { insuranceData } from "#/data/insurance";
-import { getLocale } from "#/paraglide/runtime";
 import { m } from "#/paraglide/messages";
+import { getLocale } from "#/paraglide/runtime";
 import { $submitConsent } from "#/utils/client-consent.functions";
 import { clientConsentOptions } from "#/utils/client-consent.schemas";
 import { getSeoMeta } from "#/utils/seo";
@@ -43,6 +43,17 @@ export const Route = createFileRoute("/client-consent")({
 		return seo;
 	},
 });
+
+function downloadFile(file: File) {
+	const url = URL.createObjectURL(file);
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = "ABorgia_Client_Consent.pdf";
+	document.body.append(link);
+	link.click();
+	URL.revokeObjectURL(url);
+	document.body.removeChild(link);
+}
 
 function ClientConsent() {
 	const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -92,13 +103,12 @@ function ClientConsent() {
 
 			const formData = new FormData(formRef.current);
 
-			formData.set(
-				"file",
-				new File([pdf.output("blob")], "client-consent.pdf", {
-					type: "application/pdf",
-					lastModified: Date.now(),
-				}),
-			);
+			const file = new File([pdf.output("blob")], "client-consent.pdf", {
+				type: "application/pdf",
+				lastModified: Date.now(),
+			});
+
+			formData.set("file", file);
 
 			if (import.meta.env.VITE_RECAPTCHA_ENABLED === "true") {
 				formData.set("recaptchaToken", recaptchaTokenRef.current);
@@ -121,6 +131,7 @@ function ClientConsent() {
 					setServerState(result.result);
 				} else {
 					setSubmitSuccess(true);
+					downloadFile(file);
 				}
 			} catch (e: unknown) {
 				setSubmitError(
@@ -180,7 +191,7 @@ function ClientConsent() {
 						<ArrowLeft className="w-4 h-4" /> {m.nav_back_to_home()}
 					</Link>
 					<p className="text-lg text-background/80">{m.consent_agent_name()}</p>
-					<h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+					<h1 className="text-4xl md:text-5xl font-bold text-primary brightness-140">
 						{m.consent_title()}
 					</h1>
 					<p className="text-lg text-background/80">{m.consent_subtitle()}</p>
@@ -267,13 +278,11 @@ function ClientConsent() {
 						{submitSuccess && (
 							<Card>
 								<CardContent className="pt-6">
-									<div className="text-center space-y-2">
-										<p className="text-lg font-medium text-green-600">
+									<div className="text-center flex flex-col items-center justify-center gap-4">
+										<p className="text-2xl font-medium text-green-700">
 											{m.consent_success_title()}
 										</p>
-										<p className="text-muted-foreground">
-											{m.consent_success_message()}
-										</p>
+										<CheckCircle className="size-20 text-primary" />
 									</div>
 								</CardContent>
 							</Card>
@@ -336,9 +345,7 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError
-																errors={field.state.meta.errors}
-															/>
+															<FieldError errors={field.state.meta.errors} />
 														)}
 													</FormField>
 												)}
@@ -362,9 +369,7 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError
-																errors={field.state.meta.errors}
-															/>
+															<FieldError errors={field.state.meta.errors} />
 														)}
 													</FormField>
 												)}
@@ -388,9 +393,7 @@ function ClientConsent() {
 															}
 														/>
 														{field.state.meta.isTouched && (
-															<FieldError
-																errors={field.state.meta.errors}
-															/>
+															<FieldError errors={field.state.meta.errors} />
 														)}
 													</FormField>
 												)}
@@ -402,10 +405,10 @@ function ClientConsent() {
 															<Checkbox
 																id="acknowledgment"
 																name="acknowledgment"
-															checked={!!field.state.value}
-															onCheckedChange={(checked) =>
-																field.handleChange(checked === true)
-															}
+																checked={!!field.state.value}
+																onCheckedChange={(checked) =>
+																	field.handleChange(checked === true)
+																}
 																className="mt-0.5"
 															/>
 															<Label
@@ -431,9 +434,7 @@ function ClientConsent() {
 															</Label>
 														</div>
 														{field.state.meta.isTouched && (
-															<FieldError
-																errors={field.state.meta.errors}
-															/>
+															<FieldError errors={field.state.meta.errors} />
 														)}
 													</div>
 												)}
@@ -580,9 +581,7 @@ function ClientConsent() {
 							<p className="text-xs text-muted-foreground uppercase font-medium">
 								{m.consent_agent_npn()}
 							</p>
-							<p className="font-medium text-foreground text-base">
-								19802325
-							</p>
+							<p className="font-medium text-foreground text-base">19802325</p>
 						</div>
 						<div>
 							<p className="text-xs text-muted-foreground uppercase font-medium">

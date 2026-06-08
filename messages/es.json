@@ -3,6 +3,7 @@
 
   "locale_label_en": "English",
   "locale_label_es": "Español",
+  "languages_label": "Idiomas",
   "language_label": "Idioma",
   "current_locale": "Idioma actual: {locale}",
 

@@ -56,10 +56,10 @@ function TermsAndConditions() {
 					>
 						<ArrowLeft className="w-4 h-4" /> {m.nav_back_to_home()}
 					</Link>
-					<h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+					<h1 className="text-4xl md:text-5xl font-bold text-primary brightness-140">
 						{m.terms_title()}
 					</h1>
-					<p className="text-background/60 mt-4">{m.terms_last_updated()}</p>
+					<p className="text-background/80 mt-4">{m.terms_last_updated()}</p>
 				</div>
 			</div>
 

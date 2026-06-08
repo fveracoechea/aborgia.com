@@ -20,8 +20,8 @@ import { useEffect, useState } from "react";
 import Logo from "#/assets/logo.svg?react";
 import { Footer } from "#/components/Footer";
 import { Button } from "#/components/ui/button";
-import { m } from "#/paraglide/messages";
 import { insuranceData } from "#/data/insurance";
+import { m } from "#/paraglide/messages";
 import { getSeoMeta } from "#/utils/seo";
 
 const iconMap = {
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/")({
 
 function TrustBadges() {
 	return (
-		<div className="flex flex-wrap gap-3 pt-2">
+		<div className="grid grid-cols-3 gap-2 sm:gap-4 sm:flex sm:flex-wrap">
 			<div className="flex items-center gap-2 px-3 py-2 bg-muted border">
 				<Award className="size-5 text-primary" />
 				<span className="text-xs font-medium text-foreground">
@@ -180,35 +180,32 @@ function HomePage() {
 						>
 							<Logo className="h-8 w-auto fill-current text-foreground" />
 						</button>
-
 						<nav className="hidden md:flex items-center gap-1">
 							{navLinks.map((link) => {
-								const isActive =
-									activeSection === link.href.replace("#", "");
+								const isActive = activeSection === link.href.replace("#", "");
 								return (
-								<button
-									type="button"
-									key={link.href}
-									onClick={() => scrollToSection(link.href)}
-									className={`px-4 py-2 text-sm font-medium transition-all ${
-										isActive
-											? "text-foreground bg-foreground/10"
-											: "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
-									}`}
-								>
+									<button
+										type="button"
+										key={link.href}
+										onClick={() => scrollToSection(link.href)}
+										className={`px-4 py-2 text-sm font-medium transition-all ${
+											isActive
+												? "text-foreground bg-foreground/10"
+												: "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
+										}`}
+									>
 										{link.label()}
 									</button>
-									);
-								})}
-								<Button
-									size="sm"
-									className="ml-4"
-									onClick={() => scrollToSection("#contact")}
-								>
-									{m.cta_contact_us()}
-								</Button>
-							</nav>
-
+								);
+							})}
+							<Button
+								size="sm"
+								className="ml-4"
+								onClick={() => scrollToSection("#contact")}
+							>
+								{m.cta_contact_us()}
+							</Button>
+						</nav>
 						<button
 							type="button"
 							className="md:hidden p-2"
@@ -244,14 +241,14 @@ function HomePage() {
 			{/* Hero */}
 			<section
 				id="hero"
-				className="relative min-h-screen flex items-center pt-20 overflow-hidden"
+				className="relative min-h-screen flex items-center pt-25 sm:pt-20 overflow-hidden"
 			>
 				<div className="absolute top-0 right-0 w-1/2 h-full bg-foreground/5 -skew-x-12 translate-x-20" />
 
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
 					<div className="grid lg:grid-cols-12 gap-8 items-center">
-						<div className="lg:col-span-7 space-y-4">
-							<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-foreground">
+						<div className="lg:col-span-7 space-y-6 pb-4">
+							<h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-foreground">
 								{m.hero_title_line1()}
 								<br />
 								<span className="text-primary">{m.hero_title_line2()}</span>
@@ -261,28 +258,31 @@ function HomePage() {
 							<p className="text-xl md:text-2xl text-muted-foreground max-w-lg font-medium">
 								{m.hero_tagline()}
 							</p>
-							<div className="flex flex-wrap gap-4 pt-4">
+
+							<div className="flex flex-wrap gap-4 flex-col sm:flex-row">
 								<Button
 									size="lg"
-									className=" h-14 text-lg"
+									className="text-base sm:h-14 sm:text-lg"
 									onClick={() => scrollToSection("#contact")}
 								>
 									{m.cta_get_started()}{" "}
-									<ArrowUpRight className="ml-2 size-6" />
+									<ArrowUpRight className="ml-1 size-5 sm:size-6" />
 								</Button>
+
 								<Button
 									variant="outline"
 									size="lg"
-									className="h-14 text-lg "
+									className="text-base sm:h-14 sm:text-lg"
 									onClick={() => scrollToSection("#offerings")}
 								>
 									{m.cta_view_services()}
 								</Button>
-							</div>
 
-							<TrustBadges />
+								<TrustBadges />
+							</div>
 						</div>
-						<div className="lg:col-span-5 relative">
+
+						<div className="lg:col-span-5 relative px-6 py-12 sm:px-0 sm:py-0">
 							<div className="relative">
 								<div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
 								<div className="aspect-[4/5] overflow-hidden shadow-2xl border">
@@ -292,13 +292,11 @@ function HomePage() {
 										loop
 										playsInline
 										className="w-full h-full object-cover"
-											aria-label={m.aria_hero_video()}
+										aria-label={m.aria_hero_video()}
 									>
 										<source
 											src={
-												insuranceData.images.hero[
-													Math.floor(Math.random() * 3)
-												]
+												insuranceData.images.hero[Math.floor(Math.random() * 3)]
 											}
 											type="video/mp4"
 										/>
@@ -380,7 +378,7 @@ function HomePage() {
 			</section>
 
 			{/* Offerings */}
-			<section id="offerings" className="py-24 lg:py-32 bg-background">
+			<section id="offerings" className="py-20 lg:py-32 bg-background">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="mb-16">
 						<span className="text-primary text-sm font-bold tracking-wider uppercase">
@@ -406,7 +404,7 @@ function HomePage() {
 									<div
 										className={`lg:col-span-5 ${isEven ? "lg:order-1" : "lg:order-2"}`}
 									>
-										<div className="aspect-[4/3] overflow-hidden shadow-lg group">
+										<div className="aspect-4/3 overflow-hidden shadow-lg group">
 											<img
 												src={offering.image}
 												alt={offering.title()}

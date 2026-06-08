@@ -54,22 +54,5 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://aborgia.com/es/terms-and-conditions" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://aborgia.com/terms-and-conditions" />
   </url>
-  <url>
-    <loc>https://aborgia.com/client-consent</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aborgia.com/client-consent" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://aborgia.com/es/client-consent" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://aborgia.com/client-consent" />
-  </url>
-  <url>
-    <loc>https://aborgia.com/es/client-consent</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://aborgia.com/client-consent" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://aborgia.com/es/client-consent" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://aborgia.com/client-consent" />
-  </url>
+
 </urlset>
