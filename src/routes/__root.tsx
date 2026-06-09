@@ -15,6 +15,8 @@ import appCss from "../styles.css?url";
 export const Route = createRootRoute({
 	headers() {
 		return {
+			// https://tanstack.com/start/latest/docs/framework/react/guide/isr#marketing-landing-pages
+			// Long cache for stable content
 			"Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
 		};
 	},
