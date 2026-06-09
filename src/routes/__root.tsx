@@ -13,6 +13,12 @@ import { getLocale, shouldRedirect } from "#/paraglide/runtime";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
+	headers() {
+		return {
+			"Cache-Control": "public, max-age=86400, stale-while-revalidate=604800",
+		};
+	},
+	staleTime: 60 * 60_000, // 1 hour client-side
 	async beforeLoad({ location }) {
 		const decision = await shouldRedirect({ url: location.href });
 		if (decision.redirectUrl) {
