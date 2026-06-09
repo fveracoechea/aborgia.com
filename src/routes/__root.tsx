@@ -1,18 +1,22 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+	createRootRoute,
+	HeadContent,
+	redirect,
+	Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import ParaglideLocaleSwitcher from "#/components/LocaleSwitcher";
-import { getLocale } from "#/paraglide/runtime";
+import { getLocale, shouldRedirect } from "#/paraglide/runtime";
 
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
-	beforeLoad: async () => {
-		// Other redirect strategies are possible; see
-		// https://github.com/TanStack/router/tree/main/examples/react/i18n-paraglide#offline-redirect
-		if (typeof document !== "undefined") {
-			document.documentElement.setAttribute("lang", getLocale());
+	async beforeLoad({ location }) {
+		const decision = await shouldRedirect({ url: location.href });
+		if (decision.redirectUrl) {
+			throw redirect({ href: decision.redirectUrl.href });
 		}
 	},
 

@@ -47,7 +47,7 @@
   "hero_broker_label": "Corredora de Seguros",
 
   "about_label": "Sobre Mí",
-  "about_title": "Sobre Mí",
+  "about_title": "Aquí para Ayudar",
   "about_description": "Estoy dedicada a ayudar a familias y personas a encontrar la cobertura de seguros adecuada para proteger lo que más importa. Con años de experiencia en la industria de seguros, proporciono orientación personalizada para asegurarme de que obtengas la mejor cobertura al mejor precio.",
   "about_stat1_label": "Global",
   "about_stat1_desc": "Experiencia",
@@ -57,8 +57,7 @@
   "about_stat3_desc": "Cobertura de Salud",
 
   "services_section_label": "Servicios",
-  "services_title_line1": "Ofertas de",
-  "services_title_line2": "Seguros",
+  "services_title": "Ofertas de Seguros",
 
   "offering_final_expenses_title": "Gastos Finales",
   "offering_final_expenses_desc": "Un producto de seguro de vida diseñado para cubrir costos funerarios, gastos de sepultura y otras obligaciones financieras de fin de vida. Dale a tu familia tranquilidad en momentos difíciles.",

@@ -12,7 +12,6 @@ import { useEffect, useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import Logo from "#/assets/logo.svg?react";
 import { Footer } from "#/components/Footer";
-import { FormField } from "#/components/FormField";
 import { Button } from "#/components/ui/button";
 import {
 	Card,
@@ -22,7 +21,7 @@ import {
 	CardTitle,
 } from "#/components/ui/card";
 import { Checkbox } from "#/components/ui/checkbox";
-import { FieldError } from "#/components/ui/field";
+import { Field, FieldError, FieldLabel } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
 import { insuranceData } from "#/data/insurance";
@@ -328,11 +327,11 @@ function ClientConsent() {
 										<div className="space-y-6">
 											<form.Field name="email">
 												{(field) => (
-													<FormField
-														label={m.consent_label_email()}
-														htmlFor="email"
-														required
-													>
+													<Field>
+														<FieldLabel htmlFor="email">
+															{m.consent_label_email()}
+															<span className="text-destructive ml-0.5">*</span>
+														</FieldLabel>
 														<Input
 															type="email"
 															id="email"
@@ -347,16 +346,16 @@ function ClientConsent() {
 														{field.state.meta.isTouched && (
 															<FieldError errors={field.state.meta.errors} />
 														)}
-													</FormField>
+													</Field>
 												)}
 											</form.Field>
 											<form.Field name="phone">
 												{(field) => (
-													<FormField
-														label={m.consent_label_phone()}
-														htmlFor="phone"
-														required
-													>
+													<Field>
+														<FieldLabel htmlFor="phone">
+															{m.consent_label_phone()}
+															<span className="text-destructive ml-0.5">*</span>
+														</FieldLabel>
 														<Input
 															type="tel"
 															id="phone"
@@ -371,16 +370,16 @@ function ClientConsent() {
 														{field.state.meta.isTouched && (
 															<FieldError errors={field.state.meta.errors} />
 														)}
-													</FormField>
+													</Field>
 												)}
 											</form.Field>
 											<form.Field name="fullName">
 												{(field) => (
-													<FormField
-														label={m.consent_label_full_name()}
-														htmlFor="fullName"
-														required
-													>
+													<Field>
+														<FieldLabel htmlFor="fullName">
+															{m.consent_label_full_name()}
+															<span className="text-destructive ml-0.5">*</span>
+														</FieldLabel>
 														<Input
 															type="text"
 															id="fullName"
@@ -395,7 +394,7 @@ function ClientConsent() {
 														{field.state.meta.isTouched && (
 															<FieldError errors={field.state.meta.errors} />
 														)}
-													</FormField>
+													</Field>
 												)}
 											</form.Field>
 											<form.Field name="acknowledgment">

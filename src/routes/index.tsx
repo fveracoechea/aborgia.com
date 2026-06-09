@@ -385,9 +385,7 @@ function HomePage() {
 							{m.services_section_label()}
 						</span>
 						<h2 className="text-4xl md:text-5xl font-bold text-foreground mt-4">
-							{m.services_title_line1()}
-							<br />
-							{m.services_title_line2()}
+							{m.services_title()}
 						</h2>
 					</div>
 

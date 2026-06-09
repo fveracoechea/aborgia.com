@@ -1,3 +1,9 @@
+import aboutMe from "#/assets/about-me.jpg";
+import familyForest from "#/assets/family-forest.jpg";
+import familyHome from "#/assets/family-home.jpg";
+import happyFamily from "#/assets/happy-family.jpg";
+import motherDaughters from "#/assets/mother-daughters.jpg";
+
 export const insuranceData = {
 	contact: {
 		phone: "+1 (404) 513-1683",
@@ -13,12 +19,7 @@ export const insuranceData = {
 			"/assets/hero-video-2.mp4",
 			"/assets/hero-video-3.mp4",
 		],
-		about: "/src/assets/about-me.jpg",
-		offerings: [
-			"/src/assets/family-forest.jpg",
-			"/src/assets/family-home.jpg",
-			"/src/assets/happy-family.jpg",
-			"/src/assets/mother-daughters.jpg",
-		],
+		about: aboutMe,
+		offerings: [familyForest, familyHome, happyFamily, motherDaughters],
 	},
 };

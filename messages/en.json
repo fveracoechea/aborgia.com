@@ -47,7 +47,7 @@
   "hero_broker_label": "Insurance Broker",
 
   "about_label": "About Me",
-  "about_title": "About Me",
+  "about_title": "Here to Help",
   "about_description": "I'm dedicated to helping families and individuals find the right insurance coverage to protect what matters most. With years of experience in the insurance industry, I provide personalized guidance to ensure you get the best coverage at the best price.",
   "about_stat1_label": "Global",
   "about_stat1_desc": "Expertise",
@@ -57,8 +57,7 @@
   "about_stat3_desc": "Health Coverage",
 
   "services_section_label": "Services",
-  "services_title_line1": "Insurance",
-  "services_title_line2": "Offerings",
+  "services_title": "Insurance Offerings",
 
   "offering_final_expenses_title": "Final Expenses",
   "offering_final_expenses_desc": "A life insurance product designed to cover funeral costs, burial expenses, and other end-of-life financial obligations. Give your family peace of mind during difficult times.",

@@ -22,6 +22,14 @@ const config = defineConfig({
 	},
 	plugins: [
 		devtools(),
+		tailwindcss(),
+		svgr(),
+		tanstackStart({
+			server: { entry: "./server.ts" },
+			pages: prerenderRoutes,
+		}),
+		nitro(),
+		viteReact(),
 		paraglideVitePlugin({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
@@ -38,16 +46,6 @@ const config = defineConfig({
 				},
 			],
 		}),
-		nitro({ preset: "bun", rollupConfig: { external: [/^@sentry\//] } }),
-		tailwindcss(),
-		tanstackStart({
-			server: {
-				entry: "./server.ts",
-			},
-			pages: prerenderRoutes,
-		}),
-		viteReact(),
-		svgr(),
 	],
 });
 
