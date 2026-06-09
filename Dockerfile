@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN bun install --frozen-lockfile
 COPY . ./
+RUN bunx paraglide-js compile --strategy url cookie preferredLanguage baseLocale
 RUN bun run build
 
 FROM oven/bun:1.3-alpine AS runner 
