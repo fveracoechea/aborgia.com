@@ -2,7 +2,7 @@ import { defineRailway, github, preserve, project, service } from "railway/iac";
 
 export default defineRailway(() => {
   const web = service("web", {
-    source: github("fveracoechea/aborgia.com"),
+    source: github("fveracoechea/aborgia.com", { branch: 'master' }),
     build: {
       dockerfilePath: "Dockerfile",
     },
